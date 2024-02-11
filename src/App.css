@@ -1,8 +1,20 @@
-#root {
-  max-width: 1480px;
-  margin: 0 auto;
-  text-align: center;
+* {
+  max-resolution: 0;
 }
+
 h1.test {
   color: #1d588b;
+}
+.container {
+  width: 1136px;
+  margin: 56px auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: aliceblue;
+}
+@media only screen and (max-width: 660px) {
+  .container {
+    width: 400px;
+  }
 }

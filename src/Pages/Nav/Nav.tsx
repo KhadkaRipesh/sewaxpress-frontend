@@ -10,7 +10,7 @@ function Nav() {
   const closeMobileMenu = () => setClick(false);
   return (
     <>
-      <div className={click ? styles.container_active : styles.container}>
+      <div className={click ? styles.navbar_active : styles.navbar}>
         <div className={styles.rows}>
           <div className={styles.icon}>
             <NavLink to={'/'} onClick={closeMobileMenu}>
