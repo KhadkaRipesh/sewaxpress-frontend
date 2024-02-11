@@ -1,0 +1,157 @@
+a {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.rows {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  height: 55px;
+}
+.serviceProvider {
+  padding: 0 40px;
+}
+.serviceProvider a {
+  padding: 8px;
+  text-decoration: none;
+  background-color: #1d588b;
+  color: #ffffff;
+  font-size: 16px;
+  border-radius: 8px;
+}
+.login a {
+  color: #333333;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 500;
+}
+.register a {
+  padding: 8px;
+  text-decoration: none;
+  background-color: #1d588b;
+  color: #ffffff;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+ul {
+  gap: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.container {
+  border-bottom: 1px solid black;
+  transition: height 5s ease;
+}
+.container_active {
+  border-bottom: 1px solid black;
+  transition: height 5s ease;
+}
+
+.navMenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  text-align: center;
+  justify-content: flex-end;
+}
+.navMenu_active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  text-align: center;
+  justify-content: flex-end;
+}
+.navItem {
+  height: 80px;
+  border-bottom: 2px solid transparent;
+}
+
+.navLinks {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  height: 100%;
+}
+.navItem :hover {
+  border-bottom: 2px solid #09bef0;
+}
+
+.menuIcon {
+  display: none;
+}
+
+@media only screen and (max-width: 660px) {
+  .logo {
+    height: 55px;
+    margin-left: 20px;
+  }
+  .navMenu {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    text-align: center;
+    justify-content: flex-end;
+    opacity: 0;
+  }
+
+  .navMenu_active {
+    flex-direction: column;
+    width: 95%;
+    list-style: none;
+    position: absolute;
+    top: 80px;
+    opacity: 1;
+    z-index: 1;
+    padding: 0;
+  }
+
+  .navLinks {
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    display: table;
+  }
+
+  .navItem {
+    width: 100%;
+  }
+
+  .menuIcon {
+    display: block;
+    position: absolute;
+    top: -10px;
+    right: 0;
+    transform: translate(-100%, 60%);
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+
+  .serviceProvider a,
+  .login a,
+  .register a {
+    color: #ffffff;
+    background-color: #1d588b;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0;
+  }
+  .rows ul {
+    background-color: #1d588b;
+    margin-top: -20px;
+    padding: 30px 0;
+    padding: 30px 0;
+    width: 100%;
+  }
+  .container_active {
+    border-bottom: 1px solid black;
+    height: 210px;
+  }
+}
