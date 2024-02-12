@@ -1,5 +1,6 @@
 import styles from './Landing.module.css';
 import image from '../../assets/images/ru-service-provider.png';
+import whyImage from '../../assets/images/sv.png';
 import {
   FormControl,
   InputLabel,
@@ -49,8 +50,35 @@ function LandingPage() {
       </div>
       <div className='container'>
         <div className={styles.containerr}>
-          <div className={styles.left}>Left box</div>
-          <div className={styles.right}>Right Box</div>
+          <div className={styles.left}>
+            <h2>Why SewaXpress?</h2>
+            <ul className={styles.why_us}>
+              <li>
+                <div className={styles.why_image}></div>
+                <section>
+                  <h3>Transparent Pricing</h3>
+                  <p>See fixed prices before you book. No hidden charges.</p>
+                </section>
+              </li>
+              <li>
+                <div className={styles.why_image}></div>
+                <section>
+                  <h3>Professional Support</h3>
+                  <p>Dedicated customer service team for constant support.</p>
+                </section>
+              </li>
+              <li>
+                <div className={styles.why_image}></div>
+                <section>
+                  <h3>Wide range services</h3>
+                  <p>See fixed prices before you book. No hidden charges.</p>
+                </section>
+              </li>
+            </ul>
+          </div>
+          <div className={styles.right}>
+            <img src={whyImage} alt='' height={400} />
+          </div>
         </div>
       </div>
     </>
