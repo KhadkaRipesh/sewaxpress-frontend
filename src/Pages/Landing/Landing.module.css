@@ -1,8 +1,8 @@
 .section {
   display: flex;
+  width: auto;
   align-items: center;
-  width: 100%;
-  background: linear-gradient(90deg, transparent 0%, #1d588b 40%);
+  background: linear-gradient(25deg, transparent 0%, #1d588b 100%);
 }
 .content_box {
   width: 50%;
@@ -17,7 +17,8 @@
   font-family: sans-serif;
 }
 .slogan {
-  font-size: 45px;
+  font-size: 40px;
+  word-wrap: break-word;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -29,11 +30,12 @@
 @media only screen and (max-width: 660px) {
   .section {
     display: block;
-    background: linear-gradient(180deg, transparent 0%, #1d588b 40%);
+    background: linear-gradient(180deg, transparent 0%, #1d588b 45%);
   }
   .content_box {
     margin: 20px;
-    width: auto;
+    width: 400px;
+    padding-bottom: 20px;
   }
   .img {
     width: 400px;
@@ -55,4 +57,57 @@
       Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
       sans-serif;
   }
+
+  .select_menu {
+    margin: 20px;
+  }
+
+  .containerr {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.items {
+  background-color: rebeccapurple;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#select {
+  background-color: white;
+}
+#label {
+  background-color: #ffff;
+}
+.select_menu {
+  color: #000305;
+  height: 130px;
+  width: 300px;
+  background-color: #ffff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+
+.question {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #212121;
+  margin-bottom: 16px;
+  font-family: sans-serif;
+}
+.containerr {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.right {
+  width: 50%;
+}
+.left {
+  width: 50%;
 }

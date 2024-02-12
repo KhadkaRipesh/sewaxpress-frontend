@@ -8,13 +8,20 @@ h1.test {
 .container {
   width: 1136px;
   margin: 56px auto;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   background-color: aliceblue;
 }
 @media only screen and (max-width: 660px) {
   .container {
     width: 400px;
   }
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  outline: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }

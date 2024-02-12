@@ -1,9 +1,22 @@
 import styles from './Landing.module.css';
 import image from '../../assets/images/ru-service-provider.png';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
+import { useState } from 'react';
 function LandingPage() {
+  const [city, setCity] = useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setCity(event.target.value as string);
+  };
   return (
     <>
-      <div className={'container'}>
+      <div className='container'>
         <div className={styles.section}>
           <div className={styles.image}>
             <img src={image} alt='service providers' width={400} />
@@ -14,7 +27,30 @@ function LandingPage() {
             <p className={styles.sub_slogan}>
               Hami kaha sabai sewa uplabdha xa
             </p>
+            <div className={styles.select_menu}>
+              <p className={styles.question}>Where do you need Service?</p>
+              <FormControl fullWidth className={styles.form}>
+                <InputLabel id={styles.label}>City</InputLabel>
+                <Select
+                  labelId='label'
+                  id={styles.select}
+                  value={city}
+                  label='City'
+                  onChange={handleChange}
+                >
+                  <MenuItem value={'kathmandu'}>Kathmandu</MenuItem>
+                  <MenuItem value={'lalitpur'}>Lalitpur</MenuItem>
+                  <MenuItem value={'bhaktapur'}>Bhaktapur</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
           </div>
+        </div>
+      </div>
+      <div className='container'>
+        <div className={styles.containerr}>
+          <div className={styles.left}>Left box</div>
+          <div className={styles.right}>Right Box</div>
         </div>
       </div>
     </>
