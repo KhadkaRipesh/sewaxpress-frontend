@@ -1,0 +1,92 @@
+.hr_lines {
+  position: relative;
+  max-width: 500px;
+  text-align: center;
+}
+
+.hr_lines:before {
+  content: ' ';
+  height: 1px;
+  width: 160px;
+  background: #252d3c;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+
+.hr_lines:after {
+  content: ' ';
+  height: 1px;
+  width: 160px;
+  background: #252d3c;
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+.form {
+  background-color: #f2f2f2;
+}
+h2.h2 {
+  text-align: center;
+  font-size: 32px;
+}
+button.google {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  border: none;
+  background-color: #ffe819;
+  font-size: 14px;
+  font-weight: bold;
+  gap: 5px;
+  border-radius: 6px;
+}
+
+label {
+  font-size: 16px;
+}
+
+input[type='text'],
+[type='password'] {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+}
+button.signup,
+button.login {
+  height: 50px;
+  width: 100%;
+  color: #ffffff;
+  background-color: #1d588b;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+}
+span.signin,
+span.register {
+  margin-top: 10px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+span.signin button,
+span.register button {
+  border: none;
+  cursor: pointer;
+  color: #1d588b;
+  font-weight: bold;
+  font-size: 16px;
+}

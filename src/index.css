@@ -3,6 +3,7 @@
     'Helvetica Neue', Oxygen-Sans, Ubuntu, Cantarell, Helvetica, Arial,
     sans-serif !important;
 }
+
 body {
   margin: 0;
 }
@@ -22,6 +23,9 @@ h1.test {
   display: flex;
   width: 1136px;
   margin: 56px auto;
+}
+.modalStyle .ant-modal-content {
+  background-color: #f2f2f2;
 }
 
 @media only screen and (max-width: 660px) {

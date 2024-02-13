@@ -4,42 +4,38 @@ import logo from '../../assets/icon/icon.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
 import { Modal } from 'antd';
-import Login from '../../Components/Auth/Login';
-import Register from '../../Components/Auth/Register';
+import AuthForm from '../../Components/Auth/AuthForm';
 function Nav() {
   const [click, setClick] = useState(false);
-  const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-  // This is for navigation toggle
+
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [mode, setMode] = useState('register');
+
   const handleCancel = () => {
-    setRegisterModalOpen(false);
-    setLoginModalOpen(false);
+    setModalOpen(false);
+  };
+
+  const toggleMode = () => {
+    setMode(mode === 'register' ? 'login' : 'register');
+  };
+
+  const openModal = () => {
+    setModalOpen(true);
   };
 
   return (
     <>
-      {isRegisterModalOpen && (
+      {isModalOpen && (
         <Modal
-          title='Create An Account'
-          visible={isRegisterModalOpen}
+          visible={isModalOpen}
           onCancel={handleCancel}
           footer={null}
+          className='modalStyle'
         >
-          <Register />
-        </Modal>
-      )}
-
-      {isLoginModalOpen && (
-        <Modal
-          title='Login to your Account'
-          visible={isLoginModalOpen}
-          onCancel={handleCancel}
-          footer={null}
-        >
-          <Login />
+          <AuthForm mode={mode} toggleMode={toggleMode} />
         </Modal>
       )}
       <div className={styles.navbar}>
@@ -59,7 +55,7 @@ function Nav() {
             <li className={styles.login}>
               <button
                 onClick={() => {
-                  closeMobileMenu(), setLoginModalOpen(true);
+                  closeMobileMenu(), setMode('login'), openModal();
                 }}
               >
                 Login
@@ -68,7 +64,7 @@ function Nav() {
             <li className={styles.register}>
               <button
                 onClick={() => {
-                  closeMobileMenu(), setRegisterModalOpen(true);
+                  closeMobileMenu(), setMode('register'), openModal();
                 }}
               >
                 Register
