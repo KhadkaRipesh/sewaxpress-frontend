@@ -9,6 +9,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { useState } from 'react';
+import Footer from '../../Components/resuable/Footer';
 function LandingPage() {
   const [city, setCity] = useState('');
 
@@ -20,7 +21,7 @@ function LandingPage() {
       <div className='container'>
         <div className={styles.section}>
           <div className={styles.image}>
-            <img src={image} alt='service providers' width={400} />
+            <img src={image} alt='service providers' />
           </div>
           <div className={styles.content_box}>
             <span className={styles.company}>SewaXpress</span>
@@ -77,10 +78,11 @@ function LandingPage() {
             </ul>
           </div>
           <div className={styles.right}>
-            <img src={whyImage} alt='' height={400} />
+            <img src={whyImage} className={styles.why_image} alt='' />
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
