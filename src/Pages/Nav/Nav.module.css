@@ -16,27 +16,34 @@ a {
 .serviceProvider {
   padding: 0 40px;
 }
-.serviceProvider a {
+.serviceProvider button {
   padding: 8px;
   text-decoration: none;
   background-color: #1d588b;
   color: #ffffff;
   font-size: 16px;
   border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
-.login a {
+.login button {
   color: #333333;
   text-decoration: none;
   font-size: 17px;
   font-weight: 500;
+  border: none;
+  cursor: pointer;
+  background-color: #fff;
 }
-.register a {
+.register button {
   padding: 8px;
   text-decoration: none;
   background-color: #1d588b;
   color: #ffffff;
   font-size: 16px;
   border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
 ul {
@@ -140,9 +147,7 @@ ul {
     cursor: pointer;
   }
 
-  .serviceProvider a,
-  .login a,
-  .register a {
+  .login button {
     color: #ffffff;
     background-color: #1d588b;
     font-size: 16px;
