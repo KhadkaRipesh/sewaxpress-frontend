@@ -12,26 +12,49 @@ type AuthFormProps = {
 
 const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
   // states
-  const [data, setData] = useState({
+  const [registerData, setRegisterData] = useState({
     full_name: '',
     phone_number: '',
     email: '',
+  });
+
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
   });
 
   const handleRegisterData = (
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) => {
-    setData({ ...data, [field]: event.target.value });
+    setRegisterData({ ...registerData, [field]: event.target.value });
+  };
+
+  const handleLoginData = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    setLoginData({ ...loginData, [field]: event.target.value });
   };
 
   const register = (event) => {
     event.preventDefault;
-    // toast.success('Hek');
 
     // hit api through axios
     axios
-      .post('http://192.168.100.225:8848/auth/register', data)
+      .post('http://192.168.100.225:8848/auth/register', registerData)
+      .then((response) => {
+        SuccessMessage(response.data.message);
+      })
+      .catch((error) => ErrorMessage(error.response.data.message));
+  };
+
+  const login = (event) => {
+    event.preventDefault;
+
+    // hit api through axios
+    axios
+      .post('http://192.168.100.225:8848/auth/login', loginData)
       .then((response) => {
         SuccessMessage(response.data.message);
       })
@@ -119,6 +142,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
               name='email'
               id='email'
               placeholder='Enter your email'
+              onChange={(e) => handleLoginData(e, 'email')}
               required
             />
             <br />
@@ -130,6 +154,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
               name='password'
               id='email'
               placeholder='Type your password'
+              onChange={(e) => handleLoginData(e, 'password')}
               required
             />
             <br />
@@ -138,7 +163,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             </div>
             <br />
 
-            <button className={styles.login}>Login</button>
+            <button className={styles.login} onClick={login}>
+              Login
+            </button>
             <br />
             <span className={styles.register}>
               Don't have an account?
