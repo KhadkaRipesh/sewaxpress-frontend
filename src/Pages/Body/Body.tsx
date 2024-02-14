@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import LandingPage from '../Landing/Landing';
 import NotFoundError from '../404-errror';
+import SetPassword from '../../Components/Auth/SetPassword';
 
 function Body() {
   return (
@@ -9,6 +10,10 @@ function Body() {
         <Routes>
           <Route path='*' element={<NotFoundError />}></Route>
           <Route path='/' element={<LandingPage />}></Route>
+          <Route
+            path='/:userId/set-password/:otp'
+            element={<SetPassword />}
+          ></Route>
         </Routes>
       </div>
     </>
