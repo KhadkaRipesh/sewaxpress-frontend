@@ -30,7 +30,7 @@ function Nav() {
     <>
       {isModalOpen && (
         <Modal
-          visible={isModalOpen}
+          open={isModalOpen}
           onCancel={handleCancel}
           footer={null}
           className='modalStyle'

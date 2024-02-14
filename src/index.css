@@ -3,7 +3,6 @@
     'Helvetica Neue', Oxygen-Sans, Ubuntu, Cantarell, Helvetica, Arial,
     sans-serif !important;
 }
-
 body {
   margin: 0;
 }
@@ -34,24 +33,9 @@ h1.test {
     background: transparent;
   }
 
-  body {
-    -ms-overflow-style: none;
-    width: 100vw;
-    height: 100vh;
-  }
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
   }
-}
-
-.css-6hp17o-MuiList-root-MuiMenu-list {
-  margin: 0;
-  padding: 0;
-  position: relative;
-  outline: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
 }

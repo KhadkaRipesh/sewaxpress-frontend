@@ -1,7 +1,9 @@
 import { FaGoogle } from 'react-icons/fa';
 import styles from './AuthForm.module.css';
 
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { ErrorMessage, SuccessMessage } from '../../utils/notify';
 
 type AuthFormProps = {
   mode: string;
@@ -9,6 +11,32 @@ type AuthFormProps = {
 };
 
 const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
+  // states
+  const [data, setData] = useState({
+    full_name: '',
+    phone_number: '',
+    email: '',
+  });
+
+  const handleRegisterData = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    setData({ ...data, [field]: event.target.value });
+  };
+
+  const register = (event) => {
+    event.preventDefault;
+    // toast.success('Hek');
+
+    // hit api through axios
+    axios
+      .post('http://192.168.100.225:8848/auth/register', data)
+      .then((response) => {
+        SuccessMessage(response.data.message);
+      })
+      .catch((error) => ErrorMessage(error.response.data.message));
+  };
   return (
     <>
       {/* Registration fields */}
@@ -28,9 +56,10 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <br />
             <input
               type='text'
-              name='name'
-              id='name'
+              name='full_name'
+              id='full_name'
               placeholder='Enter your full name'
+              onChange={(e) => handleRegisterData(e, 'full_name')}
               required
             />
             <br />
@@ -39,9 +68,10 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <br />
             <input
               type='text'
-              name='phone'
-              id='phone'
+              name='phone_number'
+              id='phone_number'
               placeholder='Enter your phone number'
+              onChange={(e) => handleRegisterData(e, 'phone_number')}
               required
             />
             <br />
@@ -53,11 +83,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
               name='email'
               id='email'
               placeholder='Enter your email'
+              onChange={(e) => handleRegisterData(e, 'email')}
               required
             />
             <br />
 
-            <button className={styles.signup}>Register</button>
+            <button className={styles.signup} onClick={register}>
+              Register
+            </button>
             <br />
             <span className={styles.signin}>
               Already have an account?{' '}
