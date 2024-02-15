@@ -4,6 +4,7 @@ import styles from './AuthForm.module.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ErrorMessage, SuccessMessage } from '../../utils/notify';
+import { isEmptyObject } from '../../constants';
 
 type AuthFormProps = {
   mode: string;
@@ -40,25 +41,53 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
   const register = (event) => {
     event.preventDefault;
 
-    // hit api through axios
-    axios
-      .post('http://192.168.100.225:8848/auth/register', registerData)
-      .then((response) => {
-        SuccessMessage(response.data.message);
-      })
-      .catch((error) => ErrorMessage(error.response.data.message));
+    if (isEmptyObject(registerData)) {
+      {
+        ErrorMessage('Fields cannot be empty.');
+      }
+    } else {
+      // hit api through axios
+      axios
+        .post('http://192.168.100.225:8848/auth/register', registerData)
+        .then((response) => {
+          SuccessMessage(response.data.message);
+        })
+        .catch((error) => {
+          if (error.response) {
+            ErrorMessage(error.response.data.message);
+          } else if (error.request) {
+            ErrorMessage('Network Error.');
+          } else {
+            ErrorMessage('Something went wrong.');
+          }
+        });
+    }
   };
 
   const login = (event) => {
     event.preventDefault;
 
-    // hit api through axios
-    axios
-      .post('http://192.168.100.225:8848/auth/login', loginData)
-      .then((response) => {
-        SuccessMessage(response.data.message);
-      })
-      .catch((error) => ErrorMessage(error.response.data.message));
+    if (isEmptyObject(loginData)) {
+      {
+        ErrorMessage('Fields cannot be empty.');
+      }
+    } else {
+      // hit api through axios
+      axios
+        .post('http://192.168.100.225:8848/auth/login', loginData)
+        .then((response) => {
+          SuccessMessage(response.data.message);
+        })
+        .catch((error) => {
+          if (error.response) {
+            ErrorMessage(error.response.data.message);
+          } else if (error.request) {
+            ErrorMessage('Network Error.');
+          } else {
+            ErrorMessage('Something went wrong.');
+          }
+        });
+    }
   };
   return (
     <>

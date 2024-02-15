@@ -55,10 +55,10 @@ input[type='text'],
 [type='password'] {
   width: 100%;
   height: 50px;
-  margin-bottom: 10px;
   font-size: 1rem;
   border: none;
   border-radius: 6px;
+  margin-top: 5px;
 }
 button.signup,
 button.login {
@@ -71,6 +71,7 @@ button.login {
   cursor: pointer;
   border: none;
   border-radius: 6px;
+  margin-top: 15px;
 }
 span.signin,
 span.register {
@@ -89,4 +90,25 @@ span.register button {
   color: #1d588b;
   font-weight: bold;
   font-size: 16px;
+}
+
+/* Css for set password */
+
+.set_password {
+  display: flex;
+  justify-content: center;
+  padding-top: 90px;
+}
+.set_password_form {
+  background-color: #f2f2f2;
+  padding: 40px;
+  border-radius: 6px;
+}
+.set_password_h2 {
+  text-align: center;
+  margin-top: 0;
+  font-size: 32px;
+}
+.sub_head {
+  text-align: center;
 }
