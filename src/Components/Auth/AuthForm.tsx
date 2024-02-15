@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ErrorMessage, SuccessMessage } from '../../utils/notify';
 import { isEmptyObject } from '../../constants';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type AuthFormProps = {
   mode: string;
@@ -12,6 +13,10 @@ type AuthFormProps = {
 };
 
 const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  sessionStorage.setItem('redirectUrl', location.pathname);
   // states
   const [registerData, setRegisterData] = useState({
     full_name: '',
@@ -77,6 +82,19 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
         .post('http://192.168.100.225:8848/auth/login', loginData)
         .then((response) => {
           SuccessMessage(response.data.message);
+          const token = response.data.data.access_token;
+          sessionStorage.setItem('jwtToken', token);
+          const redirectUrl = sessionStorage.getItem('redirectUrl');
+          if (redirectUrl) {
+            console.log(redirectUrl);
+            navigate(redirectUrl);
+            // Clear the stored URL after redirection
+            sessionStorage.removeItem('redirectUrl');
+          } else {
+            // If there is no stored URL, redirect to a default page
+            navigate('/');
+          }
+          window.location.reload();
         })
         .catch((error) => {
           if (error.response) {
@@ -181,7 +199,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <input
               type='password'
               name='password'
-              id='email'
+              id='password'
               placeholder='Type your password'
               onChange={(e) => handleLoginData(e, 'password')}
               required
