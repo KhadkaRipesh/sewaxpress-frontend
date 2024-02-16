@@ -54,11 +54,13 @@ label {
 input[type='text'],
 [type='password'] {
   width: 100%;
+  padding-left: 10px;
   height: 50px;
   font-size: 1rem;
   border: none;
   border-radius: 6px;
   margin-top: 5px;
+  outline: none;
 }
 button.signup,
 button.login {
@@ -72,6 +74,7 @@ button.login {
   border: none;
   border-radius: 6px;
   margin-top: 15px;
+  outline: none;
 }
 span.signin,
 span.register {

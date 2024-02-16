@@ -10,7 +10,7 @@ import ProfileNavbar from './Pages/Nav/ProfileNavbar';
 import { jwtDecode } from 'jwt-decode';
 import Loading from './Components/resuable/Loading';
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const location = useLocation();
 
   // Set loading state to true initially
@@ -26,7 +26,6 @@ function App() {
     if (jwtToken) {
       try {
         const decodedToken = jwtDecode(jwtToken);
-        console.log(decodedToken);
 
         // Check if token is expired
         const currentTime = Date.now() / 1000;

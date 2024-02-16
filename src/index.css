@@ -49,3 +49,13 @@ h1.test {
   outline: 0;
   display: block;
 }
+::placeholder {
+  /* margin-left: 30px;
+  padding-left: 10px; */
+}
+::value {
+  margin-left: 10px;
+}
+.react-icons {
+  font-size: 20px;
+}
