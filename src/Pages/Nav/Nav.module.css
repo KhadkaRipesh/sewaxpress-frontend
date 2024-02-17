@@ -206,7 +206,7 @@ ul {
   cursor: pointer;
   padding: 10px;
 }
-.bookings:hover,
+.booking:hover,
 .chat:hover,
 .notifications:hover {
   border-radius: 50%;
@@ -214,26 +214,118 @@ ul {
 }
 .bookingHover {
   position: absolute;
-  color: #ffff;
-  background-color: #171717;
-  margin-left: -17px;
-  border-radius: 5px;
+  color: #2a2a2a;
+  background-color: #e6ecf2;
+  padding: 8px;
+  margin-left: -30px;
   margin-top: 20px;
+  border-radius: 2px;
 }
 .chatHover {
   position: absolute;
-  color: #ffff;
-  background-color: #171717;
-  margin-left: -7px;
+  color: #2a2a2a;
+  background-color: #e6ecf2;
+  padding: 8px;
+  margin-left: -15px;
   margin-top: 20px;
+  border-radius: 2px;
 }
 .notificationsHover {
   position: absolute;
-  color: #ffff;
-  background-color: #171717;
-  margin-left: -28px;
+  color: #2a2a2a;
+  background-color: #e6ecf2;
+  padding: 8px;
+  margin-left: -44px;
   margin-top: 20px;
+  border-radius: 2px;
 }
 .icon_name {
   margin: 0;
+}
+.dropdown_menu {
+  position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  color: #2a2a2a;
+
+  background-color: #e6ecf2;
+  width: 240px;
+  margin-left: -204px;
+  margin-top: 20px;
+}
+.personal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.5rem 1.5rem;
+}
+.line {
+  border-top: 1px solid #4272a1;
+  height: 0;
+  overflow: hidden;
+}
+.dropdown_menu ul {
+  padding-left: 3px;
+  margin: 0px;
+  margin-top: 4px;
+  display: block;
+  width: 98%;
+}
+
+.li_items {
+  list-style-type: none;
+  display: flex;
+  gap: 10px;
+  width: auto;
+  align-items: center;
+  height: 25px;
+  padding: 0.5rem 1.5rem;
+  color: #2a2a2a;
+}
+.li_items:hover {
+  background-color: #f3f4f6;
+}
+.dropdown_icon {
+  margin-top: 2px;
+}
+
+.bookingHover::after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 9px 9px 0 9px;
+  border-color: #e6ecf2 transparent transparent transparent;
+  position: absolute;
+  top: -9px;
+  right: 26px;
+  transform: rotate(180deg);
+}
+
+.chatHover::after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 9px 9px 0 9px;
+  border-color: #e6ecf2 transparent transparent transparent;
+  position: absolute;
+  top: -9px;
+  right: 16px;
+  transform: rotate(180deg);
+}
+
+.notificationsHover::after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 9px 9px 0 9px;
+  border-color: #e6ecf2 transparent transparent transparent;
+  position: absolute;
+  top: -9px;
+  right: 45px;
+  transform: rotate(180deg);
 }

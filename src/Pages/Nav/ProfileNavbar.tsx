@@ -1,5 +1,6 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/icon/icon.png';
+import avatar from '../../assets/images/avatar.png';
 
 import styles from './Nav.module.css';
 import { useState } from 'react';
@@ -10,7 +11,8 @@ import {
   IoNotificationsOutline,
 } from 'react-icons/io5';
 import { CgProfile } from 'react-icons/cg';
-
+import { FiLogOut } from 'react-icons/fi';
+// import  avatar  from '../../assets/images/avatar.png';
 function ProfileNavbar() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,6 +22,9 @@ function ProfileNavbar() {
 
   // useState hook for hover state
   const [hoveredIcon, setHoveredIcon] = useState(null);
+
+  // for dropdown
+  const [open, setOpen] = useState(false);
 
   // Function to handle icon hover
   const handleIconHover = (iconName: any) => {
@@ -47,6 +52,15 @@ function ProfileNavbar() {
       style: styles.notificationsHover,
     },
   ];
+
+  function DropdownItems(props) {
+    return (
+      <li className={styles.li_items} onClick={props.onClick}>
+        <div className='icon'>{props.icon}</div>
+        <div className='text'>{props.text}</div>
+      </li>
+    );
+  }
 
   // store current url on session storage
   sessionStorage.setItem('redirectUrl', location.pathname);
@@ -101,8 +115,42 @@ function ProfileNavbar() {
                 )}
               </div>
             ))}
-            <div className={styles.profile} onClick={logout}>
+            <div
+              className={styles.profile}
+              onClick={() => {
+                setOpen(!open);
+              }}
+            >
               <CgProfile className='react-icons' />
+              {open && (
+                <div className={styles.dropdown_menu}>
+                  <div className={styles.personal}>
+                    <div className='pp'>
+                      <img
+                        src={avatar}
+                        alt=''
+                        style={{ height: 55, width: 55 }}
+                      />
+                    </div>
+                    <div className='pn'>{'John Doe'}</div>
+                  </div>
+                  <ul>
+                    <NavLink to='/'>
+                      <DropdownItems
+                        icon={<CgProfile className={styles.dropdown_icon} />}
+                        text='Account Settings'
+                      />
+                    </NavLink>
+                    <NavLink to='/'>
+                      <DropdownItems
+                        onClick={logout}
+                        icon={<FiLogOut className={styles.dropdown_icon} />}
+                        text='Logout'
+                      />
+                    </NavLink>
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>
