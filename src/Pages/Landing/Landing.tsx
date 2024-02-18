@@ -10,11 +10,14 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import Footer from '../../Components/resuable/Footer';
+import { useNavigate } from 'react-router-dom';
 function LandingPage() {
+  const navigate = useNavigate();
   const [city, setCity] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
-    setCity(event.target.value as string);
+    setCity(event.target.value);
+    navigate(`/${event.target.value}`);
   };
   return (
     <>
@@ -27,7 +30,7 @@ function LandingPage() {
             <span className={styles.company}>SewaXpress</span>
             <h1 className={styles.slogan}>Quality home services, on demand</h1>
             <p className={styles.sub_slogan}>
-              Hami kaha sabai sewa uplabdha xa
+              Bringing convenience to your doorstep with our home services!
             </p>
             <div className={styles.select_menu}>
               <p className={styles.question}>Where do you need Service?</p>
@@ -39,6 +42,7 @@ function LandingPage() {
                   value={city}
                   label='City'
                   onChange={handleChange}
+                  style={{ outline: 'none' }}
                 >
                   <MenuItem value={'kathmandu'}>Kathmandu</MenuItem>
                   <MenuItem value={'lalitpur'}>Lalitpur</MenuItem>

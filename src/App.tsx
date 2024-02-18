@@ -16,10 +16,10 @@ function App() {
   // Set loading state to true initially
   const [loading, setLoading] = useState(true);
 
-  // Page will load after 2 seconds
+  // Page will load after 1 second
   setTimeout(() => {
     setLoading(false);
-  }, 2000);
+  }, 1000);
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem('jwtToken');
