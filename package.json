@@ -17,6 +17,7 @@
     "antd": "^5.14.0",
     "avataaars": "^2.0.0",
     "axios": "^1.6.7",
+    "dotenv": "^16.4.4",
     "faker": "^6.6.6",
     "framer-motion": "^11.0.3",
     "jwt-decode": "^4.0.0",

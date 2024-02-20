@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ErrorMessage, SuccessMessage } from '../../utils/notify';
 import { isEmptyObject } from '../../constants';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from '../../constants/constants';
 
 type AuthFormProps = {
   mode: string;
@@ -53,9 +54,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
     } else {
       // hit api through axios
       axios
-        .post('http://192.168.100.225:8848/auth/register', registerData)
+        .post(`${BACKEND_URL}/auth/register`, registerData)
         .then((response) => {
-          SuccessMessage(response.data.message);
+          console.log(response.data);
+          SuccessMessage('Check email to set password.');
+          navigate('/');
+          window.location.reload();
         })
         .catch((error) => {
           if (error.response) {
@@ -79,7 +83,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
     } else {
       // hit api through axios
       axios
-        .post('http://192.168.100.225:8848/auth/login', loginData)
+        .post(`${BACKEND_URL}/auth/login`, loginData)
         .then((response) => {
           SuccessMessage(response.data.message);
           const token = response.data.data.access_token;

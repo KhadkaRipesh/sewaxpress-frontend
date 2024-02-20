@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ErrorMessage, SuccessMessage } from '../../utils/notify';
 import { useParams } from 'react-router-dom';
 import { isEmptyObject } from '../../constants';
+import { BACKEND_URL } from '../../constants/constants';
 function SetPassword() {
   const { userId, otp } = useParams();
   const [password, setPassword] = useState({
@@ -27,10 +28,7 @@ function SetPassword() {
       }
     } else {
       axios
-        .post(
-          `http://192.168.100.225:8848/auth/${userId}/set-password/${otp}`,
-          password
-        )
+        .post(`${BACKEND_URL}/auth/${userId}/set-password/${otp}`, password)
         .then((response) => {
           SuccessMessage(response.data.message);
         })

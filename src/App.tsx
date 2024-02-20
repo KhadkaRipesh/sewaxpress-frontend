@@ -10,7 +10,7 @@ import ProfileNavbar from './Pages/Nav/ProfileNavbar';
 import { jwtDecode } from 'jwt-decode';
 import Loading from './Components/resuable/Loading';
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
   // Set loading state to true initially
