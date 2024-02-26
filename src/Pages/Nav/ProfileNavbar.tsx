@@ -66,17 +66,9 @@ function ProfileNavbar() {
   sessionStorage.setItem('redirectUrl', location.pathname);
   const logout = () => {
     sessionStorage.removeItem('jwtToken');
-    const redirectUrl = sessionStorage.getItem('redirectUrl');
-    if (redirectUrl) {
-      console.log(redirectUrl);
-      navigate(`${redirectUrl}`);
-      // Clear the stored URL after redirection
-      sessionStorage.removeItem('redirectUrl');
-    } else {
-      // If there is no stored URL, redirect to a default page
-      navigate('/');
-    }
+    sessionStorage.removeItem('role');
     window.location.reload();
+    navigate('/');
   };
   return (
     <>

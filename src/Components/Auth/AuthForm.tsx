@@ -17,7 +17,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  sessionStorage.setItem('redirectUrl', location.pathname);
+  const from = location?.state?.from?.pathname || '/';
+
+  // sessionStorage.setItem('redirectUrl', location.pathname);
   // states
   const [registerData, setRegisterData] = useState({
     full_name: '',
@@ -87,17 +89,10 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
         .then((response) => {
           SuccessMessage(response.data.message);
           const token = response.data.data.access_token;
+          const role = response.data.data.role;
           sessionStorage.setItem('jwtToken', token);
-          const redirectUrl = sessionStorage.getItem('redirectUrl');
-          if (redirectUrl) {
-            console.log(redirectUrl);
-            navigate(redirectUrl);
-            // Clear the stored URL after redirection
-            sessionStorage.removeItem('redirectUrl');
-          } else {
-            // If there is no stored URL, redirect to a default page
-            navigate('/');
-          }
+          sessionStorage.setItem('role', role);
+          navigate(from, { replace: true });
           window.location.reload();
         })
         .catch((error) => {
@@ -111,6 +106,17 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
         });
     }
   };
+
+  const googleSignup = () => {
+    axios
+      .get(`${BACKEND_URL}/auth/google/callback`)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
   return (
     <>
       {/* Registration fields */}
@@ -118,7 +124,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
         <>
           <div className={styles.form}>
             <h2 className={styles.h2}>Create an Account</h2>
-            <button className={styles.google} type='submit'>
+            <button
+              className={styles.google}
+              type='submit'
+              onClick={googleSignup}
+            >
               <div className={styles.icon}>
                 <FaGoogle size={17} />
               </div>
