@@ -9,6 +9,8 @@ import RequireAuth from '../../Components/RequireAuth';
 import Admin from '../ServiceProvider/Admin';
 import UnauthorizedPage from '../../Components/UnauthorizedPage';
 import PopupModal from '../../Components/modal/PopupModal';
+import GoogleAuth from '../../Components/Auth/GoogleAuth';
+import Services from '../Services/Service';
 const ROLES = {
   CUSTOMER: 'CUSTOMER',
   SERVICE_PROVIDER: 'SERVICE_PROVIDER',
@@ -34,9 +36,14 @@ function Body() {
           <Route path='*' element={<NotFoundError />}></Route>
           <Route path='/login' element={<PopupModal />}></Route>
           <Route path='/' element={<LandingPage />}></Route>
+          <Route
+            path='/success/google/callback'
+            element={<GoogleAuth />}
+          ></Route>
           <Route path='/:city' element={<Category />}></Route>
           <Route path='/unauthorized' element={<UnauthorizedPage />}></Route>
-          {/* <Route path='/:city/:category' element={<Services />}></Route> */}
+
+          <Route path='/:city/:category' element={<Services />}></Route>
           <Route
             path='/:userId/set-password/:otp'
             element={<SetPassword />}

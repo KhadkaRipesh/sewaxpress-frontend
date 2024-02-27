@@ -107,16 +107,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
     }
   };
 
-  const googleSignup = () => {
-    axios
-      .get(`${BACKEND_URL}/auth/google/callback`)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  };
   return (
     <>
       {/* Registration fields */}
@@ -124,16 +114,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
         <>
           <div className={styles.form}>
             <h2 className={styles.h2}>Create an Account</h2>
-            <button
-              className={styles.google}
-              type='submit'
-              onClick={googleSignup}
-            >
-              <div className={styles.icon}>
-                <FaGoogle size={17} />
-              </div>
-              <div className={styles.google_signup}>Sign up with Google</div>
-            </button>
+            <a href='http://localhost:8848/auth/google/callback'>
+              <button className={styles.google} type='submit'>
+                <div className={styles.icon}>
+                  <FaGoogle size={17} />
+                </div>
+                <div className={styles.google_signup}>Sign up with Google</div>
+              </button>
+            </a>
             <p className={styles.hr_lines}> Sign up with email </p>
 
             <label>Full Name</label>
@@ -183,18 +171,19 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
           </div>
         </>
       )}
-
       {/* Login fields */}
       {mode === 'login' && (
         <>
           <div className={styles.form}>
             <h2 className={styles.h2}>Login to your Account</h2>
-            <button className={styles.google}>
-              <div className={styles.icon}>
-                <FaGoogle size={17} />
-              </div>
-              <div className={styles.google_signup}>Sign in with Google</div>
-            </button>
+            <a href='http://localhost:8848/auth/google/callback'>
+              <button className={styles.google}>
+                <div className={styles.icon}>
+                  <FaGoogle size={17} />
+                </div>
+                <div className={styles.google_signup}>Sign in with Google</div>
+              </button>
+            </a>
             <p className={styles.hr_lines}> Sign in with email </p>
             <label>Email Address</label>
             <br />
