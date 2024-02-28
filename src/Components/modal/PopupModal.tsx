@@ -11,8 +11,8 @@ function PopupModal() {
     navigate('/');
   };
 
-  const toggleMode = () => {
-    setMode(mode === 'register' ? 'login' : 'register');
+  const toggleMode = (mode: string) => {
+    setMode(mode);
   };
   return (
     <>

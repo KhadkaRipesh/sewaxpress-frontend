@@ -10,7 +10,7 @@ import { BACKEND_URL } from '../../constants/constants';
 
 type AuthFormProps = {
   mode: string;
-  toggleMode: () => void;
+  toggleMode: (mode: string) => void;
 };
 
 const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
@@ -107,6 +107,16 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
     }
   };
 
+  const handleSwitchToSignup = () => {
+    toggleMode('register');
+  };
+  const handleSwitchToSignIn = () => {
+    toggleMode('login');
+  };
+  const handleForgotPassword = () => {
+    toggleMode('reset');
+  };
+
   return (
     <>
       {/* Registration fields */}
@@ -166,7 +176,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <br />
             <span className={styles.signin}>
               Already have an account?{' '}
-              <button onClick={toggleMode}>Sign In</button>
+              <button onClick={handleSwitchToSignIn}>Sign In</button>
             </span>
           </div>
         </>
@@ -209,7 +219,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             />
             <br />
             <div className={styles.forgot}>
-              <label>Forgot password?</label>
+              <label onClick={handleForgotPassword}>Forgot password?</label>
             </div>
             <br />
 
@@ -219,8 +229,16 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <br />
             <span className={styles.register}>
               Don't have an account?
-              <button onClick={toggleMode}>Register here</button>
+              <button onClick={handleSwitchToSignup}>Register here</button>
             </span>
+          </div>
+        </>
+      )}
+
+      {mode === 'reset' && (
+        <>
+          <div className={styles.form}>
+            <h2 className={styles.h2}>Reset your Password</h2>
           </div>
         </>
       )}

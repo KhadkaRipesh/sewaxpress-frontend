@@ -18,8 +18,8 @@ function Nav() {
     setModalOpen(false);
   };
 
-  const toggleMode = () => {
-    setMode(mode === 'register' ? 'login' : 'register');
+  const toggleMode = (mode: string) => {
+    setMode(mode);
   };
 
   const openModal = () => {
