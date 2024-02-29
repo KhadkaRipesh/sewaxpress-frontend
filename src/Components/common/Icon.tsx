@@ -1,26 +1,25 @@
 import { IconBaseProps } from 'react-icons';
-import { IoAddCircleOutline } from 'react-icons/io5';
-import {
-  AiOutlineFileAdd,
-  AiOutlineSetting,
-  AiOutlineUser,
-} from 'react-icons/ai';
+import { AiOutlineSetting, AiOutlineUser } from 'react-icons/ai';
 
-import { GiBookshelf } from 'react-icons/gi';
-import { TbBookUpload, TbBookOff } from 'react-icons/tb';
-import { FiBookOpen } from 'react-icons/fi';
 import { FiLogOut } from 'react-icons/fi';
+import { GrServices } from 'react-icons/gr';
+import { TbCategoryPlus } from 'react-icons/tb';
+import { FaStoreAlt } from 'react-icons/fa';
+import { TfiDashboard } from 'react-icons/tfi';
+import { BsJournalBookmark, BsBookmarkCheck } from 'react-icons/bs';
+import { HiOutlineUsers } from 'react-icons/hi';
+
 export const icons = {
-  bookupload: TbBookUpload,
-  Books: GiBookshelf,
-  booksexpire: TbBookOff,
-  student: AiOutlineUser,
-  setting: AiOutlineSetting,
-  add: AiOutlineFileAdd,
-  bookOpen: FiBookOpen,
-  addbooks: IoAddCircleOutline,
   user: AiOutlineUser,
+  setting: AiOutlineSetting,
   logout: FiLogOut,
+  services: GrServices,
+  category: TbCategoryPlus,
+  hubs: FaStoreAlt,
+  dashboard: TfiDashboard,
+  booking: BsJournalBookmark,
+  categoryy: BsBookmarkCheck,
+  users: HiOutlineUsers,
 };
 
 export type CustomIconType = keyof typeof icons;

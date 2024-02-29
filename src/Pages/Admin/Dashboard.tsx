@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from './Dashboard.module.css';
 import Card from '../../Components/mini-component/Card';
 import { Title } from '../../Components/common/Title';
+import axios from 'axios';
+import { BACKEND_URL } from '../../constants/constants';
 
 interface DashboardDataType {
-  totalServices: number;
-  totalCustomers: number;
-  totalBookings: number;
+  total_categories: number;
+  total_hubs: number;
+  booked_service: number;
   totalUsers: number;
 }
 
 function AdminDashboard() {
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/dashboard`)
+      .then((response) => setData(response.data.data))
+      .catch((error) => console.log(error.response));
+  }, []);
+
   const [data, setData] = React.useState<DashboardDataType | null>(null);
 
   return (
@@ -27,24 +36,29 @@ function AdminDashboard() {
           animate={{ opacity: 1, transition: { duration: 1 } }}
           exit={{ opacity: 0 }}
         >
-          <Card title={100} color='green' subtitle='Total Books' icon='Books' />
           <Card
-            title={100}
-            color='red'
-            subtitle='Books Issued'
-            icon='bookupload'
+            title={data?.total_categories}
+            color='green'
+            subtitle='Total Categories'
+            icon='category'
           />
           <Card
-            title={10}
+            title={data?.total_hubs}
             color='blue'
-            subtitle='Expired Books'
-            icon='booksexpire'
+            subtitle='Total Hubs'
+            icon='hubs'
           />
           <Card
-            title={20}
+            title={data?.booked_service}
+            color='red'
+            subtitle='Booked Services'
+            icon='services'
+          />
+          <Card
+            title={data?.totalUsers}
             color='orange'
-            subtitle='Total Students'
-            icon='student'
+            subtitle='Total Users'
+            icon='user'
           />
         </motion.div>
       </motion.div>

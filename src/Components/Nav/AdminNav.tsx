@@ -4,36 +4,33 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaBars } from 'react-icons/fa';
-import { TfiDashboard } from 'react-icons/tfi';
-import { BsJournalBookmark, BsBookmarkCheck } from 'react-icons/bs';
-import { HiOutlineUsers } from 'react-icons/hi';
-import { FiLogOut } from 'react-icons/fi';
+import { Icon } from '../common/Icon';
 
 const routes = [
   {
     path: '/admin/dashboard',
     name: 'Dashboard',
-    icon: <TfiDashboard />,
+    icon: 'dashboard',
   },
   {
     path: '/admin/booking',
     name: 'Bookings',
-    icon: <BsJournalBookmark />,
+    icon: 'booking',
   },
   {
     path: '/admin/category',
     name: 'Category',
-    icon: <BsBookmarkCheck />,
+    icon: 'categoryy',
   },
   {
     path: '/admin/user',
     name: 'Users',
-    icon: <HiOutlineUsers />,
+    icon: 'users',
   },
   {
     path: '',
     name: 'Logout',
-    icon: <FiLogOut />,
+    icon: 'logout',
   },
 ];
 
@@ -77,7 +74,9 @@ export default function AdminNav() {
                   }}
                   onClick={route.name === 'Logout' ? handleLogout : undefined}
                 >
-                  <div className={styles.icon}>{route.icon}</div>
+                  <div className={styles.icon}>
+                    <Icon icon={route.icon}></Icon>
+                  </div>
                   <AnimatePresence>
                     {isOpen && (
                       <motion.div className={styles.link_text}>
