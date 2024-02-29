@@ -2,10 +2,11 @@ import { useState } from 'react';
 import styles from './AuthForm.module.css';
 import axios from 'axios';
 import { ErrorMessage, SuccessMessage } from '../../utils/notify';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { isEmptyObject } from '../../constants';
 import { BACKEND_URL } from '../../constants/constants';
 function SetPassword() {
+  const navigate = useNavigate();
   const { userId, otp } = useParams();
   const [password, setPassword] = useState({
     password: '',
@@ -28,9 +29,10 @@ function SetPassword() {
       }
     } else {
       axios
-        .post(`${BACKEND_URL}/auth/${userId}/set-password/${otp}`, password)
+        .post(`${BACKEND_URL}/auth/${userId}/reset-password/${otp}`, password)
         .then((response) => {
           SuccessMessage(response.data.message);
+          navigate('/login');
         })
         .catch((error) => {
           if (error.response) {

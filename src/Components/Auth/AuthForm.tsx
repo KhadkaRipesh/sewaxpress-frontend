@@ -32,6 +32,17 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
     password: '',
   });
 
+  const [emailData, setEmailData] = useState({
+    email: '',
+  });
+
+  const handleForgotData = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    setEmailData({ ...emailData, [field]: event.target.value });
+  };
+
   const handleRegisterData = (
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
@@ -105,6 +116,26 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
           }
         });
     }
+  };
+  const resetPassword = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${BACKEND_URL}/auth/reset-request`, emailData)
+      .then((response) => {
+        console.log(response.data);
+        SuccessMessage('Check email to set password.');
+        navigate('/');
+        window.location.reload();
+      })
+      .catch((error) => {
+        if (error.response) {
+          ErrorMessage(error.response.data.message);
+        } else if (error.request) {
+          ErrorMessage('Network Error.');
+        } else {
+          ErrorMessage('Something went wrong.');
+        }
+      });
   };
 
   const handleSwitchToSignup = () => {
@@ -239,6 +270,22 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
         <>
           <div className={styles.form}>
             <h2 className={styles.h2}>Reset your Password</h2>
+            <p className={styles.hr_lines}> Reset password with email </p>
+
+            <label>Email</label>
+            <br />
+            <input
+              type='text'
+              name='email'
+              id='email'
+              placeholder='Enter your email'
+              onChange={(e) => handleForgotData(e, 'email')}
+              required
+            />
+            <br />
+            <button className={styles.login} onClick={resetPassword}>
+              Get Email
+            </button>
           </div>
         </>
       )}
