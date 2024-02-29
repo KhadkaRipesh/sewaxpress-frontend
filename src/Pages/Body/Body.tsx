@@ -3,14 +3,15 @@ import LandingPage from '../Landing/Landing';
 import NotFoundError from '../404-errror';
 import SetPassword from '../../Components/Auth/SetPassword';
 import Category from '../Category/Category';
-import ServiceProviderDashboard from '../ServiceProvider/Dashboard';
-import Login from '../ServiceProvider/Test';
 import RequireAuth from '../../Components/RequireAuth';
-import Admin from '../ServiceProvider/Admin';
 import UnauthorizedPage from '../../Components/UnauthorizedPage';
 import PopupModal from '../../Components/modal/PopupModal';
 import GoogleAuth from '../../Components/Auth/GoogleAuth';
 import Services from '../Services/Service';
+import AdminDashboard from '../Admin/Dashboard';
+import Bookings from '../Admin/Booking';
+import Categories from '../Admin/Category';
+import Users from '../Admin/User';
 const ROLES = {
   CUSTOMER: 'CUSTOMER',
   SERVICE_PROVIDER: 'SERVICE_PROVIDER',
@@ -23,13 +24,13 @@ function Body() {
         <Routes>
           {/* protect route */}
           <Route
-            element={<RequireAuth allowedRoles={ROLES.SERVICE_PROVIDER} />}
+            path='/admin'
+            element={<RequireAuth allowedRoles={ROLES.ADMIN} />}
           >
-            <Route
-              path='/service'
-              element={<ServiceProviderDashboard />}
-            ></Route>
-            <Route path='/admin' element={<Admin />}></Route>
+            <Route path='dashboard' element={<AdminDashboard />}></Route>
+            <Route path='booking' element={<Bookings />}></Route>
+            <Route path='category' element={<Categories />}></Route>
+            <Route path='user' element={<Users />}></Route>
           </Route>
 
           {/* public route */}

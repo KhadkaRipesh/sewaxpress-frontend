@@ -9,7 +9,9 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
-
+.App {
+  display: flex;
+}
 /* Hide scrollbar for IE/Edge */
 body {
   -ms-overflow-style: none;

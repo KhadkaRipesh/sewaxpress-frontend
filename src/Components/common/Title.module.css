@@ -1,0 +1,9 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+.title {
+  font-weight: 600;
+  font-size: 2.2rem;
+}

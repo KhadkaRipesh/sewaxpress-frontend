@@ -1,0 +1,76 @@
+a {
+  text-decoration: none;
+}
+
+.nav_container {
+  height: 100vh;
+  /* background: rgb(0, 7, 61); */
+  background: #ffffff;
+  color: #1d588b;
+  border-right: 2px solid #f2f2f2;
+}
+
+.navitems {
+  margin-top: 20px;
+}
+
+.logo {
+  margin-top: 30px;
+  margin-left: 25px;
+  width: 140px;
+}
+.top_container {
+  display: flex;
+}
+.bars {
+  font-size: 30px;
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.routes {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.Navitems {
+  display: flex;
+  color: #1d588b;
+  gap: 10px;
+  padding: 5px 10px;
+  border-right: 4px solid transparent;
+  /* transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045); */
+}
+
+.link_text {
+  white-space: nowrap;
+  font-size: 18px;
+  padding-top: 6px;
+}
+.icon {
+  font-size: 2rem;
+  padding-right: 20px;
+  margin-left: 8px;
+}
+.container {
+  display: flex;
+}
+.link:active {
+  border-right: 4px solid #1d588b;
+  background: #1d588b;
+}
+
+.Navitems:hover {
+  border-right: 4px solid #90a5b6;
+  background: #1d588b;
+  color: white;
+}
+
+.NavItemsActive {
+  border-right: 4px solid #90a5b6;
+  background: #1d588b;
+  color: white;
+}

@@ -20,7 +20,7 @@ function SetPassword() {
     setPassword({ ...password, [field]: event.target.value });
   };
 
-  const createPassword = (event) => {
+  const createPassword = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
 
     if (isEmptyObject(password)) {

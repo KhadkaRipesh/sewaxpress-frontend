@@ -1,16 +1,19 @@
 import LoadingBar from 'react-top-loading-bar';
 import './App.css';
 import Body from './Pages/Body/Body';
-import NavBar from './Pages/Nav/Nav';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ProfileNavbar from './Pages/Nav/ProfileNavbar';
+import ProfileNavbar from './Components/Nav/ProfileNavbar';
 import { jwtDecode } from 'jwt-decode';
 import Loading from './Components/resuable/Loading';
+import AdminNav from './Components/Nav/AdminNav';
+import Nav from './Components/Nav/Nav';
 function App() {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
 
   // Set loading state to true initially
@@ -22,7 +25,14 @@ function App() {
   }, 1000);
 
   useEffect(() => {
+    // store token and roles if there is on session
     const jwtToken = sessionStorage.getItem('jwtToken');
+    const role = sessionStorage.getItem('role');
+    // if use is admin redirect to admin dashboard
+    if (role === 'ADMIN') {
+      setIsAdmin(true);
+      navigate('/admin/dashboard');
+    }
     if (jwtToken) {
       try {
         const decodedToken = jwtDecode(jwtToken);
@@ -49,31 +59,30 @@ function App() {
     return location.pathname.includes('set-password');
   };
 
-  const isHomePage = () => {
-    return location.pathname.includes('/');
-  };
-
   const renderNavBar = () => {
     if (isSetPasswordPage()) {
       return null;
+    } else if (isAdmin) {
+      return <AdminNav />;
     } else if (isLoggedIn) {
       return <ProfileNavbar />;
     }
-    return <NavBar />;
+    return <Nav />;
   };
 
   if (loading) {
     return <Loading />;
   }
-
   // If page is not in loading state, display page.
   else {
     return (
       <>
-        <ToastContainer position='bottom-right' />
-        <LoadingBar color='#1D588B' progress={100} height={4} />
-        {renderNavBar()}
-        <Body />
+        <div className={`${isAdmin ? 'App' : ''}`}>
+          <ToastContainer position='bottom-right' />
+          <LoadingBar color='#1D588B' progress={100} height={4} />
+          {renderNavBar()}
+          <Body />
+        </div>
       </>
     );
   }

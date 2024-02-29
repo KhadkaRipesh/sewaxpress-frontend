@@ -4,7 +4,7 @@ import logo from '../../assets/icon/icon.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
 import { Modal } from 'antd';
-import AuthForm from '../../Components/Auth/AuthForm';
+import AuthForm from '../Auth/AuthForm';
 function Nav() {
   const [click, setClick] = useState(false);
 

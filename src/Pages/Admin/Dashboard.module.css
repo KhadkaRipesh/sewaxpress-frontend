@@ -1,0 +1,9 @@
+.cards {
+  display: flex;
+  margin-top: 50px;
+  margin-left: 20px;
+}
+
+.middlecontainer {
+  display: flex;
+}

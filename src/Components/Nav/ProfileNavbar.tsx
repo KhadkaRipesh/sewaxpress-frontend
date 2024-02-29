@@ -3,7 +3,7 @@ import logo from '../../assets/icon/icon.png';
 import avatar from '../../assets/images/avatar.png';
 
 import styles from './Nav.module.css';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import {
   IoChatbubblesOutline,
@@ -27,6 +27,7 @@ function ProfileNavbar() {
   const [open, setOpen] = useState(false);
 
   // Function to handle icon hover
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleIconHover = (iconName: any) => {
     setHoveredIcon(iconName);
   };
@@ -37,7 +38,10 @@ function ProfileNavbar() {
   };
 
   // function for searching
-  const handleChange = (e) => {
+  const handleChange = (e: {
+    preventDefault: () => void;
+    target: { value: SetStateAction<string> };
+  }) => {
     e.preventDefault();
     setSearchInput(e.target.value);
   };
