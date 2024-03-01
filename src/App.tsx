@@ -1,74 +1,35 @@
 import LoadingBar from 'react-top-loading-bar';
 import './App.css';
-import Body from './Pages/Body/Body';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import ProfileNavbar from './Components/Nav/ProfileNavbar';
-import { jwtDecode } from 'jwt-decode';
+import { Route, Routes } from 'react-router-dom';
+import Base from './Pages/Base/Base';
+import LandingPage from './Pages/Landing/Landing';
+import Category from './Pages/Category/Category';
+import Services from './Pages/Services/Service';
+import SetPassword from './Components/Auth/SetPassword';
+import UnauthorizedPage from './Components/UnauthorizedPage';
+import RequireAuth from './Components/RequireAuth';
+import AdminDashboard from './Pages/Admin/Dashboard';
+import Bookings from './Pages/Admin/Booking';
+import Categories from './Pages/Admin/Category';
+import Users from './Pages/Admin/User';
+import { useState } from 'react';
 import Loading from './Components/resuable/Loading';
-import AdminNav from './Components/Nav/AdminNav';
-import Nav from './Components/Nav/Nav';
+import PopupModal from './Components/modal/PopupModal';
+import GoogleAuth from './Components/Auth/GoogleAuth';
+import NotFoundError from './Pages/404-errror';
+const ROLES = {
+  CUSTOMER: 'CUSTOMER',
+  SERVICE_PROVIDER: 'SERVICE_PROVIDER',
+  ADMIN: 'ADMIN',
+};
 function App() {
-  const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const location = useLocation();
-
-  // Set loading state to true initially
   const [loading, setLoading] = useState(true);
-
-  // Page will load after 1 second
+  // // Page will load after 1 second
   setTimeout(() => {
     setLoading(false);
   }, 1000);
-
-  useEffect(() => {
-    // store token and roles if there is on session
-    const jwtToken = sessionStorage.getItem('jwtToken');
-    const role = sessionStorage.getItem('role');
-    // if use is admin redirect to admin dashboard
-    if (role === 'ADMIN') {
-      setIsAdmin(true);
-      navigate('/admin/dashboard');
-    }
-    if (jwtToken) {
-      try {
-        const decodedToken = jwtDecode(jwtToken);
-
-        // Check if token is expired
-        const currentTime = Date.now() / 1000;
-        if (decodedToken.exp > currentTime) {
-          setIsLoggedIn(true);
-        } else {
-          // Token is expired, clear sessionStorage and log out
-          sessionStorage.removeItem('jwtToken');
-          console.log(isLoggedIn);
-        }
-      } catch (error) {
-        // Handle invalid or expired token
-        console.error('Error decoding JWT token:', error);
-        setIsLoggedIn(false);
-        sessionStorage.removeItem('jwtToken');
-      }
-    }
-  }, []);
-
-  const isSetPasswordPage = () => {
-    return location.pathname.includes('set-password');
-  };
-
-  const renderNavBar = () => {
-    if (isSetPasswordPage()) {
-      return null;
-    } else if (isAdmin) {
-      return <AdminNav />;
-    } else if (isLoggedIn) {
-      return <ProfileNavbar />;
-    }
-    return <Nav />;
-  };
 
   if (loading) {
     return <Loading />;
@@ -77,12 +38,38 @@ function App() {
   else {
     return (
       <>
-        <div className={`${isAdmin ? 'App' : ''}`}>
-          <ToastContainer position='bottom-right' />
-          <LoadingBar color='#1D588B' progress={100} height={4} />
-          {renderNavBar()}
-          <Body />
-        </div>
+        <ToastContainer position='bottom-right' />
+        <LoadingBar color='#1D588B' progress={100} height={4} />
+
+        <Routes>
+          {/* protected routes */}
+          <Route
+            path='/admin'
+            element={<RequireAuth allowedRoles={ROLES.ADMIN} />}
+          >
+            <Route path='dashboard' element={<AdminDashboard />}></Route>
+            <Route path='booking' element={<Bookings />}></Route>
+            <Route path='category' element={<Categories />}></Route>
+            <Route path='user' element={<Users />}></Route>
+          </Route>
+          {/* public routes */}
+          <Route path='/' element={<Base />}>
+            <Route path='/' element={<LandingPage />}></Route>
+            <Route path='/:city' element={<Category />}></Route>
+            <Route path='/:city/:category' element={<Services />}></Route>
+            <Route path='/login' element={<PopupModal />}></Route>
+          </Route>
+          <Route
+            path='/success/google/callback'
+            element={<GoogleAuth />}
+          ></Route>
+          <Route
+            path='/:userId/set-password/:otp'
+            element={<SetPassword />}
+          ></Route>
+          <Route path='/unauthorized' element={<UnauthorizedPage />}></Route>
+          <Route path='*' element={<NotFoundError />}></Route>
+        </Routes>
       </>
     );
   }

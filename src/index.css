@@ -16,7 +16,9 @@ body::-webkit-scrollbar {
 body {
   -ms-overflow-style: none;
 }
-
+.admin {
+  display: flex;
+}
 h1.test {
   color: #1d588b;
 }

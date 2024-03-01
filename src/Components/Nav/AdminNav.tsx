@@ -27,11 +27,6 @@ const routes = [
     name: 'Users',
     icon: 'users',
   },
-  {
-    path: '',
-    name: 'Logout',
-    icon: 'logout',
-  },
 ];
 
 export default function AdminNav() {
@@ -40,8 +35,8 @@ export default function AdminNav() {
   const handleLogout = () => {
     sessionStorage.removeItem('jwtToken');
     sessionStorage.removeItem('role');
-    navigate('/');
     window.location.reload();
+    navigate('/');
   };
 
   const [isOpen, setIsOpen] = useState(true);
@@ -72,7 +67,6 @@ export default function AdminNav() {
                     if (isActive) str += ` ${styles.NavItemsActive}`;
                     return str;
                   }}
-                  onClick={route.name === 'Logout' ? handleLogout : undefined}
                 >
                   <div className={styles.icon}>
                     <Icon icon={route.icon}></Icon>
@@ -87,8 +81,20 @@ export default function AdminNav() {
                 </NavLink>
               );
             })}
+            {/* logout button */}
+            <div className={styles.Navitems} onClick={handleLogout}>
+              <div className={styles.icon}>
+                <Icon icon='logout'></Icon>
+              </div>
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.div className={styles.link_text}>
+                    {'Logout'}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </section>
-          <div className={styles.top_container}></div>
         </div>
       </motion.div>
     </div>

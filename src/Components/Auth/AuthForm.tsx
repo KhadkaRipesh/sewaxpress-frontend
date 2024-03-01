@@ -103,8 +103,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
           const role = response.data.data.role;
           sessionStorage.setItem('jwtToken', token);
           sessionStorage.setItem('role', role);
-          navigate(from, { replace: true });
-          window.location.reload();
+          if (role === 'ADMIN') {
+            navigate('/admin/dashboard');
+          } else {
+            navigate(from, { replace: true });
+            window.location.reload();
+          }
         })
         .catch((error) => {
           if (error.response) {
