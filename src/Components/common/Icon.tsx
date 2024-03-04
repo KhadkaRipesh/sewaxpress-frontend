@@ -8,6 +8,8 @@ import { FaStoreAlt } from 'react-icons/fa';
 import { TfiDashboard } from 'react-icons/tfi';
 import { BsJournalBookmark, BsBookmarkCheck } from 'react-icons/bs';
 import { HiOutlineUsers } from 'react-icons/hi';
+import { FaCartArrowDown } from 'react-icons/fa6';
+import { MdOutlineMoreTime } from 'react-icons/md';
 
 export const icons = {
   user: AiOutlineUser,
@@ -20,6 +22,8 @@ export const icons = {
   booking: BsJournalBookmark,
   categoryy: BsBookmarkCheck,
   users: HiOutlineUsers,
+  cart: FaCartArrowDown,
+  time: MdOutlineMoreTime,
 };
 
 export type CustomIconType = keyof typeof icons;

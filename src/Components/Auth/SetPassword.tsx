@@ -20,7 +20,7 @@ function SetPassword() {
     setPassword({ ...password, [field]: event.target.value });
   };
 
-  const createPassword = (event: { preventDefault: () => void; }) => {
+  const createPassword = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     if (isEmptyObject(password)) {
@@ -29,7 +29,7 @@ function SetPassword() {
       }
     } else {
       axios
-        .post(`${BACKEND_URL}/auth/${userId}/reset-password/${otp}`, password)
+        .post(`${BACKEND_URL}/auth/${userId}/set-password/${otp}`, password)
         .then((response) => {
           SuccessMessage(response.data.message);
           navigate('/login');
