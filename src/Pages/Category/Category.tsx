@@ -23,7 +23,7 @@ function Category() {
     {
       name: `Women's Salon & Spa`,
       image: `${image1}`,
-      type: 'Type1',
+      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
     },
     {
       name: `Men's Salon & Massage`,
@@ -55,6 +55,7 @@ function Category() {
   const handleRoute = (category: string) => {
     navigate(`/${city}/${category}`);
   };
+
   if (isValidCity) {
     return (
       <>

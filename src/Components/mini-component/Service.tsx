@@ -1,6 +1,7 @@
 import { Icon } from '../common/Icon';
 import styles from './Service.module.css';
 import chat from '../../assets/images/chat.jpg';
+import { BACKEND_URL } from '../../constants/constants';
 
 function ServiceCard(props: any) {
   return (
@@ -8,7 +9,12 @@ function ServiceCard(props: any) {
       <div className={styles.row}>
         <div className={styles.left}>
           <div className='image'>
-            <img src={props.image} alt='' height={290} width={347} />
+            <img
+              src={`${BACKEND_URL}` + props.image}
+              alt=''
+              height={290}
+              width={347}
+            />
           </div>
         </div>
         <div className={styles.center}>
@@ -17,6 +23,10 @@ function ServiceCard(props: any) {
           </div>
           <span className={styles.hub}>
             By:<i>{props.hub}</i>
+            <div className={styles.location}>
+              <Icon icon='location' size={16} />
+              <span>{props.location}</span>
+            </div>
           </span>
           <div className={styles.description}>
             <span>{props.description}</span>
@@ -30,7 +40,9 @@ function ServiceCard(props: any) {
             <div className={styles.price}>Price: Rs.{props.price}</div>
             <div className={styles.action}>
               <Icon icon='cart' size={22} />
-              <button className={styles.add}>Add</button>
+              <button className={styles.add} onClick={props.onAddToCart}>
+                Add
+              </button>
             </div>
           </div>
         </div>

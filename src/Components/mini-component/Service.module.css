@@ -49,6 +49,13 @@ h2 {
 span.hub {
   font-size: 16px;
   margin-top: 0;
+  display: flex;
+  gap: 4px;
+}
+.location{
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
 }
 .action {
   display: flex;

@@ -10,6 +10,7 @@ import { BsJournalBookmark, BsBookmarkCheck } from 'react-icons/bs';
 import { HiOutlineUsers } from 'react-icons/hi';
 import { FaCartArrowDown } from 'react-icons/fa6';
 import { MdOutlineMoreTime } from 'react-icons/md';
+import { CiLocationOn } from 'react-icons/ci';
 
 export const icons = {
   user: AiOutlineUser,
@@ -24,6 +25,7 @@ export const icons = {
   users: HiOutlineUsers,
   cart: FaCartArrowDown,
   time: MdOutlineMoreTime,
+  location: CiLocationOn,
 };
 
 export type CustomIconType = keyof typeof icons;

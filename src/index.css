@@ -3,6 +3,7 @@
     'Helvetica Neue', Oxygen-Sans, Ubuntu, Cantarell, Helvetica, Arial,
     sans-serif !important;
 }
+
 body {
   margin: 0;
 }
@@ -62,4 +63,8 @@ h1.test {
 }
 .react-icons {
   font-size: 20px;
+}
+
+.admin-container {
+  width: 100%;
 }
