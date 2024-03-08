@@ -6,7 +6,12 @@ import {
   fetchServices,
   getCart,
 } from '../../api/connection';
-import { QueryClient, useMutation, useQuery } from 'react-query';
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from 'react-query';
 import { Title } from '../../Components/common/Title';
 import styles from './Service.module.css';
 import { Icon } from '../../Components/common/Icon';
@@ -15,6 +20,7 @@ import { useState } from 'react';
 import { Modal } from 'antd';
 import CartItem from '../../Components/mini-component/CartItem';
 function Services() {
+  const queryClient = useQueryClient();
   const { city, category } = useParams<{ city?: string; category?: string }>();
   const pagination = { page: 1, limit: 10 };
 
@@ -38,21 +44,24 @@ function Services() {
   };
 
   const token = sessionStorage.getItem('jwtToken');
-  const addToCart = async (serviceId: string, hubId: string) => {
-    const data = {
-      service_id: serviceId,
-      hub_id: hubId,
-    };
-    await addServiceToCart(data, token)
-      .then((res) => SuccessMessage(res.data.message))
-      .catch((er) => {
-        if (er.response.status === 401) {
-          ErrorMessage('You are not authorized');
-        } else {
-          ErrorMessage(er.response.data.message);
-        }
-      });
-  };
+
+  const addCartServiceMutation = useMutation(
+    (params: { service_id: string; hub_id: string }) => {
+      const { service_id, hub_id } = params;
+      const data = {
+        service_id: service_id,
+        hub_id: hub_id,
+      };
+      console.log(data);
+      return addServiceToCart(data, token);
+    },
+    {
+      onSuccess: () => {
+        SuccessMessage('Service added on Cart.');
+        queryClient.invalidateQueries(['cartServices']);
+      },
+    }
+  );
 
   const deleteCartServiceMutation = useMutation(
     (service_id: string) => {
@@ -61,6 +70,7 @@ function Services() {
     {
       onSuccess: () => {
         SuccessMessage('Service removed from Cart.');
+        queryClient.invalidateQueries(['cartServices']);
       },
     }
   );
@@ -111,7 +121,12 @@ function Services() {
                   description={data.description}
                   time={data.estimated_time}
                   price={data.price}
-                  onAddToCart={() => addToCart(data.id, data.hub.id)}
+                  onAddToCart={() =>
+                    addCartServiceMutation.mutate({
+                      service_id: data.id,
+                      hub_id: data.hub.id,
+                    })
+                  }
                 />
               );
             })
