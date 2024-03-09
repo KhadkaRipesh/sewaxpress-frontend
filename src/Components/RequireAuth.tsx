@@ -6,11 +6,10 @@ const RequireAuth = ({ allowedRoles }) => {
 
   const token = sessionStorage.getItem('jwtToken');
   const role = sessionStorage.getItem('role');
-  // console.log(role, token);
-  console.log(role, allowedRoles);
+
   return role === allowedRoles ? (
-    <div className='admin'>
-      <AdminNav />
+    <div className='admins'>
+      {role === 'ADMIN' ? <AdminNav /> : null}
       <Outlet />
     </div>
   ) : token ? (

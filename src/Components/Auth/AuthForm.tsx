@@ -105,6 +105,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
           sessionStorage.setItem('role', role);
           if (role === 'ADMIN') {
             navigate('/admin/dashboard');
+          } else if (role === 'SERVICE_PROVIDER') {
+            navigate('/serviceprovider');
           } else {
             window.location.reload();
           }

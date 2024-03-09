@@ -17,7 +17,7 @@ body::-webkit-scrollbar {
 body {
   -ms-overflow-style: none;
 }
-.admin {
+.admins {
   display: flex;
 }
 h1.test {

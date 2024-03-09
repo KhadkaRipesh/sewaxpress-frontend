@@ -19,6 +19,7 @@ import Loading from './Components/resuable/Loading';
 import PopupModal from './Components/modal/PopupModal';
 import GoogleAuth from './Components/Auth/GoogleAuth';
 import NotFoundError from './Pages/404-errror';
+import ServiceProviderDashboard from './Pages/ServiceProvider/Dashboard';
 const ROLES = {
   CUSTOMER: 'CUSTOMER',
   SERVICE_PROVIDER: 'SERVICE_PROVIDER',
@@ -51,6 +52,13 @@ function App() {
             <Route path='booking' element={<Bookings />}></Route>
             <Route path='category' element={<Categories />}></Route>
             <Route path='user' element={<Users />}></Route>
+          </Route>
+
+          <Route
+            path='/serviceprovider'
+            element={<RequireAuth allowedRoles={ROLES.SERVICE_PROVIDER} />}
+          >
+            <Route path='' element={<ServiceProviderDashboard />}></Route>
           </Route>
           {/* public routes */}
           <Route path='/' element={<Base />}>
