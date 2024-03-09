@@ -67,12 +67,10 @@ function ProfileNavbar() {
   }
 
   // store current url on session storage
-  sessionStorage.setItem('redirectUrl', location.pathname);
   const logout = () => {
     sessionStorage.removeItem('jwtToken');
     sessionStorage.removeItem('role');
     window.location.reload();
-    navigate('/');
   };
   return (
     <>

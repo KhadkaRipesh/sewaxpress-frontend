@@ -106,7 +106,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
           if (role === 'ADMIN') {
             navigate('/admin/dashboard');
           } else {
-            navigate(from, { replace: true });
             window.location.reload();
           }
         })

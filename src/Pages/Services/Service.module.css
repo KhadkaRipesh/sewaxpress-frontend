@@ -16,11 +16,40 @@
   touch-action: manipulation;
   height: 50px;
   display: flex;
-  align-items: center ;
+  align-items: center;
   gap: 10px;
 }
 .head {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+h2.title {
+  text-align: center;
+  font-size: 32px;
+}
+.null {
+  border-top: 1px solid black;
+  text-align: center;
+}
+button.proceed {
+  height: 50px;
+  width: 100%;
+  color: #ffffff;
+  background-color: #1d588b;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  margin-top: 15px;
+  outline: none;
+}
+.picker {
+  height: 55px;
+  width: 100%;
+}
+Input.address {
+  width: 98%;
 }

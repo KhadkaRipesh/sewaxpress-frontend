@@ -18,7 +18,7 @@ function CartItem(props: any) {
           <div className={styles.center}>
             <div className={styles.content}>
               <h4>{props.service}</h4>
-              <p>{props.price}</p>
+              <p>Rs: {props.price}</p>
             </div>
           </div>
           <div className={styles.right}>

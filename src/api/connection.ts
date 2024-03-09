@@ -71,3 +71,19 @@ export async function deleteCartService(
   });
   return res;
 }
+
+export async function bookService(
+  data: {
+    booking_date: string;
+    booking_address: string;
+  },
+  jwt: string | null
+) {
+  const res = await axiosInstance.post(`/book`, data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+
+  return res;
+}
