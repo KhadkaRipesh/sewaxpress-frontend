@@ -60,6 +60,15 @@ export async function getCart(jwt: null | string) {
   return res;
 }
 
+export async function deleteCart(jwt: null | string) {
+  const res = await axiosInstance.delete('/cart', {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
+
 export async function deleteCartService(
   service_id: string,
   jwt: null | string

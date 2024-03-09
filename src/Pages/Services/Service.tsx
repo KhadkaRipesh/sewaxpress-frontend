@@ -3,6 +3,7 @@ import ServiceCard from '../../Components/mini-component/Service';
 import {
   addServiceToCart,
   bookService,
+  deleteCart,
   deleteCartService,
   fetchServices,
   getCart,
@@ -58,8 +59,6 @@ function Services() {
     setModalOpen(false);
   };
 
-  const token = sessionStorage.getItem('jwtToken');
-
   const addCartServiceMutation = useMutation(
     (params: { service_id: string; hub_id: string }) => {
       const { service_id, hub_id } = params;
@@ -67,7 +66,7 @@ function Services() {
         service_id: service_id,
         hub_id: hub_id,
       };
-      return addServiceToCart(data, token)
+      return addServiceToCart(data, session)
         .then((res) => {
           SuccessMessage(res.data.message);
           queryClient.invalidateQueries(['cartServices']);
@@ -76,9 +75,20 @@ function Services() {
     }
   );
 
+  const deleteCartMutation = useMutation(
+    (jwt: string | null) => {
+      return deleteCart(jwt);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['cartServices']);
+      },
+    }
+  );
+
   const deleteCartServiceMutation = useMutation(
     (service_id: string) => {
-      return deleteCartService(service_id, token);
+      return deleteCartService(service_id, session);
     },
     {
       onSuccess: () => {
@@ -97,7 +107,11 @@ function Services() {
   // book service
   const book = () => {
     bookService(bookData, session)
-      .then((res) => SuccessMessage(res.data.message))
+      .then((res) => {
+        SuccessMessage(res.data.message);
+        setModalOpen(false);
+        deleteCartMutation.mutate(session);
+      })
       .catch((err) => ErrorMessage('Please fill all field.'));
   };
   return (
