@@ -11,6 +11,7 @@ import { HiOutlineUsers } from 'react-icons/hi';
 import { FaCartArrowDown } from 'react-icons/fa6';
 import { MdOutlineMoreTime } from 'react-icons/md';
 import { CiLocationOn } from 'react-icons/ci';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 export const icons = {
   user: AiOutlineUser,
@@ -26,6 +27,7 @@ export const icons = {
   cart: FaCartArrowDown,
   time: MdOutlineMoreTime,
   location: CiLocationOn,
+  delete: AiOutlineDelete,
 };
 
 export type CustomIconType = keyof typeof icons;

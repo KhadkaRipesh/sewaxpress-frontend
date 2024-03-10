@@ -33,8 +33,8 @@ export default function AdminNav() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    sessionStorage.removeItem('jwtToken');
-    sessionStorage.removeItem('role');
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('role');
     window.location.reload();
     navigate('/');
   };

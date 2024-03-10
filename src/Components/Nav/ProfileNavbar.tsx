@@ -68,8 +68,8 @@ function ProfileNavbar() {
 
   // store current url on session storage
   const logout = () => {
-    sessionStorage.removeItem('jwtToken');
-    sessionStorage.removeItem('role');
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('role');
     window.location.reload();
   };
   return (

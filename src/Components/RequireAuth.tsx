@@ -4,8 +4,8 @@ import AdminNav from './Nav/AdminNav';
 const RequireAuth = ({ allowedRoles }) => {
   const location = useLocation();
 
-  const token = sessionStorage.getItem('jwtToken');
-  const role = sessionStorage.getItem('role');
+  const token = localStorage.getItem('jwtToken');
+  const role = localStorage.getItem('role');
 
   return role === allowedRoles ? (
     <div className='admins'>

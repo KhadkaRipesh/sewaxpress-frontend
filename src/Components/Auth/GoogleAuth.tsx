@@ -12,8 +12,8 @@ function GoogleAuth() {
     const userType = searchParams.get('user_type');
     const error = searchParams.get('error');
     if (accessToken && userType) {
-      sessionStorage.setItem('jwtToken', accessToken);
-      sessionStorage.setItem('role', userType);
+      localStorage.setItem('jwtToken', accessToken);
+      localStorage.setItem('role', userType);
       navigate('/');
       window.location.reload();
     }

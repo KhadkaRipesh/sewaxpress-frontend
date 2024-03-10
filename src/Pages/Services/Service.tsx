@@ -27,7 +27,7 @@ function Services() {
   );
   const ServiceList = serviceData?.data.data.result;
 
-  const session = sessionStorage.getItem('jwtToken');
+  const session = localStorage.getItem('jwtToken');
   const { data: cartData } = useQuery(session ? 'cartServices' : '', () =>
     session ? getCart(session) : null
   );
@@ -71,7 +71,9 @@ function Services() {
           SuccessMessage(res.data.message);
           queryClient.invalidateQueries(['cartServices']);
         })
-        .catch((err) => ErrorMessage(err.response.data.message));
+        .catch((err) =>
+          ErrorMessage([err.response.data.message, 'Please Login to continue.'])
+        );
     }
   );
 

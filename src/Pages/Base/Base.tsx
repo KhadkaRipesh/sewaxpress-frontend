@@ -7,7 +7,7 @@ function Base() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const jwtToken = sessionStorage.getItem('jwtToken');
+    const jwtToken = localStorage.getItem('jwtToken');
     if (jwtToken) {
       setIsLoggedIn(true);
     }

@@ -19,7 +19,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
 
   const from = location?.state?.from?.pathname || '/';
 
-  // sessionStorage.setItem('redirectUrl', location.pathname);
+  // localStorage.setItem('redirectUrl', location.pathname);
   // states
   const [registerData, setRegisterData] = useState({
     full_name: '',
@@ -101,8 +101,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
           SuccessMessage(response.data.message);
           const token = response.data.data.access_token;
           const role = response.data.data.role;
-          sessionStorage.setItem('jwtToken', token);
-          sessionStorage.setItem('role', role);
+          localStorage.setItem('jwtToken', token);
+          localStorage.setItem('role', role);
           if (role === 'ADMIN') {
             navigate('/admin/dashboard');
           } else if (role === 'SERVICE_PROVIDER') {

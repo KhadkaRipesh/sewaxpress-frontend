@@ -1,4 +1,5 @@
 import { BACKEND_URL } from '../../constants/constants';
+import { Icon } from '../common/Icon';
 import styles from './CartItem.module.css';
 function CartItem(props: any) {
   return (
@@ -22,7 +23,12 @@ function CartItem(props: any) {
             </div>
           </div>
           <div className={styles.right}>
-            <button onClick={props.onDelete}>Delete</button>
+            <Icon
+              icon='delete'
+              size={26}
+              onClick={props.onDelete}
+              style={{ cursor: 'pointer' }}
+            />
           </div>
         </div>
       </div>
