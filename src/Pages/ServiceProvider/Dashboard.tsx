@@ -1,7 +1,7 @@
 function ServiceProviderDashboard() {
   return (
     <>
-      <div className='container'>Dashboard of Service Provider</div>
+      <div>Dashboard of Service Provider</div>
     </>
   );
 }

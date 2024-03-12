@@ -71,9 +71,13 @@ function Services() {
           SuccessMessage(res.data.message);
           queryClient.invalidateQueries(['cartServices']);
         })
-        .catch((err) =>
-          ErrorMessage([err.response.data.message, 'Please Login to continue.'])
-        );
+        .catch((err) => {
+          if (err.response.status === 401) {
+            ErrorMessage('Please Login to Continue');
+          } else {
+            ErrorMessage(err.response.data.message);
+          }
+        });
     }
   );
 

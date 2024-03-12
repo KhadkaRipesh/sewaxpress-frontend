@@ -28,27 +28,27 @@ function Category() {
     {
       name: `Men's Salon & Massage`,
       image: `${image2}`,
-      type: 'Type1',
+      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
     },
     {
       name: `AC & Appliance Repair`,
       image: `${image3}`,
-      type: 'Type1',
+      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
     },
     {
       name: `Cleaning & Pest Control`,
       image: `${image4}`,
-      type: 'Type1',
+      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
     },
     {
       name: `Electrician, Plumber & Carpenters`,
       image: `${image5}`,
-      type: 'Type1',
+      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
     },
     {
       name: `Painting & Waterproofing`,
       image: `${image6}`,
-      type: 'Type1',
+      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
     },
   ];
 

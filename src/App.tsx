@@ -58,7 +58,10 @@ function App() {
             path='/serviceprovider'
             element={<RequireAuth allowedRoles={ROLES.SERVICE_PROVIDER} />}
           >
-            <Route path='' element={<ServiceProviderDashboard />}></Route>
+            <Route
+              path='dashboard'
+              element={<ServiceProviderDashboard />}
+            ></Route>
           </Route>
           {/* public routes */}
           <Route path='/' element={<Base />}>
