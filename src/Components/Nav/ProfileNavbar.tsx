@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logo from '../../assets/icon/icon.png';
 import avatar from '../../assets/images/avatar.png';
 
@@ -14,9 +14,6 @@ import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
 // import  avatar  from '../../assets/images/avatar.png';
 function ProfileNavbar() {
-  const location = useLocation();
-  const navigate = useNavigate();
-
   // usestate hooks for search
   const [searchInput, setSearchInput] = useState('');
 

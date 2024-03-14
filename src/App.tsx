@@ -20,6 +20,8 @@ import PopupModal from './Components/modal/PopupModal';
 import GoogleAuth from './Components/Auth/GoogleAuth';
 import NotFoundError from './Pages/404-errror';
 import ServiceProviderDashboard from './Pages/ServiceProvider/Dashboard';
+import Test from './Pages/ServiceProvider/Test';
+import ServiceManagement from './Pages/ServiceProvider/Services';
 const ROLES = {
   CUSTOMER: 'CUSTOMER',
   SERVICE_PROVIDER: 'SERVICE_PROVIDER',
@@ -62,6 +64,8 @@ function App() {
               path='dashboard'
               element={<ServiceProviderDashboard />}
             ></Route>
+            <Route path='services' element={<ServiceManagement />}></Route>
+            <Route path='booking' element={<Test />}></Route>
           </Route>
           {/* public routes */}
           <Route path='/' element={<Base />}>

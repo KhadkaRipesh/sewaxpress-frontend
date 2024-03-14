@@ -1,4 +1,4 @@
-function Login() {
+function Test() {
   return (
     <>
       <div className='container'>Login garne suruma</div>
@@ -6,4 +6,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Test;

@@ -13,6 +13,11 @@ const routes = [
     icon: 'dashboard',
   },
   {
+    path: '/serviceprovider/services',
+    name: 'Services',
+    icon: 'services',
+  },
+  {
     path: '/serviceprovider/booking',
     name: 'Bookings',
     icon: 'booking',

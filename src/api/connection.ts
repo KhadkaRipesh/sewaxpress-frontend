@@ -10,7 +10,7 @@ export interface PaginationType {
 // creating axios instance
 export const axiosInstance = axios.create({
   baseURL: BACKEND_URL,
-  headers: { 'Content-Type': 'application/json' },
+  // headers: { 'Content-Type': 'application/json' || 'multipart/form-data' },
 });
 
 axiosInstance.interceptors.response.use(
@@ -28,6 +28,7 @@ export async function userProfile(jwt: string) {
   return res;
 }
 
+// fetch all services
 export async function fetchServices(
   city: string | undefined,
   category: string | undefined,
@@ -39,6 +40,7 @@ export async function fetchServices(
   return res;
 }
 
+// add service on cart
 export async function addServiceToCart(
   data: { service_id: string; hub_id: string },
   jwt: null | string
@@ -46,11 +48,13 @@ export async function addServiceToCart(
   const res = await axiosInstance.post('/cart', data, {
     headers: {
       Authorization: `Bearer ${jwt}`,
+      'Content-Type': 'application/json',
     },
   });
   return res;
 }
 
+// get cart
 export async function getCart(jwt: null | string) {
   const res = await axiosInstance.get('/cart', {
     headers: {
@@ -60,6 +64,7 @@ export async function getCart(jwt: null | string) {
   return res;
 }
 
+// delete cart
 export async function deleteCart(jwt: null | string) {
   const res = await axiosInstance.delete('/cart', {
     headers: {
@@ -69,6 +74,7 @@ export async function deleteCart(jwt: null | string) {
   return res;
 }
 
+// delete service from cart
 export async function deleteCartService(
   service_id: string,
   jwt: null | string
@@ -81,6 +87,7 @@ export async function deleteCartService(
   return res;
 }
 
+// book Service
 export async function bookService(
   data: {
     booking_date: string;
@@ -91,8 +98,41 @@ export async function bookService(
   const res = await axiosInstance.post(`/book`, data, {
     headers: {
       Authorization: `Bearer ${jwt}`,
+      'Content-Type': 'application/json',
     },
   });
 
+  return res;
+}
+// get service from service provider
+export async function fetchOwnServices(jwt: string | null) {
+  const res = await axiosInstance.get('/service/my-service', {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
+// delete my service
+export async function deleteMyService(
+  service_id: string | null,
+  jwt: string | null
+) {
+  const res = await axiosInstance.delete(`/service/${service_id}`, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
+// add service on hub
+export async function createService(data, jwt: string | null) {
+  console.log(data);
+  const res = await axiosInstance.post('/service', data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return res;
 }

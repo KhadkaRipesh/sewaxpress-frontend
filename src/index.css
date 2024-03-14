@@ -68,3 +68,8 @@ h1.test {
 .admin-container {
   width: 100%;
 }
+.data {
+  margin-top: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
