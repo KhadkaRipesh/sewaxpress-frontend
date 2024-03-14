@@ -2,7 +2,7 @@ import LoadingBar from 'react-top-loading-bar';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Base from './Pages/Base/Base';
 import LandingPage from './Pages/Landing/Landing';
 import Category from './Pages/Category/Category';
@@ -39,6 +39,11 @@ function App() {
   }
   // If page is not in loading state, display page.
   else {
+    const token = localStorage.getItem('jwtToken');
+    let isAuth;
+    if (token) {
+      isAuth = true;
+    }
     return (
       <>
         <ToastContainer position='bottom-right' />
@@ -72,15 +77,18 @@ function App() {
             <Route path='/' element={<LandingPage />}></Route>
             <Route path='/:city' element={<Category />}></Route>
             <Route path='/:city/:category' element={<Services />}></Route>
-            <Route path='/login' element={<PopupModal />}></Route>
           </Route>
           <Route
+            path='/login'
+            element={isAuth ? <Navigate to='/' /> : <PopupModal />}
+          ></Route>
+          <Route
             path='/success/google/callback'
-            element={<GoogleAuth />}
+            element={isAuth ? <Navigate to='/' /> : <GoogleAuth />}
           ></Route>
           <Route
             path='/:userId/set-password/:otp'
-            element={<SetPassword />}
+            element={isAuth ? <Navigate to='/' /> : <SetPassword />}
           ></Route>
           <Route path='/unauthorized' element={<UnauthorizedPage />}></Route>
           <Route path='*' element={<NotFoundError />}></Route>
