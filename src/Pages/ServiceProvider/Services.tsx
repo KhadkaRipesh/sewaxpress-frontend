@@ -10,7 +10,7 @@ import {
   fetchOwnServices,
 } from '../../api/connection';
 import { BACKEND_URL } from '../../constants/constants';
-import { SuccessMessage } from '../../utils/notify';
+import { ErrorMessage, SuccessMessage } from '../../utils/notify';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import type { GetProp, UploadProps } from 'antd';
 
@@ -172,6 +172,9 @@ function ServiceManagement() {
         queryClient.invalidateQueries(['myService']);
         SuccessMessage('Service Added Successfully.');
       },
+      onError: (error) => {
+        ErrorMessage(error.response.data.message);
+      },
     }
   );
 
@@ -212,6 +215,23 @@ function ServiceManagement() {
         >
           {/* Form here */}
           <div className='form'>
+            <label>Service Image</label>
+            <Upload
+              name='avatar'
+              listType='picture-card'
+              className='avatar-uploader'
+              showUploadList={false}
+              action='https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188'
+              onChange={handleChange}
+            >
+              {imageUrl ? (
+                <img src={imageUrl} alt='avatar' style={{ width: '100%' }} />
+              ) : (
+                uploadButton
+              )}
+            </Upload>
+            <br />
+
             <label>Service Name</label>
             <br />
             <input
@@ -258,17 +278,6 @@ function ServiceManagement() {
             />
             <br />
 
-            <label>Hub</label>
-            <input
-              type='text'
-              name='hub_id'
-              id='hub_id'
-              placeholder='Hub here'
-              onChange={(e) => handleAddService(e, 'hub_id')}
-              required
-            />
-            <br />
-
             <label>Category</label>
             <input
               type='text'
@@ -280,21 +289,6 @@ function ServiceManagement() {
             />
             <br />
           </div>
-
-          <Upload
-            name='avatar'
-            listType='picture-card'
-            className='avatar-uploader'
-            showUploadList={false}
-            action='https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188'
-            onChange={handleChange}
-          >
-            {imageUrl ? (
-              <img src={imageUrl} alt='avatar' style={{ width: '100%' }} />
-            ) : (
-              uploadButton
-            )}
-          </Upload>
         </Drawer>
         <div className='data'>
           <Table columns={columns} dataSource={data} rowKey={'id'} />

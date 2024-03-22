@@ -50,7 +50,7 @@ function App() {
         <LoadingBar color='#1D588B' progress={100} height={4} />
 
         <Routes>
-          {/* protected routes */}
+          {/* protected routes for admin*/}
           <Route
             path='/admin'
             element={<RequireAuth allowedRoles={ROLES.ADMIN} />}
@@ -61,6 +61,7 @@ function App() {
             <Route path='user' element={<Users />}></Route>
           </Route>
 
+          {/* protected routes for service provider */}
           <Route
             path='/serviceprovider'
             element={<RequireAuth allowedRoles={ROLES.SERVICE_PROVIDER} />}
@@ -72,6 +73,7 @@ function App() {
             <Route path='services' element={<ServiceManagement />}></Route>
             <Route path='booking' element={<Test />}></Route>
           </Route>
+
           {/* public routes */}
           <Route path='/' element={<Base />}>
             <Route path='/' element={<LandingPage />}></Route>

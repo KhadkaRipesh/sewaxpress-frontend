@@ -136,3 +136,12 @@ export async function createService(data, jwt: string | null) {
   });
   return res;
 }
+
+export async function sessionUser(jwt: null | string) {
+  const res = await axiosInstance.get('/users/current-user', {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}

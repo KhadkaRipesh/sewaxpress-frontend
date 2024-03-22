@@ -1,21 +1,40 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import AdminNav from './Nav/AdminNav';
 import ServiceProviderNav from './Nav/ServiceProviderNav';
+import { useQuery } from 'react-query';
+import { sessionUser } from '../api/connection';
+import Loading from './resuable/Loading';
 
 const RequireAuth = ({ allowedRoles }) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const token = localStorage.getItem('jwtToken');
-  const role = localStorage.getItem('role');
+  const jwt = localStorage.getItem('jwtToken');
 
-  return role === allowedRoles ? (
+  const { data: userInfo, isLoading } = useQuery('users', () =>
+    sessionUser(jwt)
+      .then((res) => {
+        return res.data.data;
+      })
+      .catch((error) => {
+        if (error) {
+          localStorage.removeItem('jwtToken');
+          navigate('/login');
+        }
+      })
+  );
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return userInfo?.role === allowedRoles ? (
     <>
       <div className='admins'>
-        {role === 'ADMIN' ? <AdminNav /> : <ServiceProviderNav />}
+        {userInfo.role === 'ADMIN' ? <AdminNav /> : <ServiceProviderNav />}
         <Outlet />
       </div>
     </>
-  ) : token ? (
+  ) : userInfo ? (
     <Navigate to='/unauthorized' state={{ from: location }} replace />
   ) : (
     <Navigate to='/login' state={{ from: location }} replace />
