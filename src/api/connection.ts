@@ -10,7 +10,6 @@ export interface PaginationType {
 // creating axios instance
 export const axiosInstance = axios.create({
   baseURL: BACKEND_URL,
-  // headers: { 'Content-Type': 'application/json' || 'multipart/form-data' },
 });
 
 axiosInstance.interceptors.response.use(

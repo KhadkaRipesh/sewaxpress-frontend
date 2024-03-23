@@ -1,10 +1,11 @@
+import { BACKEND_URL } from '../../constants/constants';
 import styles from '../Chat/ChatList.module.css';
 function ChatListItems(props: any) {
   const selectChat = (e) => {
     const chatItems = e.currentTarget.parentNode.children;
 
     for (let index = 0; index < chatItems.length; index++) {
-      chatItems[index].classList.remove(`${styles.active}`);
+      chatItems[index].classList.remove('active');
     }
 
     e.currentTarget.classList.add(`${styles.active}`);
@@ -20,7 +21,7 @@ function ChatListItems(props: any) {
       >
         <div className={styles.avatar}>
           <div className={styles.avatar_img}>
-            <img src={props.image} alt='#' />
+            <img src={`${BACKEND_URL}` + props.image} alt='#' />
           </div>
           <span
             className={`${styles.isOnline} ${
