@@ -10,7 +10,6 @@ const RequireAuth = ({ allowedRoles }) => {
   const navigate = useNavigate();
 
   const jwt = localStorage.getItem('jwtToken');
-
   const { data: userInfo, isLoading } = useQuery('users', () =>
     sessionUser(jwt)
       .then((res) => {

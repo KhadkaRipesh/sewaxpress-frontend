@@ -22,6 +22,7 @@ import NotFoundError from './Pages/404-errror';
 import ServiceProviderDashboard from './Pages/ServiceProvider/Dashboard';
 import Test from './Pages/ServiceProvider/Test';
 import ServiceManagement from './Pages/ServiceProvider/Services';
+import Chat from './Pages/Chat/Chat';
 const ROLES = {
   CUSTOMER: 'CUSTOMER',
   SERVICE_PROVIDER: 'SERVICE_PROVIDER',
@@ -72,6 +73,7 @@ function App() {
             ></Route>
             <Route path='services' element={<ServiceManagement />}></Route>
             <Route path='booking' element={<Test />}></Route>
+            <Route path='messages' element={<Chat />}></Route>
           </Route>
 
           {/* public routes */}
@@ -79,6 +81,7 @@ function App() {
             <Route path='/' element={<LandingPage />}></Route>
             <Route path='/:city' element={<Category />}></Route>
             <Route path='/:city/:category' element={<Services />}></Route>
+            <Route path='/messages' element={<Chat />}></Route>
           </Route>
           <Route
             path='/login'
