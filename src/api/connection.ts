@@ -144,3 +144,12 @@ export async function sessionUser(jwt: null | string) {
   });
   return res;
 }
+
+export async function getRoomById(room_id: string, jwt: string | null) {
+  const res = await axiosInstance.get(`/chat/room/${room_id}`, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}

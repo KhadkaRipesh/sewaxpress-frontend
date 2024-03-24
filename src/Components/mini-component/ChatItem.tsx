@@ -1,3 +1,4 @@
+import { BACKEND_URL } from '../../constants/constants';
 import styles from '../Chat/ChatContent.module.css';
 function ChatItems(props) {
   return (
@@ -17,12 +18,7 @@ function ChatItems(props) {
         </div>
         <div className={styles.avatar}>
           <div className={styles.avatar_img}>
-            <img
-              src={
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU'
-              }
-              alt='#'
-            />
+            <img src={`${BACKEND_URL}` + props.image} alt='#' />
           </div>
         </div>
       </div>

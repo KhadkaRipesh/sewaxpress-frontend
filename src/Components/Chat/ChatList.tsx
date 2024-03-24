@@ -3,6 +3,18 @@ import styles from './ChatList.module.css';
 function ChatList(props) {
   const rooms = props.rooms;
   const user = props.user;
+
+  const getCurrentRoom = (e, room: string, nameToDisplay: string) => {
+    props.onRoomSelect(room);
+    props.onTitleName(nameToDisplay);
+    const chatItems = e.currentTarget.parentNode.children;
+
+    for (let index = 0; index < chatItems.length; index++) {
+      chatItems[index].classList.remove(`${styles.active}`);
+    }
+
+    e.currentTarget.classList.add(`${styles.active}`);
+  };
   return (
     <>
       <div className={styles.main__chatlist}>
@@ -28,6 +40,9 @@ function ChatList(props) {
                 active={item.active ? 'active' : ''}
                 isOnline={item.isOnline ? 'active' : ''}
                 image={item.hub_avatar}
+                onGetRoom={(e) =>
+                  getCurrentRoom(e, item.room_id, nameToDisplay)
+                }
               />
             );
           })}

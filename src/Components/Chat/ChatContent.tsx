@@ -1,58 +1,43 @@
+import { useEffect, useRef, useState } from 'react';
 import ChatItems from '../mini-component/ChatItem';
 import styles from './ChatContent.module.css';
 import { InfoCircleFilled, SendOutlined } from '@ant-design/icons';
-function ChatContent() {
-  const chatItms = [
-    {
-      key: 1,
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSM6p4C6imkewkCDW-9QrpV-MMAhOC7GnJcIQ&usqp=CAU',
-      type: '',
-      msg: 'Hi Tim, How are you?',
-    },
-    {
-      key: 2,
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU',
-      type: 'other',
-      msg: 'I am fine.',
-    },
-    {
-      key: 3,
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU',
-      type: 'other',
-      msg: 'What about you?',
-    },
-    {
-      key: 4,
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSM6p4C6imkewkCDW-9QrpV-MMAhOC7GnJcIQ&usqp=CAU',
-      type: '',
-      msg: 'Awesome these days.',
-    },
-    {
-      key: 5,
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU',
-      type: 'other',
-      msg: "Finally. What's the plan?",
-    },
-    {
-      key: 6,
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSM6p4C6imkewkCDW-9QrpV-MMAhOC7GnJcIQ&usqp=CAU',
-      type: '',
-      msg: 'what plan mate?',
-    },
-    {
-      key: 7,
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU',
-      type: 'other',
-      msg: "I'm taliking about the tutorial",
-    },
-  ];
+function ChatContent(props) {
+  const chatItems = props.messages;
+  const currentUser = props.user;
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  const [message, setMessage] = useState('');
+
+  // Function to scroll chat container to the bottom
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatItems]);
+
+  const handleTypingMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setMessage(e.target.value);
+  };
+
+  const sendMessage = () => {
+    setMessage('');
+    props.onTypedMessage(message);
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setMessage('');
+      props.onTypedMessage(message);
+    }
+  };
+
   return (
     <>
       <div className={styles.main__chatcontent}>
@@ -70,7 +55,7 @@ function ChatContent() {
                 </div>
                 <span className={`isOnline`}></span>
               </div>
-              <p>Tim Hover</p>
+              <p>{props.title}</p>
             </div>
           </div>
 
@@ -82,16 +67,15 @@ function ChatContent() {
             </div>
           </div>
         </div>
-        <div className={styles.content__body}>
+        <div className={styles.content__body} ref={chatContainerRef}>
           <div className={styles.chat__items}>
-            {chatItms.map((itm, index) => {
+            {chatItems.map((itm, index) => {
               return (
                 <ChatItems
-                  animationDelay={index + 2}
-                  key={itm.key}
-                  user={itm.type ? itm.type : 'me'}
-                  msg={itm.msg}
-                  image={itm.image}
+                  key={itm.id}
+                  user={itm.sender.id === currentUser ? 'me' : 'other'}
+                  msg={itm.text}
+                  image={itm.avatar}
                 />
               );
             })}
@@ -99,8 +83,18 @@ function ChatContent() {
         </div>
         <div className={styles.content__footer}>
           <div className={styles.sendNewMessage}>
-            <input type='text' placeholder='Type a message here' />
-            <button className={styles.btnSendMsg} id='sendMsgBtn'>
+            <input
+              type='text'
+              placeholder='Type a message here'
+              onChange={(e) => handleTypingMessage(e)}
+              onKeyPress={(e) => handleKeyPress(e)}
+              value={message}
+            />
+            <button
+              className={styles.btnSendMsg}
+              id='sendMsgBtn'
+              onClick={sendMessage}
+            >
               <SendOutlined />
             </button>
           </div>

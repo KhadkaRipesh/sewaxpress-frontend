@@ -1,20 +1,11 @@
 import { BACKEND_URL } from '../../constants/constants';
 import styles from '../Chat/ChatList.module.css';
 function ChatListItems(props: any) {
-  const selectChat = (e) => {
-    const chatItems = e.currentTarget.parentNode.children;
-
-    for (let index = 0; index < chatItems.length; index++) {
-      chatItems[index].classList.remove('active');
-    }
-
-    e.currentTarget.classList.add(`${styles.active}`);
-  };
   return (
     <>
       <div
         style={{ animationDelay: `0.${props.animationDelay}s` }}
-        onClick={selectChat}
+        onClick={props.onGetRoom}
         className={`${styles.chatlist__item} ${
           props.active === 'active' ? styles.active : ''
         } `}
