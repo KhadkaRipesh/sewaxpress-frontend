@@ -1,12 +1,14 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ServiceCard from '../../Components/mini-component/Service';
 import {
   addServiceToCart,
   bookService,
+  createChatRoom,
   deleteCart,
   deleteCartService,
   fetchServices,
   getCart,
+  sessionUser,
 } from '../../api/connection';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Title } from '../../Components/common/Title';
@@ -17,17 +19,31 @@ import React, { useState } from 'react';
 import { DatePicker, DatePickerProps, Modal } from 'antd';
 import CartItem from '../../Components/mini-component/CartItem';
 function Services() {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   // extracting city and category from url
   const { city, category } = useParams<{ city?: string; category?: string }>();
-  const pagination = { page: 1, limit: 10 };
 
   const { data: serviceData } = useQuery('services', () =>
-    fetchServices(city, category, pagination)
+    fetchServices(city, category)
   );
-  const ServiceList = serviceData?.data.data.result;
+  const ServiceList = serviceData?.data.data;
 
   const session = localStorage.getItem('jwtToken');
+
+  const { data: userInfo, isLoading } = useQuery('users', () =>
+    sessionUser(session)
+      .then((res) => {
+        return res.data.data;
+      })
+      .catch((error) => {
+        if (error) {
+          localStorage.removeItem('jwtToken');
+          // navigate('/login');
+        }
+      })
+  );
+
   const { data: cartData } = useQuery(session ? 'cartServices' : '', () =>
     session ? getCart(session) : null
   );
@@ -120,6 +136,23 @@ function Services() {
       })
       .catch((err) => ErrorMessage('Please fill all field.'));
   };
+
+  // to start chat
+  const chatToHubMutation = useMutation((params: { hub_id: string }) => {
+    const { hub_id } = params;
+    const data = { hub_id: hub_id, customer_id: userInfo.id };
+    return createChatRoom(data, session)
+      .then((res) => {
+        navigate(`/messages?roomId=${res.data.data.id}`);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          ErrorMessage('Please Login to Continue');
+        } else {
+          ErrorMessage(err.response.data.message);
+        }
+      });
+  });
   return (
     <>
       <div className='container'>
@@ -225,6 +258,11 @@ function Services() {
                 onAddToCart={() =>
                   addCartServiceMutation.mutate({
                     service_id: data.id,
+                    hub_id: data.hub.id,
+                  })
+                }
+                chatToHub={() =>
+                  chatToHubMutation.mutate({
                     hub_id: data.hub.id,
                   })
                 }

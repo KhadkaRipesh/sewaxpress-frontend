@@ -30,12 +30,9 @@ export async function userProfile(jwt: string) {
 // fetch all services
 export async function fetchServices(
   city: string | undefined,
-  category: string | undefined,
-  pagination: PaginationType
+  category: string | undefined
 ) {
-  const res = await axiosInstance.get(
-    `/service/${city}/${category}?page=${pagination.page}&limit=${pagination.limit}`
-  );
+  const res = await axiosInstance.get(`/service/${city}/${category}`);
   return res;
 }
 
@@ -125,7 +122,13 @@ export async function deleteMyService(
   return res;
 }
 // add service on hub
-export async function createService(data, jwt: string | null) {
+export async function createService(
+  data: {
+    service_id: string;
+    hub_id: string;
+  },
+  jwt: string | null
+) {
   console.log(data);
   const res = await axiosInstance.post('/service', data, {
     headers: {
@@ -145,8 +148,21 @@ export async function sessionUser(jwt: null | string) {
   return res;
 }
 
-export async function getRoomById(room_id: string, jwt: string | null) {
+// get room by id
+export async function getRoomById(room_id: string | null, jwt: string | null) {
   const res = await axiosInstance.get(`/chat/room/${room_id}`, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
+
+export async function createChatRoom(
+  data: { hub_id: string; customer_id: string },
+  jwt: string | null
+) {
+  const res = await axiosInstance.post('chat/room/', data, {
     headers: {
       Authorization: `Bearer ${jwt}`,
     },

@@ -4,10 +4,13 @@ import ChatList from '../../Components/Chat/ChatList';
 import styles from './Chat.module.css';
 import io, { Socket } from 'socket.io-client';
 import { BACKEND_URL } from '../../constants/constants';
-import { sessionUser } from '../../api/connection';
-import { useNavigate } from 'react-router-dom';
+import { getRoomById, sessionUser } from '../../api/connection';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
+import { useQuery } from 'react-query';
 function Chat() {
+  const location = useLocation();
+
   const [rooms, setRooms] = useState([]);
   const [userType, setUserType] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('');
@@ -18,6 +21,26 @@ function Chat() {
     DefaultEventsMap,
     DefaultEventsMap
   > | null>(null);
+  const [chatHeader, setChatHeader] = useState('');
+
+  // if user cames from service list page through chat
+  useEffect(() => {
+    const fetchData = async () => {
+      const searchParams = new URLSearchParams(location.search);
+      const roomId = searchParams.get('roomId');
+
+      try {
+        const roomInfoResponse = await getRoomById(roomId, jwt);
+        const roomInfo = roomInfoResponse.data.data;
+        setSelectedRoom(roomId);
+        setChatHeader(roomInfo.hubName);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -55,11 +78,6 @@ function Chat() {
         console.error('Failed to get rooms');
       }
     });
-
-    // Cleanup function to disconnect socket
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
   useEffect(() => {
@@ -67,11 +85,16 @@ function Chat() {
       // Fetch messages of the selected room
       fetchRoomMessages(selectedRoom);
     }
+
+    // Cleanup function to disconnect socket
+    return () => {
+      if (socketConnection) {
+        socketConnection.off(`all_chats`);
+      }
+    };
   }, [selectedRoom]);
 
   const fetchRoomMessages = (room: string) => {
-    console.log('HHh');
-    console.log(room);
     if (socketConnection) {
       // Emit 'get-all-chats' event to request messages of the selected room
       socketConnection.emit('get-all-chats', { room_id: room });
@@ -80,7 +103,6 @@ function Chat() {
       socketConnection.on(`all_chats`, (response) => {
         if (response.success) {
           // Handle successful response
-          console.log('Messages of room', room, ':', response.data);
           setMessages(response.data);
         } else {
           // Handle error response
@@ -99,8 +121,7 @@ function Chat() {
   };
 
   const sendMessage = (message: string) => {
-    console.log(message);
-    console.log(selectedRoom);
+    if (!message) return null;
     try {
       if (socketConnection) {
         socketConnection.emit('send-message', {
@@ -109,15 +130,6 @@ function Chat() {
         });
 
         console.log('Message sent successfully');
-        socketConnection.on(`message`, (response) => {
-          if (response.success) {
-            // Handle successful response
-            console.log(response.data);
-          } else {
-            // Handle error response
-            console.error('Failed to get message');
-          }
-        });
       } else {
         console.error('Socket connection is not established');
       }
@@ -126,6 +138,30 @@ function Chat() {
     }
   };
 
+  // Listen for incoming messages
+  useEffect(() => {
+    if (socketConnection) {
+      // Listen for response from the server
+      socketConnection.on('message', (response) => {
+        if (response.success) {
+          console.log('Message received successfully:', response.data);
+          setMessages((prevMessage) => [...prevMessage, response.data]);
+          // Handle the received message data here
+        } else {
+          console.error('Failed to receive message');
+          // Handle the error here
+        }
+      });
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      if (socketConnection) {
+        socketConnection.off('message');
+      }
+    };
+  }, [socketConnection]);
+
   return (
     <>
       <div className='container'>
@@ -133,14 +169,18 @@ function Chat() {
           <ChatList
             rooms={rooms}
             user={userType}
+            // from message page directly
             onRoomSelect={handleRoomSelect}
             onTitleName={handleTitleName}
+            // from service page while starting chat
+            defaultSelectedRoom={selectedRoom}
           />
           <ChatContent
             messages={messages}
             user={currentUser}
             title={selectedRoomUser}
             onTypedMessage={sendMessage}
+            defaultTitleRoom={chatHeader}
           />
         </div>
       </div>

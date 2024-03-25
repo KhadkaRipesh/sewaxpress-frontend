@@ -3,6 +3,7 @@ import styles from './ChatList.module.css';
 function ChatList(props) {
   const rooms = props.rooms;
   const user = props.user;
+  const selectedRoom = props.defaultSelectedRoom;
 
   const getCurrentRoom = (e, room: string, nameToDisplay: string) => {
     props.onRoomSelect(room);
@@ -37,7 +38,7 @@ function ChatList(props) {
                 name={nameToDisplay}
                 key={item.room_id}
                 animationDelay={index + 1}
-                active={item.active ? 'active' : ''}
+                active={selectedRoom === item.room_id ? 'active' : ''}
                 isOnline={item.isOnline ? 'active' : ''}
                 image={item.hub_avatar}
                 onGetRoom={(e) =>

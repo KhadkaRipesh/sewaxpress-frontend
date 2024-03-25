@@ -49,7 +49,9 @@ function ServiceCard(props: any) {
         <div className={styles.right}>
           <div className='contact'>
             <img src={chat} alt='' height={200} width={200} />
-            <button className={styles.chat}>Chat</button>
+            <button className={styles.chat} onClick={props.chatToHub}>
+              Chat
+            </button>
           </div>
         </div>
       </div>
