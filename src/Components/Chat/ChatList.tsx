@@ -31,19 +31,19 @@ function ChatList(props) {
         <div className={styles.chatlist__items}>
           {rooms.map((item, index) => {
             const nameToDisplay =
-              user === 'CUSTOMER' ? item.hub_name : item.customer_full_name;
+              user === 'CUSTOMER' ? item.hub.name : item.customer.full_name;
 
+            const imageToDisplay =
+              user === 'CUSTOMER' ? item.hub.avatar : item.customer.avatar;
             return (
               <ChatListItems
                 name={nameToDisplay}
-                key={item.room_id}
+                key={item.id}
                 animationDelay={index + 1}
-                active={selectedRoom === item.room_id ? 'active' : ''}
+                active={selectedRoom === item.id ? 'active' : ''}
                 isOnline={item.isOnline ? 'active' : ''}
-                image={item.hub_avatar}
-                onGetRoom={(e) =>
-                  getCurrentRoom(e, item.room_id, nameToDisplay)
-                }
+                image={imageToDisplay}
+                onGetRoom={(e) => getCurrentRoom(e, item.id, nameToDisplay)}
               />
             );
           })}

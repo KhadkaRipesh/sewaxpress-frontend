@@ -140,7 +140,7 @@ function Services() {
   // to start chat
   const chatToHubMutation = useMutation((params: { hub_id: string }) => {
     const { hub_id } = params;
-    const data = { hub_id: hub_id, customer_id: userInfo.id };
+    const data = { hub_id: hub_id, customer_id: userInfo ? userInfo.id : '' };
     return createChatRoom(data, session)
       .then((res) => {
         navigate(`/messages?roomId=${res.data.data.id}`);

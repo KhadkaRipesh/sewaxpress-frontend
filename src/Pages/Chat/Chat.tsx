@@ -5,13 +5,12 @@ import styles from './Chat.module.css';
 import io, { Socket } from 'socket.io-client';
 import { BACKEND_URL } from '../../constants/constants';
 import { getRoomById, sessionUser } from '../../api/connection';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
-import { useQuery } from 'react-query';
 function Chat() {
   const location = useLocation();
 
-  const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState<any[]>([]);
   const [userType, setUserType] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('');
   const [messages, setMessages] = useState<any[]>([]);
@@ -32,6 +31,9 @@ function Chat() {
       try {
         const roomInfoResponse = await getRoomById(roomId, jwt);
         const roomInfo = roomInfoResponse.data.data;
+        console.log(roomInfo);
+        console.log(rooms);
+        // setRooms((prevRoom) => [...prevRoom, roomInfo]);
         setSelectedRoom(roomId);
         setChatHeader(roomInfo.hubName);
       } catch (error) {
@@ -45,6 +47,7 @@ function Chat() {
   const navigate = useNavigate();
 
   const jwt = localStorage.getItem('jwtToken');
+
   useEffect(() => {
     sessionUser(jwt)
       .then((res) => {
@@ -73,6 +76,7 @@ function Chat() {
       if (response.success) {
         // Handle successful response
         setRooms(response.data);
+        console.log(rooms);
       } else {
         // Handle error response
         console.error('Failed to get rooms');
@@ -144,7 +148,6 @@ function Chat() {
       // Listen for response from the server
       socketConnection.on('message', (response) => {
         if (response.success) {
-          console.log('Message received successfully:', response.data);
           setMessages((prevMessage) => [...prevMessage, response.data]);
           // Handle the received message data here
         } else {
