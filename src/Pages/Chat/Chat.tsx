@@ -31,11 +31,9 @@ function Chat() {
       try {
         const roomInfoResponse = await getRoomById(roomId, jwt);
         const roomInfo = roomInfoResponse.data.data;
-        console.log(roomInfo);
-        console.log(rooms);
-        // setRooms((prevRoom) => [...prevRoom, roomInfo]);
+
         setSelectedRoom(roomId);
-        setChatHeader(roomInfo.hubName);
+        setChatHeader(roomInfo.hub.name);
       } catch (error) {
         console.log(error);
       }
@@ -148,6 +146,7 @@ function Chat() {
       // Listen for response from the server
       socketConnection.on('message', (response) => {
         if (response.success) {
+          console.log(response.data);
           setMessages((prevMessage) => [...prevMessage, response.data]);
           // Handle the received message data here
         } else {
@@ -184,6 +183,7 @@ function Chat() {
             title={selectedRoomUser}
             onTypedMessage={sendMessage}
             defaultTitleRoom={chatHeader}
+            selectedRoom={selectedRoom}
           />
         </div>
       </div>

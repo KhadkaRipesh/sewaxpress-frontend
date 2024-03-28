@@ -12,7 +12,11 @@ function ChatListItems(props: any) {
       >
         <div className={styles.avatar}>
           <div className={styles.avatar_img}>
-            <img src={`${BACKEND_URL}` + props.image} alt='#' />
+            {props.image ? (
+              <img src={`${BACKEND_URL}` + props.image} alt='#' />
+            ) : (
+              <img src={''} alt='#' />
+            )}
           </div>
           <span
             className={`${styles.isOnline} ${

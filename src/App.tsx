@@ -23,11 +23,57 @@ import ServiceProviderDashboard from './Pages/ServiceProvider/Dashboard';
 import Test from './Pages/ServiceProvider/Test';
 import ServiceManagement from './Pages/ServiceProvider/Services';
 import Chat from './Pages/Chat/Chat';
+import { getMessaging, getToken } from 'firebase/messaging';
+import { initializeApp } from 'firebase/app';
+// import { FirebaseConfig } from './constants/constants';
+
 const ROLES = {
   CUSTOMER: 'CUSTOMER',
   SERVICE_PROVIDER: 'SERVICE_PROVIDER',
   ADMIN: 'ADMIN',
 };
+
+// const firebaseConfig = {
+//   apiKey: FirebaseConfig.API_KEY,
+//   authDomain: FirebaseConfig.AUTH_DOMAIN,
+//   projectId: FirebaseConfig.PROJECT_ID,
+//   storageBucket: FirebaseConfig.STORAGEBUCKET,
+//   messagingSenderId: FirebaseConfig.MESSAGING_SENDER_ID,
+//   appId: FirebaseConfig.APP_ID,
+//   measurementId: FirebaseConfig.MEASUREMENT_ID,
+// };
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyDXlc_es7be83lnLDZ7D77WiGJGFUpLKno',
+  authDomain: 'sewaxpress-b8731.firebaseapp.com',
+  projectId: 'sewaxpress-b8731',
+  storageBucket: 'sewaxpress-b8731.appspot.com',
+  messagingSenderId: '164817731619',
+  appId: '1:164817731619:web:ffbedac361fee9b62b3196',
+  measurementId: 'G-YKVXVDGQ5Y',
+};
+const firebaseApp = initializeApp(firebaseConfig);
+const messaging = getMessaging(firebaseApp);
+
+const setupNotifications = async () => {
+  try {
+    const permission = await Notification.requestPermission();
+
+    if (permission === 'granted') {
+      console.log('Notification permission granted.');
+      // Get the FCM token
+      const token = await getToken(messaging);
+      console.log('FCM Token:', token);
+    } else {
+      console.log('Notification permission denied.');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+setupNotifications();
+
 function App() {
   const [loading, setLoading] = useState(true);
   // // Page will load after 1 second
