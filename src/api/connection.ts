@@ -169,3 +169,18 @@ export async function createChatRoom(
   });
   return res;
 }
+
+export async function saveToken(
+  data: {
+    notification_token: string;
+    device_type: string;
+  },
+  jwt: string | null
+) {
+  const res = await axiosInstance.post('firebase/save-token', data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}

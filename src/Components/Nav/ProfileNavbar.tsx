@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/icon/icon.png';
 import avatar from '../../assets/images/avatar.png';
 
@@ -14,6 +14,7 @@ import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
 // import  avatar  from '../../assets/images/avatar.png';
 function ProfileNavbar() {
+  const navigate = useNavigate();
   // usestate hooks for search
   const [searchInput, setSearchInput] = useState('');
 
@@ -43,10 +44,23 @@ function ProfileNavbar() {
     setSearchInput(e.target.value);
   };
 
+  const handleIconClick = (path) => {
+    navigate(`/${path}`);
+  };
   // Icon data
   const icons = [
-    { name: 'Booking', icon: IoBrowsersOutline, style: styles.bookingHover },
-    { name: 'Chat', icon: IoChatbubblesOutline, style: styles.chatHover },
+    {
+      name: 'Booking',
+      icon: IoBrowsersOutline,
+      style: styles.bookingHover,
+      path: 'messages',
+    },
+    {
+      name: 'Chat',
+      icon: IoChatbubblesOutline,
+      style: styles.chatHover,
+      path: 'messages',
+    },
     {
       name: 'Notifications',
       icon: IoNotificationsOutline,
@@ -97,6 +111,7 @@ function ProfileNavbar() {
                 className={styles[icon.name.toLowerCase()]}
                 onMouseEnter={() => handleIconHover(icon.name)}
                 onMouseLeave={handleIconHoverOut}
+                onClick={() => handleIconClick(icon.path)}
               >
                 <icon.icon className='react-icons' />
                 {hoveredIcon === icon.name && (
