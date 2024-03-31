@@ -23,7 +23,7 @@ import ServiceProviderDashboard from './Pages/ServiceProvider/Dashboard';
 import Test from './Pages/ServiceProvider/Test';
 import ServiceManagement from './Pages/ServiceProvider/Services';
 import Chat from './Pages/Chat/Chat';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { getMessaging, getToken } from 'firebase/messaging';
 import { initializeApp } from 'firebase/app';
 import { FirebaseConfig } from './constants/constants';
 import { saveToken } from './api/connection';

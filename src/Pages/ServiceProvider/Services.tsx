@@ -12,7 +12,7 @@ import {
 import { BACKEND_URL } from '../../constants/constants';
 import { ErrorMessage, SuccessMessage } from '../../utils/notify';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import type { GetProp, UploadProps } from 'antd';
+import type { UploadProps } from 'antd';
 
 const getBase64 = (img: FileType, callback: (url: string) => void) => {
   const reader = new FileReader();

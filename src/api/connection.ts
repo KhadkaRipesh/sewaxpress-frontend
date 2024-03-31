@@ -158,6 +158,7 @@ export async function getRoomById(room_id: string | null, jwt: string | null) {
   return res;
 }
 
+// to create chat room
 export async function createChatRoom(
   data: { hub_id: string; customer_id: string },
   jwt: string | null
@@ -170,6 +171,7 @@ export async function createChatRoom(
   return res;
 }
 
+// for saving fcm token
 export async function saveToken(
   data: {
     notification_token: string;
@@ -178,6 +180,16 @@ export async function saveToken(
   jwt: string | null
 ) {
   const res = await axiosInstance.post('firebase/save-token', data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
+
+// for getting notification
+export async function getNotification(jwt: string | null) {
+  const res = await axiosInstance.get('notification', {
     headers: {
       Authorization: `Bearer ${jwt}`,
     },

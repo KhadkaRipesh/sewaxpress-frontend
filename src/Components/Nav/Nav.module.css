@@ -206,11 +206,17 @@ ul {
   cursor: pointer;
   padding: 10px;
 }
-.booking:hover,
-.chat:hover,
-.notifications:hover {
+.bookingHover,
+.chatHover,
+.notificationsHover {
   border-radius: 50%;
   box-shadow: #e6ecf2 0px -50px 36px -28px inset;
+  display: none;
+}
+.booking:hover .bookingHover,
+.chat:hover .chatHover,
+.notifications:hover .notificationsHover {
+  display: block;
 }
 .bookingHover {
   position: absolute;
@@ -245,11 +251,12 @@ ul {
 .dropdown_menu {
   position: absolute;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  color: #2a2a2a;
-  background-color: #e6ecf2;
+  color: #212529;
+  background-color: #fff;
   width: 240px;
   margin-left: -204px;
   margin-top: 20px;
+  border-radius: 6px;
 }
 .personal {
   display: flex;
@@ -298,7 +305,7 @@ ul {
   border-color: #e6ecf2 transparent transparent transparent;
   position: absolute;
   top: -9px;
-  right: 26px;
+  right: 32px;
   transform: rotate(180deg);
 }
 
@@ -328,4 +335,16 @@ ul {
   top: -9px;
   right: 45px;
   transform: rotate(180deg);
+}
+.notification_dropdown {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #212529;
+  background-color: #fff;
+  width: 360px;
+  margin-top: 20px;
+  right: -46px;
+  border-radius: 6px;
+  max-height: 383px;
+  overflow-y: scroll;
 }

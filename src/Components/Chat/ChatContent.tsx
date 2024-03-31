@@ -76,7 +76,6 @@ function ChatContent(props) {
             <div className={styles.content__body} ref={chatContainerRef}>
               <div className={styles.chat__items}>
                 {chatItems.map((itm, index) => {
-                  console.log(itm);
                   return (
                     <ChatItems
                       key={itm.id}

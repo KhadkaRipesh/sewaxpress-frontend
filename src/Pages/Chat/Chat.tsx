@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import { useEffect, useState } from 'react';
 import ChatContent from '../../Components/Chat/ChatContent';
 import ChatList from '../../Components/Chat/ChatList';
@@ -98,16 +99,14 @@ function Chat() {
 
   const fetchRoomMessages = (room: string) => {
     if (socketConnection) {
-      // Emit 'get-all-chats' event to request messages of the selected room
+      // Event to request messages of the selected room
       socketConnection.emit('get-all-chats', { room_id: room });
 
       // Listen for messages on the selected room channel
       socketConnection.on(`all_chats`, (response) => {
         if (response.success) {
-          // Handle successful response
           setMessages(response.data);
         } else {
-          // Handle error response
           console.error('Failed to get messages of room', room);
         }
       });

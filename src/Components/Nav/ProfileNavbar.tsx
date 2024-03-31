@@ -12,28 +12,17 @@ import {
 } from 'react-icons/io5';
 import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
+import Notification from '../Notifications/Notification';
 // import  avatar  from '../../assets/images/avatar.png';
 function ProfileNavbar() {
   const navigate = useNavigate();
+
   // usestate hooks for search
   const [searchInput, setSearchInput] = useState('');
 
-  // useState hook for hover state
-  const [hoveredIcon, setHoveredIcon] = useState(null);
-
   // for dropdown
   const [open, setOpen] = useState(false);
-
-  // Function to handle icon hover
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleIconHover = (iconName: any) => {
-    setHoveredIcon(iconName);
-  };
-
-  // Function to handle icon hover out
-  const handleIconHoverOut = () => {
-    setHoveredIcon(null);
-  };
+  const [showNotification, setShowNotification] = useState(false);
 
   // function for searching
   const handleChange = (e: {
@@ -44,29 +33,9 @@ function ProfileNavbar() {
     setSearchInput(e.target.value);
   };
 
-  const handleIconClick = (path) => {
-    navigate(`/${path}`);
+  const clickNav = (item: string) => {
+    navigate(`/${item}`);
   };
-  // Icon data
-  const icons = [
-    {
-      name: 'Booking',
-      icon: IoBrowsersOutline,
-      style: styles.bookingHover,
-      path: 'messages',
-    },
-    {
-      name: 'Chat',
-      icon: IoChatbubblesOutline,
-      style: styles.chatHover,
-      path: 'messages',
-    },
-    {
-      name: 'Notifications',
-      icon: IoNotificationsOutline,
-      style: styles.notificationsHover,
-    },
-  ];
 
   function DropdownItems(props) {
     return (
@@ -105,22 +74,34 @@ function ProfileNavbar() {
             </div>
           </div>
           <div className={styles.topRight}>
-            {icons.map((icon, index) => (
-              <div
-                key={index}
-                className={styles[icon.name.toLowerCase()]}
-                onMouseEnter={() => handleIconHover(icon.name)}
-                onMouseLeave={handleIconHoverOut}
-                onClick={() => handleIconClick(icon.path)}
-              >
-                <icon.icon className='react-icons' />
-                {hoveredIcon === icon.name && (
-                  <div className={icon.style}>
-                    <p className={styles.icon_name}>{icon.name}</p>
-                  </div>
-                )}
+            <div className={styles.booking}>
+              <IoBrowsersOutline className='react-icons' />
+              <div className={styles.bookingHover}>
+                <p className={styles.icon_name}>Bookings</p>
               </div>
-            ))}
+            </div>
+            <div className={styles.chat} onClick={() => clickNav('messages')}>
+              <IoChatbubblesOutline className='react-icons' />
+              <div className={styles.chatHover}>
+                <p className={styles.icon_name}>Chat</p>
+              </div>
+            </div>
+            <div
+              className={styles.notifications}
+              onClick={() => {
+                setShowNotification(!showNotification);
+              }}
+            >
+              <IoNotificationsOutline className='react-icons' />
+              <div className={styles.notificationsHover}>
+                <p className={styles.icon_name}>Notifications</p>
+              </div>
+              {showNotification && (
+                <div className={styles.notification_dropdown}>
+                  <Notification />
+                </div>
+              )}
+            </div>
             <div
               className={styles.profile}
               onClick={() => {
