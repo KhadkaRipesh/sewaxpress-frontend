@@ -27,6 +27,7 @@ import { getMessaging, getToken } from 'firebase/messaging';
 import { initializeApp } from 'firebase/app';
 import { FirebaseConfig } from './constants/constants';
 import { saveToken } from './api/connection';
+import UserProfile from './Pages/Profile/Profile';
 
 const ROLES = {
   CUSTOMER: 'CUSTOMER',
@@ -124,6 +125,7 @@ function App() {
             <Route path='/:city' element={<Category />}></Route>
             <Route path='/:city/:category' element={<Services />}></Route>
             <Route path='/messages' element={<Chat />}></Route>
+            <Route path='/profile' element={<UserProfile />}></Route>
           </Route>
           <Route
             path='/login'
