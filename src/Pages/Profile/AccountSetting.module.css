@@ -1,0 +1,29 @@
+.accountsettings {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+.accountsettings h1 {
+  padding: 10px 20px;
+}
+
+.accountsettings .form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.accountsettings .form .form_group {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  margin: 10px;
+}
+.form_group input {
+  border: 1px solid black;
+  width: 380px;
+}

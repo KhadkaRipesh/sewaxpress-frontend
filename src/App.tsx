@@ -125,8 +125,10 @@ function App() {
             <Route path='/:city' element={<Category />}></Route>
             <Route path='/:city/:category' element={<Services />}></Route>
             <Route path='/messages' element={<Chat />}></Route>
-            <Route path='/profile' element={<UserProfile />}></Route>
           </Route>
+          {/* for profile */}
+          <Route path='/profile/:activePage' element={<UserProfile />}></Route>
+
           <Route
             path='/login'
             element={isAuth ? <Navigate to='/' /> : <PopupModal />}

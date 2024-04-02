@@ -1,0 +1,34 @@
+.usersidebar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.usersidebar .s1,
+.usersidebar .s2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+}
+.usersidebar p {
+  width: 30px;
+  height: 30px;
+  color: gray;
+}
+
+.usersidebar .s1:hover {
+  background-color: rgb(246, 246, 246);
+  border-radius: 5px;
+  cursor: pointer;
+  color: gray;
+}
+
+.usersidebar .s2 {
+  background-color: rgb(246, 246, 246);
+  border-radius: 5px;
+  cursor: pointer;
+  color: gray;
+}
+

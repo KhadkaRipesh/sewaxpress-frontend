@@ -12,6 +12,10 @@ import { FaCartArrowDown } from 'react-icons/fa6';
 import { MdOutlineMoreTime } from 'react-icons/md';
 import { CiLocationOn } from 'react-icons/ci';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { VscAccount } from 'react-icons/vsc';
+import { AiOutlineShopping } from 'react-icons/ai';
+import { FaRegAddressCard } from 'react-icons/fa';
+import { RiLockPasswordLine } from 'react-icons/ri';
 
 export const icons = {
   user: AiOutlineUser,
@@ -28,6 +32,10 @@ export const icons = {
   time: MdOutlineMoreTime,
   location: CiLocationOn,
   delete: AiOutlineDelete,
+  account: VscAccount,
+  mybooking: AiOutlineShopping,
+  address: FaRegAddressCard,
+  password: RiLockPasswordLine,
 };
 
 export type CustomIconType = keyof typeof icons;

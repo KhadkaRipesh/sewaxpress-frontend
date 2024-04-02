@@ -122,10 +122,10 @@ function ProfileNavbar() {
                     <div className='pn'>{'John Doe'}</div>
                   </div>
                   <ul>
-                    <NavLink to='/'>
+                    <NavLink to='/profile/account'>
                       <DropdownItems
                         icon={<CgProfile className={styles.dropdown_icon} />}
-                        text='Account Settings'
+                        text='My Profile'
                       />
                     </NavLink>
                     <NavLink to='/'>

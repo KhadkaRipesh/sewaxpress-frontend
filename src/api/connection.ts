@@ -7,6 +7,18 @@ export interface PaginationType {
   limit: number;
 }
 
+export interface BookingQuery {
+  book_status?:
+    | 'BOOKING_PROCESSING'
+    | 'BOOKING_PLACED'
+    | 'BOOKING_COMPLETED'
+    | 'BOOKING_CANCELLED'
+    | 'READYFORSERVICE';
+  date?: 'YESTERDAY' | 'TODAY' | 'custom' | 'LAST_7_DAYS' | 'LAST_30_DAYS';
+  start_date?: string | null;
+  end_date?: string | null;
+}
+
 // creating axios instance
 export const axiosInstance = axios.create({
   baseURL: BACKEND_URL,
@@ -193,6 +205,18 @@ export async function getNotification(jwt: string | null) {
     headers: {
       Authorization: `Bearer ${jwt}`,
     },
+  });
+  return res;
+}
+
+// get my booked services
+
+export async function getMyBookings(query: BookingQuery, jwt: string | null) {
+  const res = await axiosInstance.get('book/my-booking', {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+    params: query,
   });
   return res;
 }
