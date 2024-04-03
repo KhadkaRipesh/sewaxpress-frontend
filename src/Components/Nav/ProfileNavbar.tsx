@@ -1,7 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/icon/icon.png';
-import avatar from '../../assets/images/avatar.png';
-
 import styles from './Nav.module.css';
 import { SetStateAction, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
@@ -13,6 +11,9 @@ import {
 import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
 import Notification from '../Notifications/Notification';
+import { useQuery } from 'react-query';
+import { sessionUser } from '../../api/connection';
+import { BACKEND_URL } from '../../constants/constants';
 // import  avatar  from '../../assets/images/avatar.png';
 function ProfileNavbar() {
   const navigate = useNavigate();
@@ -44,6 +45,23 @@ function ProfileNavbar() {
         <div className='text'>{props.text}</div>
       </li>
     );
+  }
+  const session = localStorage.getItem('jwtToken');
+
+  const { data: userInfo, isLoading } = useQuery('users', () =>
+    sessionUser(session)
+      .then((res) => {
+        return res.data.data;
+      })
+      .catch((error) => {
+        if (error) {
+          localStorage.removeItem('jwtToken');
+          navigate('/login');
+        }
+      })
+  );
+  if (isLoading) {
+    return null;
   }
 
   // store current url on session storage
@@ -113,14 +131,28 @@ function ProfileNavbar() {
                 <div className={styles.dropdown_menu}>
                   <div className={styles.personal}>
                     <div className='pp'>
-                      <img
-                        src={avatar}
-                        alt=''
-                        style={{ height: 55, width: 55 }}
-                      />
+                      {userInfo?.avatar ? (
+                        <img
+                          src={`${BACKEND_URL}` + userInfo?.avatar}
+                          alt=''
+                          style={{ height: 55, width: 55 }}
+                        />
+                      ) : (
+                        <img
+                          src={
+                            'https://media.istockphoto.com/id/1131164548/vector/avatar-5.jpg?s=612x612&w=0&k=20&c=CK49ShLJwDxE4kiroCR42kimTuuhvuo2FH5y_6aSgEo='
+                          }
+                          alt=''
+                          style={{ height: 55, width: 55 }}
+                        />
+                      )}
                     </div>
-                    <div className='pn'>{'John Doe'}</div>
+                    <div className={styles.block}>
+                      <div className='pn'>{userInfo?.full_name}</div>
+                      <span className={styles.email}>{userInfo?.email}</span>
+                    </div>
                   </div>
+                  <hr />
                   <ul>
                     <NavLink to='/profile/account'>
                       <DropdownItems

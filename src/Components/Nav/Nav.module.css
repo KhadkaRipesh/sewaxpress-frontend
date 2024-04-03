@@ -348,3 +348,7 @@ ul {
   max-height: 383px;
   overflow-y: scroll;
 }
+span.email {
+  font-size: 10px;
+  color: #8d8d8d;
+}

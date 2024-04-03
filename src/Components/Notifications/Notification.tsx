@@ -23,7 +23,6 @@ function Notification() {
     return null;
   }
 
-  
   return (
     <>
       <div className={styles.personal}>
@@ -95,8 +94,6 @@ function Notification() {
             </div>
           );
         })}
-
-        {/* <span className={styles.text}>March 9, 2024 at 11:36 PM</span> */}
       </div>
     </>
   );
