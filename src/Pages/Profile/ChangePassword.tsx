@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from './ChangePassword.module.css';
+import { changePassword } from '../../api/connection';
+import { ErrorMessage, SuccessMessage } from '../../utils/notify';
 function ChangePassword() {
   const [passwordData, setPasswordData] = useState({
     current_password: '',
@@ -14,6 +16,21 @@ function ChangePassword() {
     setPasswordData({ ...passwordData, [field]: event.target.value });
   };
 
+  const session = localStorage.getItem('jwtToken');
+  const handleChange = () => {
+    changePassword(passwordData, session)
+      .then((res) => {
+        setPasswordData({
+          current_password: '',
+          new_password: '',
+          re_password: '',
+        });
+        SuccessMessage(res.data.message);
+      })
+      .catch((err) => {
+        ErrorMessage(err.response.data.message);
+      });
+  };
   return (
     <>
       <div className={styles.set_password}>
@@ -30,6 +47,7 @@ function ChangePassword() {
             name='current_password'
             id='current_password'
             placeholder='Type your password'
+            value={passwordData.current_password}
             onChange={(e) => handleChangePassword(e, 'current_password')}
             required
           />
@@ -42,6 +60,7 @@ function ChangePassword() {
             name='new_password'
             id='new_password'
             placeholder='Create new password'
+            value={passwordData.new_password}
             onChange={(e) => handleChangePassword(e, 'new_password')}
             required
           />
@@ -54,12 +73,15 @@ function ChangePassword() {
             name='re_password'
             id='re_password'
             placeholder='Confirm your password'
+            value={passwordData.re_password}
             onChange={(e) => handleChangePassword(e, 're_password')}
             required
           />
           <br />
 
-          <button className={styles.change}>Change Password</button>
+          <button className={styles.change} onClick={handleChange}>
+            Change Password
+          </button>
           <br />
         </div>
       </div>

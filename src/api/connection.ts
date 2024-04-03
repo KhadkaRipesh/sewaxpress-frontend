@@ -220,3 +220,20 @@ export async function getMyBookings(query: BookingQuery, jwt: string | null) {
   });
   return res;
 }
+
+// change password
+export async function changePassword(
+  data: {
+    current_password: string;
+    new_password: string;
+    re_password: string;
+  },
+  jwt: string | null
+) {
+  const res = await axiosInstance.post('auth/change-password', data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
