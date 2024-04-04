@@ -15,14 +15,25 @@ import { Title } from '../../Components/common/Title';
 import styles from './Service.module.css';
 import { Icon } from '../../Components/common/Icon';
 import { ErrorMessage, SuccessMessage } from '../../utils/notify';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DatePicker, DatePickerProps, Modal } from 'antd';
 import CartItem from '../../Components/mini-component/CartItem';
+
+interface FarePrice {
+  label: string;
+  value: number;
+}
+
 function Services() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   // extracting city and category from url
   const { city, category } = useParams<{ city?: string; category?: string }>();
+
+  // use state for fare prices
+  const [farePrices, setFarePrices] = useState<FarePrice[]>([]);
+  const [farePrice, setFarePrice] = useState();
+  const [fareChange, setFareChange] = useState(0);
 
   const { data: serviceData } = useQuery('services', () =>
     fetchServices(city, category)
@@ -31,7 +42,7 @@ function Services() {
 
   const session = localStorage.getItem('jwtToken');
 
-  const { data: userInfo, isLoading } = useQuery('users', () =>
+  const { data: userInfo } = useQuery('users', () =>
     sessionUser(session)
       .then((res) => {
         return res.data.data;
@@ -48,6 +59,46 @@ function Services() {
     session ? getCart(session) : null
   );
   const cartItems = cartData?.data.data.cart_services;
+  const cart = cartData?.data.data;
+  useEffect(() => {
+    calculateFarePrices(cart?.grand_total);
+  }, [cart]);
+
+  // Function to calculate fare prices based on grand total
+  const calculateFarePrices = (total) => {
+    const grandTotal = parseFloat(total);
+    const discount15Percent = grandTotal * 0.15;
+    const discount10Percent = grandTotal * 0.1;
+    const surcharge10Percent = grandTotal * 0.1;
+
+    // Set the calculated prices to the state
+    setFarePrices([
+      {
+        label: '-15%',
+        value: grandTotal - discount15Percent,
+      },
+      {
+        label: '-10%',
+        value: grandTotal - discount10Percent,
+      },
+      {
+        label: '0%',
+        value: grandTotal,
+      },
+      {
+        label: '+10%',
+        value: grandTotal + surcharge10Percent,
+      },
+    ]);
+  };
+
+  // Function to handle selecting a fare
+  const handleSelectFare = (fare) => {
+    setFareChange(fare - cart.grand_total);
+    setFarePrice(fare);
+    setBookData({ ...bookData, after_fare_price: fare });
+  };
+
   // state for modal
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -56,6 +107,7 @@ function Services() {
 
   // states for booking service
   const [bookData, setBookData] = useState({
+    after_fare_price: 1,
     booking_date: '',
     booking_address: '',
   });
@@ -133,8 +185,9 @@ function Services() {
         SuccessMessage(res.data.message);
         setModalOpen(false);
         deleteCartMutation.mutate(session);
+        setFareChange(0);
       })
-      .catch((err) => ErrorMessage('Please fill all field.'));
+      .catch((err) => console.log(err.response));
   };
 
   // to start chat
@@ -212,6 +265,57 @@ function Services() {
               {mode === 'book' && (
                 <>
                   <h2 className={styles.title}>Make a Book</h2>
+                  <div className={styles.box_style}>
+                    <h3 className={styles.inner}>Summary</h3>
+
+                    <table className={styles.table}>
+                      <tbody>
+                        <tr>
+                          <td>Service Cost</td>
+                          <td style={{ textAlign: 'end' }}>{cart.sub_total}</td>
+                        </tr>
+                        <tr>
+                          <td>Discount Cost</td>
+                          <td style={{ textAlign: 'end' }}>
+                            {cart.discount_amount}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tax Amount</td>
+                          <td style={{ textAlign: 'end' }}>
+                            {cart.tax_amount}
+                          </td>
+                        </tr>
+                        {farePrice ? (
+                          <tr>
+                            <td>Fare Price</td>
+                            <td style={{ textAlign: 'end' }}>{fareChange}</td>
+                          </tr>
+                        ) : null}
+                        <tr>
+                          <td>Grand Total</td>
+                          <td style={{ textAlign: 'end' }}>
+                            {`Rs: ${cart.grand_total + fareChange}`}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <label>Fare Price</label>
+                  <br />
+                  <div className={styles.bid}>
+                    {farePrices.map((price, index) => (
+                      <button
+                        key={index}
+                        className={styles.button_bid}
+                        onClick={() => handleSelectFare(price.value)}
+                      >
+                        {price.value}
+                      </button>
+                    ))}
+                  </div>
+                  <br />
+
                   <label>Booking Date</label>
                   <br />
                   <DatePicker
@@ -236,7 +340,7 @@ function Services() {
                   />
                   <br />
                   <button className={styles.proceed} onClick={book}>
-                    Book
+                    Request for Book
                   </button>
                 </>
               )}

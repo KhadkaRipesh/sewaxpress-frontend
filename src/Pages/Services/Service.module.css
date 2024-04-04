@@ -53,3 +53,84 @@ button.proceed {
 Input.address {
   width: 98%;
 }
+
+.box_style {
+  background: #fff;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  margin-bottom: 25px;
+  padding: 30px;
+  position: relative;
+  color: #333;
+}
+table.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #333;
+}
+table.table td {
+  border-top: 1px solid #ededed;
+  width: 50%;
+}
+h3.inner {
+  margin: -30px -30px 20px;
+  background-color: #565a5c;
+  padding: 10px 20px 10px 18px;
+  color: #fff;
+  border: 1px solid #fff;
+  -webkit-border-top-left-radius: 3px;
+  text-align: center;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+/* CSS */
+.button_bid {
+  align-items: center;
+  appearance: button;
+  background-color: #0276ff;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-family: 'RM Neue', sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  padding: 10px 21px;
+  text-align: center;
+  text-transform: none;
+  transition: color 0.13s ease-in-out, background 0.13s ease-in-out,
+    opacity 0.13s ease-in-out, box-shadow 0.13s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 80px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button_bid:active {
+  background-color: #006ae8;
+}
+
+.button_bid:hover {
+  background-color: #1c84ff;
+}
+.bid {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}

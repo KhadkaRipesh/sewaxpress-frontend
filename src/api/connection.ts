@@ -98,6 +98,7 @@ export async function deleteCartService(
 // book Service
 export async function bookService(
   data: {
+    after_fare_price: number;
     booking_date: string;
     booking_address: string;
   },
