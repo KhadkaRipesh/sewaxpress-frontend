@@ -7,13 +7,13 @@ function ProfileSideBar(props) {
       <div className={styles.usersidebar}>
         {props.activePage === 'account' ? (
           <div className={styles.s2}>
-            <Icon icon='account' />
+            <Icon icon='address' />
             <span>Account Settings</span>
           </div>
         ) : (
           <Link to='/profile/account' className='stylesnone'>
             <div className={styles.s1}>
-              <Icon icon='account' />
+              <Icon icon='address' />
               <span>Account Settings</span>
             </div>
           </Link>
@@ -28,20 +28,6 @@ function ProfileSideBar(props) {
             <div className={styles.s1}>
               <Icon icon='mybooking' />
               <span>My Bookings</span>
-            </div>
-          </Link>
-        )}
-        {/* for address */}
-        {props.activePage === 'address' ? (
-          <div className={styles.s2}>
-            <Icon icon='address' />
-            <span>Change Address</span>
-          </div>
-        ) : (
-          <Link to='/profile/address' className='stylesnone'>
-            <div className={styles.s1}>
-              <Icon icon='address' />
-              <span>Change Address</span>
             </div>
           </Link>
         )}

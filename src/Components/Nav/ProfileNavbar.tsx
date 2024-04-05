@@ -92,7 +92,10 @@ function ProfileNavbar() {
             </div>
           </div>
           <div className={styles.topRight}>
-            <div className={styles.booking}>
+            <div
+              className={styles.booking}
+              onClick={() => clickNav('profile/mybookings')}
+            >
               <IoBrowsersOutline className='react-icons' />
               <div className={styles.bookingHover}>
                 <p className={styles.icon_name}>Bookings</p>

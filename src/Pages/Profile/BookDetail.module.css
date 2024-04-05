@@ -1,0 +1,141 @@
+.book_container {
+  width: 1136px;
+  margin: 56px auto;
+  display: flex;
+  justify-content: center;
+}
+button.back {
+  margin-top: 20px;
+  margin-left: 20px;
+  background-color: #1d588b;
+  color: #dddddd;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.detailPage {
+  border: 3px solid rgb(207, 207, 207);
+  width: 60%;
+}
+.detailPage h1 {
+  text-align: center;
+}
+
+.content_table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content_table thead tr {
+  background-color: #1d588b;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.content_table th,
+.content_table td {
+  padding: 12px 15px;
+}
+
+.content_table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.content_table tbody tr:nth-of-type(odd) {
+  background-color: #f3f3f3;
+}
+
+.content_table tbody tr:last-of-type {
+  border-bottom: 2px solid #1d588b;
+}
+
+.content_table tbody tr.active-row {
+  font-weight: bold;
+  color: #1d588b;
+}
+button.pay {
+  background-color: #1d588b;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Amazon Ember', sans-serif;
+  font-size: 13px;
+  line-height: 29px;
+  padding: 0 10px 0 11px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100px;
+}
+
+/* CSS */
+button.cancel {
+  align-items: center;
+  background-color: #ffe7e7;
+  background-position: 0 0;
+  border: 1px solid #fee0e0;
+  border-radius: 11px;
+  box-sizing: border-box;
+  color: #d33a2c;
+  cursor: pointer;
+  display: flex;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 33.4929px;
+  list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg)
+    none;
+  padding: 2px 12px;
+  text-align: left;
+  text-decoration: none;
+  text-shadow: none;
+  text-underline-offset: 1px;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  word-break: break-word;
+}
+.payment {
+  margin: 30px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+.payment .action {
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-left: 5px;
+  align-items: center;
+}
+.cancel {
+  margin: 10px;
+  /* display: flex; */
+  /* align-items: center;
+  float: left; */
+}
+.note {
+  font-size: 12px;
+  text-align: center;
+}
+
+td.border {
+  border: 1px solid #1d588b;
+}

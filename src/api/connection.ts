@@ -238,3 +238,30 @@ export async function changePassword(
   });
   return res;
 }
+
+// get booking details by customer
+export async function getBookDetailByCustomer(
+  book_id: string | null,
+  jwt: string | null
+) {
+  const res = await axiosInstance.get(`book/customer/${book_id}`, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
+
+// cancel booking by customer
+export async function cancelBooking(
+  // data: { cancelled_reason: string | null },
+  book_id: string | null,
+  jwt: string | null
+) {
+  const res = await axiosInstance.post(`book/cancel/${book_id}`, null, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}

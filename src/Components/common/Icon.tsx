@@ -16,6 +16,8 @@ import { VscAccount } from 'react-icons/vsc';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { RiLockPasswordLine } from 'react-icons/ri';
+import { IoArrowBackSharp } from 'react-icons/io5';
+import { MdPending } from 'react-icons/md';
 
 export const icons = {
   user: AiOutlineUser,
@@ -36,6 +38,8 @@ export const icons = {
   mybooking: AiOutlineShopping,
   address: FaRegAddressCard,
   password: RiLockPasswordLine,
+  back: IoArrowBackSharp,
+  pending: MdPending,
 };
 
 export type CustomIconType = keyof typeof icons;

@@ -2,13 +2,15 @@ import { useQuery } from 'react-query';
 import { BookingQuery, getMyBookings } from '../../api/connection';
 import { Badge, Button, Space, Table } from 'antd';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 function MyBookings() {
+  const navigate = useNavigate();
   const query: BookingQuery = {
-    book_status: 'BOOKING_PLACED',
-    date: 'LAST_30_DAYS',
-    start_date: null,
-    end_date: null,
+    // book_status: 'BOOKING_PLACED',
+    // date: 'LAST_30_DAYS',
+    // start_date: null,
+    // end_date: null,
   };
 
   // columns for table
@@ -83,11 +85,12 @@ function MyBookings() {
       key: 'action',
       render: (record: { id: string }) => (
         <Space size='middle'>
-          <Button onClick={() => viewStatus(record.id)}>Book Action</Button>
+          <Button onClick={() => viewStatus(record.id)}>View More</Button>
         </Space>
       ),
     },
   ];
+
   //   fetch my bookings
   const session = localStorage.getItem('jwtToken');
   const { data: services } = useQuery('myService', () =>
@@ -98,7 +101,7 @@ function MyBookings() {
   const data = services?.data.data;
 
   const viewStatus = (id: string) => {
-    console.log('Status viewed of ', id);
+    navigate(`/book/${id}`);
   };
   return (
     <>

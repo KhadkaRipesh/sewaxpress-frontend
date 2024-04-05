@@ -37,6 +37,7 @@
   border-top: 1px solid #e9ecef;
   padding: 5px 8px;
   font-size: 14px;
+  height: 80px;
   background-color: #e9f3fd;
 }
 .notifi_item_unread img {
@@ -47,7 +48,7 @@
 .notifi_item_unread p {
   margin: 0;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 400;
   font-family: sans-serif;
 }
 

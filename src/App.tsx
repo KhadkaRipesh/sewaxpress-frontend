@@ -28,6 +28,7 @@ import { initializeApp } from 'firebase/app';
 import { FirebaseConfig } from './constants/constants';
 import { saveToken } from './api/connection';
 import UserProfile from './Pages/Profile/Profile';
+import BookingDetails from './Pages/Profile/BookDetail';
 
 const ROLES = {
   CUSTOMER: 'CUSTOMER',
@@ -121,13 +122,14 @@ function App() {
 
           {/* public routes */}
           <Route path='/' element={<Base />}>
-            <Route path='/' element={<LandingPage />}></Route>
+            <Route path='' element={<LandingPage />}></Route>
             <Route path='/:city' element={<Category />}></Route>
             <Route path='/:city/:category' element={<Services />}></Route>
             <Route path='/messages' element={<Chat />}></Route>
           </Route>
           {/* for profile */}
           <Route path='/profile/:activePage' element={<UserProfile />}></Route>
+          <Route path='/book/:id' element={<BookingDetails />}></Route>
 
           <Route
             path='/login'
