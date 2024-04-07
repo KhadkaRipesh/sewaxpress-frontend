@@ -265,3 +265,12 @@ export async function cancelBooking(
   });
   return res;
 }
+
+export async function makePayment(book_id: string | null, jwt: string | null) {
+  const res = await axiosInstance.post(`book/payment/${book_id}`, null, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}

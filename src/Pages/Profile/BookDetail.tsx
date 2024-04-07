@@ -1,7 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import ProfileNavbar from '../../Components/Nav/ProfileNavbar';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { cancelBooking, getBookDetailByCustomer } from '../../api/connection';
+import {
+  cancelBooking,
+  getBookDetailByCustomer,
+  makePayment,
+} from '../../api/connection';
 import styles from './BookDetail.module.css';
 import { Icon } from '../../Components/common/Icon';
 import { Popconfirm } from 'antd';
@@ -39,6 +43,17 @@ function BookingDetails() {
 
   const confirm = (bookId: string) => {
     cancelBookingMutation.mutate(bookId);
+  };
+
+  const payThroughKhalti = (book_id: string) => {
+    console.log(book_id);
+    makePayment(book_id, session).then((res) => {
+      const redirect_url: string = res.data.data;
+      console.log(redirect_url);
+      if (redirect_url) {
+        window.location.href = redirect_url;
+      }
+    });
   };
   return (
     <>
@@ -131,7 +146,7 @@ function BookingDetails() {
             ) : (
               <>
                 Payment Status:
-                {bookingDetails?.paid_to_serviceProvider ? (
+                {bookingDetails?.hasCustomerPaid ? (
                   <>
                     <div className={styles.action}>
                       <p>Paid</p>
@@ -141,7 +156,12 @@ function BookingDetails() {
                   <>
                     <div className={styles.action}>
                       <p>Pending</p>
-                      <button className={styles.pay}>Pay Now</button>
+                      <button
+                        className={styles.pay}
+                        onClick={() => payThroughKhalti(bookingDetails.id)}
+                      >
+                        Pay Now
+                      </button>
                     </div>
                   </>
                 )}
@@ -153,7 +173,9 @@ function BookingDetails() {
               bookingDetails?.book_status === 'BOOKING_CANCELLED' ? (
                 <>
                   <strong>Status: </strong>
-                  <p>Booking Canceled :( </p>
+                  <div className={styles.cancel_border}>
+                    <p>Booking Canceled :( </p>
+                  </div>
                 </>
               ) : (
                 <>
