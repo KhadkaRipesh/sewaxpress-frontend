@@ -11,11 +11,17 @@ function Nav() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+  // for login and register
   const [isModalOpen, setModalOpen] = useState(false);
   const [mode, setMode] = useState('register');
 
+  // for service provider registration
+  const [becameServiceproviderOpen, setBecameServiceproviderOpen] =
+    useState(false);
+
   const handleCancel = () => {
     setModalOpen(false);
+    setBecameServiceproviderOpen(false);
   };
 
   const toggleMode = (mode: string) => {
@@ -25,6 +31,8 @@ function Nav() {
   const openModal = () => {
     setModalOpen(true);
   };
+
+  const serviceprovidermode = 'serviceprovidermode';
 
   return (
     <>
@@ -36,6 +44,16 @@ function Nav() {
           className='modalStyle'
         >
           <AuthForm mode={mode} toggleMode={toggleMode} />
+        </Modal>
+      )}
+      {becameServiceproviderOpen && (
+        <Modal
+          open={becameServiceproviderOpen}
+          onCancel={handleCancel}
+          footer={null}
+          className='modalStyleForVendor'
+        >
+          <AuthForm mode={serviceprovidermode} toggleMode={toggleMode} />
         </Modal>
       )}
       <div className={styles.navbar}>
@@ -50,7 +68,14 @@ function Nav() {
           </div>
           <ul className={click ? styles.navMenu_active : styles.navMenu}>
             <li className={styles.serviceProvider}>
-              <button onClick={closeMobileMenu}>Become Service Provider</button>
+              <button
+                onClick={() => {
+                  closeMobileMenu();
+                  setBecameServiceproviderOpen(true);
+                }}
+              >
+                Become Service Provider
+              </button>
             </li>
             <li className={styles.login}>
               <button

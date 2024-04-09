@@ -46,7 +46,6 @@ function BookingDetails() {
   };
 
   const payThroughKhalti = (book_id: string) => {
-    console.log(book_id);
     makePayment(book_id, session).then((res) => {
       const redirect_url: string = res.data.data;
       console.log(redirect_url);

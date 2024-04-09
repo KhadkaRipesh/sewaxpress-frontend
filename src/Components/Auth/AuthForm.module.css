@@ -14,6 +14,10 @@
   top: 50%;
   left: 0;
 }
+p.hr {
+  width: 100%;
+  border: 1px solid #c9c8c8;
+}
 
 .hr_lines:after {
   content: ' ';
@@ -31,6 +35,11 @@
 h2.h2 {
   text-align: center;
   font-size: 32px;
+}
+h2.h22 {
+  text-align: center;
+  font-size: 32px;
+  margin: auto;
 }
 button.google {
   height: 50px;
@@ -114,4 +123,49 @@ span.register button {
 }
 .sub_head {
   text-align: center;
+}
+
+.main_content {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.leftcontent {
+  width: 50%;
+  border: 1px solid #c9c8c8;
+  padding: 10px;
+  border-radius: 8px;
+}
+.rightcontent {
+  border: 1px solid #c9c8c8;
+  width: 50%;
+  padding: 10px;
+  border-radius: 8px;
+}
+Input.textfield {
+  width: 97%;
+}
+span.title {
+  position: absolute;
+  margin-top: -23px;
+  background-color: #f2f2f2;
+  padding-inline: 5px;
+}
+.textField {
+  width: 97%;
+  padding-left: 10px;
+  height: 50px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  margin-top: 5px;
+  outline: none;
+  display: flex;
+  align-items: center;
+  background: white;
+}
+.verify {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }

@@ -32,6 +32,15 @@ h1.test {
   background-color: #f2f2f2;
 }
 
+.modalStyleForVendor .ant-modal-content {
+  background-color: #f2f2f2;
+  width: 900px;
+}
+.modalStyleForVendor {
+  display: flex;
+  justify-content: center;
+}
+
 @media only screen and (max-width: 660px) {
   body::-webkit-scrollbar {
     width: 0px;

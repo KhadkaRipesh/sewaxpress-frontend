@@ -30,7 +30,6 @@ export default function ServiceProviderNav() {
   const handleLogout = () => {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('role');
-    window.location.reload();
     navigate('/');
   };
 

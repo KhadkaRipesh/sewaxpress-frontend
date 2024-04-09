@@ -274,3 +274,19 @@ export async function makePayment(book_id: string | null, jwt: string | null) {
   });
   return res;
 }
+
+// application for becomming service provider
+export async function applicationForServiceProvider(formData: FormData) {
+  const res = await axiosInstance.post('hub', formData);
+  return res;
+}
+
+// fetch hub from admin
+export async function fetchHubs(jwt: string | null) {
+  const res = await axiosInstance.get('hub/admin', {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}

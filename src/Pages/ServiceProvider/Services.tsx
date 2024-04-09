@@ -82,7 +82,6 @@ function ServiceManagement() {
       key: 'availability',
       render: (available) => (available ? 'true' : 'false'),
     },
-
     {
       title: 'Action',
       key: 'action',
@@ -112,7 +111,7 @@ function ServiceManagement() {
   const { data: services } = useQuery('myService', () =>
     fetchOwnServices(session)
   );
-  const data = services?.data.data.result;
+  const data = services?.data.data;
 
   //   delete service
 

@@ -23,6 +23,11 @@ const routes = [
     icon: 'categoryy',
   },
   {
+    path: '/admin/hub',
+    name: 'Hubs',
+    icon: 'categoryy',
+  },
+  {
     path: '/admin/user',
     name: 'Users',
     icon: 'users',
@@ -35,7 +40,6 @@ export default function AdminNav() {
   const handleLogout = () => {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('role');
-    window.location.reload();
     navigate('/');
   };
 

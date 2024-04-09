@@ -29,6 +29,7 @@ import { FirebaseConfig } from './constants/constants';
 import { saveToken } from './api/connection';
 import UserProfile from './Pages/Profile/Profile';
 import BookingDetails from './Pages/Profile/BookDetail';
+import HubManagement from './Pages/Admin/Hub';
 
 const ROLES = {
   CUSTOMER: 'CUSTOMER',
@@ -103,6 +104,7 @@ function App() {
             <Route path='dashboard' element={<AdminDashboard />}></Route>
             <Route path='booking' element={<Bookings />}></Route>
             <Route path='category' element={<Categories />}></Route>
+            <Route path='hub' element={<HubManagement />}></Route>
             <Route path='user' element={<Users />}></Route>
           </Route>
 

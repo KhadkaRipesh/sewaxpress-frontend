@@ -17,6 +17,7 @@ const RequireAuth = ({ allowedRoles }) => {
       })
       .catch((error) => {
         if (error) {
+          console.log(error);
           localStorage.removeItem('jwtToken');
           navigate('/login');
         }
@@ -26,18 +27,22 @@ const RequireAuth = ({ allowedRoles }) => {
     return <Loading />;
   }
 
-  return userInfo?.role === allowedRoles ? (
-    <>
+  if (userInfo?.role === allowedRoles) {
+    return (
       <div className='admins'>
         {userInfo.role === 'ADMIN' ? <AdminNav /> : <ServiceProviderNav />}
         <Outlet />
       </div>
-    </>
-  ) : userInfo ? (
-    <Navigate to='/unauthorized' state={{ from: location }} replace />
-  ) : (
-    <Navigate to='/login' state={{ from: location }} replace />
-  );
+    );
+  } else {
+    return (
+      <Navigate
+        to={userInfo ? '/unauthorized' : '/login'}
+        state={{ from: location }}
+        replace
+      />
+    );
+  }
 };
 
 export default RequireAuth;
