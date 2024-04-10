@@ -1,12 +1,50 @@
-import { Badge, Button, Space, Table } from 'antd';
+import {
+  Badge,
+  Button,
+  Dropdown,
+  MenuProps,
+  Space,
+  Table,
+  Typography,
+} from 'antd';
 import { Title } from '../../Components/common/Title';
 import { motion } from 'framer-motion';
-import { useQuery } from 'react-query';
-import { fetchHubs } from '../../api/connection';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { fetchHubs, updateHubStatus } from '../../api/connection';
 import { BACKEND_URL } from '../../constants/constants';
 import moment from 'moment';
+import { DownOutlined } from '@ant-design/icons';
+import { ErrorMessage } from '../../utils/notify';
 
 function HubManagement() {
+  const queryClient = useQueryClient();
+
+  // fetch hubs
+  const session = localStorage.getItem('jwtToken');
+  const { data: services } = useQuery('hubs', () => fetchHubs(session));
+  const data = services?.data.data;
+
+  // function to edit the status details
+  const editHubStatusMutation = useMutation(
+    (params: { status: string; hub_id: string }) => {
+      const data = {
+        status: params.status,
+      };
+      return updateHubStatus(params.hub_id, data, session)
+        .then((res) => {
+          console.log(res.data);
+          queryClient.invalidateQueries(['hubs']);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            ErrorMessage('Please Login to Continue');
+          } else {
+            console.log(err.response.data.message);
+          }
+        });
+    }
+  );
+
   // Columns for Services
   const columns = [
     {
@@ -41,7 +79,7 @@ function HubManagement() {
       title: 'Approved Status',
       dataIndex: 'status',
       key: 'status',
-      render: (text: string) => {
+      render: (text: string, record: { id: string }) => {
         let badgeStatus = 'default';
 
         // Determine badge status and text based on specific conditions
@@ -51,11 +89,57 @@ function HubManagement() {
           badgeStatus = 'success';
         } else if (text === 'CLOSED') {
           badgeStatus = 'error';
-        } else if (text === 'SUSPENDEF') {
+        } else if (text === 'SUSPENDED') {
           badgeStatus = 'warning';
         }
 
-        return <Badge status={badgeStatus} text={text} />;
+        const items: MenuProps['items'] = [
+          {
+            key: '1',
+            label: 'PENDING',
+          },
+          {
+            key: '2',
+            label: 'ACTIVE',
+          },
+          {
+            key: '3',
+            label: 'CLOSED',
+          },
+        ];
+
+        const handleStatusChange = async (selectedItem: any, record: any) => {
+          try {
+            // Call editHubStatusMutation function here
+            await editHubStatusMutation.mutateAsync({
+              status: selectedItem.label,
+              hub_id: record.id,
+            });
+          } catch (error) {
+            console.error('Error updating hub status:', error);
+          }
+        };
+
+        return (
+          <>
+            <Dropdown
+              menu={{
+                items,
+                selectable: true,
+                defaultSelectedKeys: ['3'],
+                onClick: ({ key }: { key: string }) =>
+                  handleStatusChange(items[Number(key) - 1], record),
+              }}
+            >
+              <Typography.Link>
+                <Space>
+                  <Badge status={badgeStatus} text={text} />
+                  <DownOutlined />
+                </Space>
+              </Typography.Link>
+            </Dropdown>
+          </>
+        );
       },
     },
     {
@@ -77,17 +161,10 @@ function HubManagement() {
       render: (record: { id: string }) => (
         <Space size='middle'>
           <Button>View</Button>
-
-          <Button>Edit</Button>
         </Space>
       ),
     },
   ];
-
-  // fetch hubs
-  const session = localStorage.getItem('jwtToken');
-  const { data: services } = useQuery('hubs', () => fetchHubs(session));
-  const data = services?.data.data;
 
   return (
     <>

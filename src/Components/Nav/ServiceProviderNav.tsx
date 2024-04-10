@@ -22,6 +22,11 @@ const routes = [
     name: 'Bookings',
     icon: 'booking',
   },
+  {
+    path: '/serviceprovider/messages',
+    name: 'Messages',
+    icon: 'message',
+  },
 ];
 
 export default function ServiceProviderNav() {

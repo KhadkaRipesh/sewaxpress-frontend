@@ -10,7 +10,7 @@ const RequireAuth = ({ allowedRoles }) => {
   const navigate = useNavigate();
 
   const jwt = localStorage.getItem('jwtToken');
-  const { data: userInfo, isLoading } = useQuery('users', () =>
+  const { data: userInfo, isLoading } = useQuery(['users', jwt], () =>
     sessionUser(jwt)
       .then((res) => {
         return res.data.data;
@@ -26,6 +26,8 @@ const RequireAuth = ({ allowedRoles }) => {
   if (isLoading) {
     return <Loading />;
   }
+
+  console.log(userInfo);
 
   if (userInfo?.role === allowedRoles) {
     return (

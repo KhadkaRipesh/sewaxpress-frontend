@@ -20,7 +20,7 @@ import PopupModal from './Components/modal/PopupModal';
 import GoogleAuth from './Components/Auth/GoogleAuth';
 import NotFoundError from './Pages/404-errror';
 import ServiceProviderDashboard from './Pages/ServiceProvider/Dashboard';
-import Test from './Pages/ServiceProvider/Test';
+import Test from './Pages/ServiceProvider/Booking';
 import ServiceManagement from './Pages/ServiceProvider/Services';
 import Chat from './Pages/Chat/Chat';
 import { getMessaging, getToken } from 'firebase/messaging';

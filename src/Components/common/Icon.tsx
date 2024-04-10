@@ -18,6 +18,7 @@ import { FaRegAddressCard } from 'react-icons/fa';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { IoArrowBackSharp } from 'react-icons/io5';
 import { MdPending } from 'react-icons/md';
+import { FaRegMessage } from 'react-icons/fa6';
 
 export const icons = {
   user: AiOutlineUser,
@@ -40,6 +41,7 @@ export const icons = {
   password: RiLockPasswordLine,
   back: IoArrowBackSharp,
   pending: MdPending,
+  message: FaRegMessage,
 };
 
 export type CustomIconType = keyof typeof icons;

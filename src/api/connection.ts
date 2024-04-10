@@ -290,3 +290,32 @@ export async function fetchHubs(jwt: string | null) {
   });
   return res;
 }
+
+// update hub status by admin
+export async function updateHubStatus(
+  hub_id: string,
+  data: { status: string | null },
+  jwt: string | null
+) {
+  const res = await axiosInstance.patch(`hub/admin/${hub_id}`, data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
+
+// get all booking of hub on specific service provider
+export async function fetchBookingOfServiceProvider(
+  jwt: string | null,
+  query: BookingQuery
+) {
+  const res = await axiosInstance.get('/book', {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+    params: query,
+  });
+
+  return res;
+}
