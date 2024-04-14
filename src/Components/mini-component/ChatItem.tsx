@@ -1,6 +1,24 @@
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactNode,
+  ReactPortal,
+} from 'react';
 import { BACKEND_URL } from '../../constants/constants';
 import styles from '../Chat/ChatContent.module.css';
-function ChatItems(props) {
+function ChatItems(props: {
+  user: string;
+  msg:
+    | string
+    | number
+    | boolean
+    | ReactElement<any, string | JSXElementConstructor<any>>
+    | Iterable<ReactNode>
+    | ReactPortal
+    | null
+    | undefined;
+  image: string;
+}) {
   return (
     <>
       <div

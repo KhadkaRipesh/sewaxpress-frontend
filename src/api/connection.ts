@@ -135,13 +135,7 @@ export async function deleteMyService(
   return res;
 }
 // add service on hub
-export async function createService(
-  data: {
-    service_id: string;
-    hub_id: string;
-  },
-  jwt: string | null
-) {
+export async function createService(data: any, jwt: string | null) {
   console.log(data);
   const res = await axiosInstance.post('/service', data, {
     headers: {

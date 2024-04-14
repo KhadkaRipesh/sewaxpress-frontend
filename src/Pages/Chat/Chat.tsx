@@ -32,9 +32,10 @@ function Chat() {
       try {
         const roomInfoResponse = await getRoomById(roomId, jwt);
         const roomInfo = roomInfoResponse.data.data;
-
-        setSelectedRoom(roomId);
-        setChatHeader(roomInfo.hub.name);
+        if (roomId) {
+          setSelectedRoom(roomId);
+          setChatHeader(roomInfo.hub.name);
+        }
       } catch (error) {
         console.log(error);
       }

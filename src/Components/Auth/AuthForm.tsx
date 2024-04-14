@@ -197,7 +197,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
           } else if (role === 'SERVICE_PROVIDER') {
             navigate('/serviceprovider/dashboard');
           } else {
-            // window.location.reload();
+            window.location.reload();
           }
         })
         .catch((error) => {

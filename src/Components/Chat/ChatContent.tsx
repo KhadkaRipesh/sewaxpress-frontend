@@ -1,8 +1,32 @@
-import { useEffect, useRef, useState } from 'react';
+import {
+  JSXElementConstructor,
+  KeyboardEvent,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import ChatItems from '../mini-component/ChatItem';
 import styles from './ChatContent.module.css';
 import { InfoCircleFilled, SendOutlined } from '@ant-design/icons';
-function ChatContent(props) {
+function ChatContent(props: {
+  messages: any[];
+  user: string;
+  selectedRoom: string;
+  defaultTitleRoom: string;
+  onTypedMessage: (arg0: string) => void;
+  title:
+    | string
+    | number
+    | boolean
+    | ReactElement<any, string | JSXElementConstructor<any>>
+    | Iterable<ReactNode>
+    | ReactPortal
+    | null
+    | undefined;
+}) {
   const chatItems = props.messages;
   const currentUser = props.user;
   const selectedRoom = props.selectedRoom;
@@ -34,7 +58,7 @@ function ChatContent(props) {
     setMessage('');
     props.onTypedMessage(message);
   };
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       setMessage('');
@@ -75,7 +99,7 @@ function ChatContent(props) {
             </div>
             <div className={styles.content__body} ref={chatContainerRef}>
               <div className={styles.chat__items}>
-                {chatItems.map((itm, index) => {
+                {chatItems.map((itm) => {
                   return (
                     <ChatItems
                       key={itm.id}

@@ -19,7 +19,7 @@ function Categories() {
     {
       title: 'Sn.',
       dataIndex: 'sn',
-      render: (text, record, index) => (currentPage - 1) * pageSize + index + 1,
+      render: (index) => (currentPage - 1) * pageSize + index + 1,
     },
     {
       title: 'Category Name',

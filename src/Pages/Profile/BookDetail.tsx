@@ -9,7 +9,14 @@ import {
 import styles from './BookDetail.module.css';
 import { Icon } from '../../Components/common/Icon';
 import { Popconfirm } from 'antd';
-import { ErrorMessage, SuccessMessage } from '../../utils/notify';
+import { SuccessMessage } from '../../utils/notify';
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactNode,
+  ReactPortal,
+  Key,
+} from 'react';
 
 function BookingDetails() {
   const { id } = useParams();
@@ -21,7 +28,7 @@ function BookingDetails() {
   const session = localStorage.getItem('jwtToken');
 
   // query for fetching book details
-  const { data: bookingDetails, isLoading } = useQuery('bookDetails', () =>
+  const { data: bookingDetails } = useQuery('bookDetails', () =>
     book_id
       ? getBookDetailByCustomer(book_id, session).then((res) => res.data.data)
       : Promise.resolve(null)
@@ -109,13 +116,48 @@ function BookingDetails() {
               </tr>
             </thead>
             <tbody>
-              {bookingDetails?.booked_services.map((service, index) => (
-                <tr key={index}>
-                  <td>{service.service.name}</td>
-                  <td>{service.service.estimated_time}</td>
-                  <td>Rs: {service.price}</td>
-                </tr>
-              ))}
+              {bookingDetails?.booked_services.map(
+                (
+                  service: {
+                    service: {
+                      name:
+                        | string
+                        | number
+                        | boolean
+                        | ReactElement<any, string | JSXElementConstructor<any>>
+                        | Iterable<ReactNode>
+                        | ReactPortal
+                        | null
+                        | undefined;
+                      estimated_time:
+                        | string
+                        | number
+                        | boolean
+                        | ReactElement<any, string | JSXElementConstructor<any>>
+                        | Iterable<ReactNode>
+                        | ReactPortal
+                        | null
+                        | undefined;
+                    };
+                    price:
+                      | string
+                      | number
+                      | boolean
+                      | ReactElement<any, string | JSXElementConstructor<any>>
+                      | Iterable<ReactNode>
+                      | ReactPortal
+                      | null
+                      | undefined;
+                  },
+                  index: Key | null | undefined
+                ) => (
+                  <tr key={index}>
+                    <td>{service.service.name}</td>
+                    <td>{service.service.estimated_time}</td>
+                    <td>Rs: {service.price}</td>
+                  </tr>
+                )
+              )}
               <tr>
                 <td></td>
                 <td className={styles.border}>Total Cost: </td>

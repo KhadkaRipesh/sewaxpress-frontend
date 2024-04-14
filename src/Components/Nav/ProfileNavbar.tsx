@@ -1,7 +1,15 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/icon/icon.png';
 import styles from './Nav.module.css';
-import { SetStateAction, useState } from 'react';
+import {
+  JSXElementConstructor,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  SetStateAction,
+  useState,
+} from 'react';
 import { CiSearch } from 'react-icons/ci';
 import {
   IoChatbubblesOutline,
@@ -38,7 +46,27 @@ function ProfileNavbar() {
     navigate(`/${item}`);
   };
 
-  function DropdownItems(props) {
+  function DropdownItems(props: {
+    onClick: MouseEventHandler<HTMLLIElement> | undefined;
+    icon:
+      | string
+      | number
+      | boolean
+      | ReactElement<any, string | JSXElementConstructor<any>>
+      | Iterable<ReactNode>
+      | ReactPortal
+      | null
+      | undefined;
+    text:
+      | string
+      | number
+      | boolean
+      | ReactElement<any, string | JSXElementConstructor<any>>
+      | Iterable<ReactNode>
+      | ReactPortal
+      | null
+      | undefined;
+  }) {
     return (
       <li className={styles.li_items} onClick={props.onClick}>
         <div className='icon'>{props.icon}</div>
@@ -161,6 +189,7 @@ function ProfileNavbar() {
                       <DropdownItems
                         icon={<CgProfile className={styles.dropdown_icon} />}
                         text='My Profile'
+                        onClick={() => null}
                       />
                     </NavLink>
                     <NavLink to='/'>

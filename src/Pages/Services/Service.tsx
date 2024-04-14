@@ -65,7 +65,7 @@ function Services() {
   }, [cart]);
 
   // Function to calculate fare prices based on grand total
-  const calculateFarePrices = (total) => {
+  const calculateFarePrices = (total: string) => {
     const grandTotal = parseFloat(total);
     const discount15Percent = grandTotal * 0.15;
     const discount10Percent = grandTotal * 0.1;
@@ -93,7 +93,7 @@ function Services() {
   };
 
   // Function to handle selecting a fare
-  const handleSelectFare = (fare) => {
+  const handleSelectFare = (fare: any | React.SetStateAction<undefined>) => {
     setFareChange(fare - cart.grand_total);
     setFarePrice(fare);
     setBookData({ ...bookData, after_fare_price: fare });
@@ -174,6 +174,7 @@ function Services() {
   // for datepicker
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     if (typeof dateString === 'string') {
+      console.log(date);
       setBookData({ ...bookData, booking_date: dateString });
     }
   };
@@ -232,19 +233,29 @@ function Services() {
                 <>
                   <h2 className={styles.title}>Your Cart</h2>
                   {cartItems && cartItems.length > 0 ? (
-                    cartItems.map((data) => {
-                      return (
-                        <CartItem
-                          key={data.id}
-                          image={data.service.image}
-                          service={data.service.name}
-                          price={data.service.price}
-                          onDelete={() =>
-                            deleteCartServiceMutation.mutate(data.service.id)
-                          }
-                        />
-                      );
-                    })
+                    cartItems.map(
+                      (data: {
+                        id: string;
+                        service: {
+                          image: string;
+                          name: string;
+                          price: any;
+                          id: string;
+                        };
+                      }) => {
+                        return (
+                          <CartItem
+                            key={data.id}
+                            image={data.service.image}
+                            service={data.service.name}
+                            price={data.service.price}
+                            onDelete={() =>
+                              deleteCartServiceMutation.mutate(data.service.id)
+                            }
+                          />
+                        );
+                      }
+                    )
                   ) : (
                     <p className={styles.null}>No services added on Cart.</p>
                   )}
@@ -348,31 +359,41 @@ function Services() {
           )}
         </div>
         {ServiceList ? (
-          ServiceList.map((data) => {
-            return (
-              <ServiceCard
-                key={data.id}
-                image={data.image}
-                service={data.name}
-                hub={data.hub.name}
-                location={data.hub.address}
-                description={data.description}
-                time={data.estimated_time}
-                price={data.price}
-                onAddToCart={() =>
-                  addCartServiceMutation.mutate({
-                    service_id: data.id,
-                    hub_id: data.hub.id,
-                  })
-                }
-                chatToHub={() =>
-                  chatToHubMutation.mutate({
-                    hub_id: data.hub.id,
-                  })
-                }
-              />
-            );
-          })
+          ServiceList.map(
+            (data: {
+              id: string;
+              image: string;
+              name: string;
+              hub: { name: string; address: string; id: string };
+              description: string;
+              estimated_time: string;
+              price: any;
+            }) => {
+              return (
+                <ServiceCard
+                  key={data.id}
+                  image={data.image}
+                  service={data.name}
+                  hub={data.hub.name}
+                  location={data.hub.address}
+                  description={data.description}
+                  time={data.estimated_time}
+                  price={data.price}
+                  onAddToCart={() =>
+                    addCartServiceMutation.mutate({
+                      service_id: data.id,
+                      hub_id: data.hub.id,
+                    })
+                  }
+                  chatToHub={() =>
+                    chatToHubMutation.mutate({
+                      hub_id: data.hub.id,
+                    })
+                  }
+                />
+              );
+            }
+          )
         ) : (
           <p className={styles.null}>No services available for this address.</p>
         )}

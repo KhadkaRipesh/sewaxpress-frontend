@@ -85,7 +85,7 @@ function Booking() {
     {
       title: 'Action',
       key: 'action',
-      render: (record: { id: string }) => (
+      render: () => (
         <Space size='middle'>
           <Button>View More</Button>
         </Space>

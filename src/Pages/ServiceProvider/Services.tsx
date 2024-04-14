@@ -14,7 +14,7 @@ import { ErrorMessage, SuccessMessage } from '../../utils/notify';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 
-const getBase64 = (img: FileType, callback: (url: string) => void) => {
+const getBase64 = (img: any, callback: (url: string) => void) => {
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result as string));
   reader.readAsDataURL(img);
@@ -47,7 +47,7 @@ function ServiceManagement() {
       title: 'Image',
       dataIndex: 'image',
       key: 'image',
-      render: (image) => (
+      render: (image: string) => (
         <img
           src={`${BACKEND_URL}` + image}
           alt='Service'
@@ -64,7 +64,7 @@ function ServiceManagement() {
       title: 'Category',
       dataIndex: 'category',
       key: 'category',
-      render: (category) => category.category_name,
+      render: (category: { category_name: any }) => category.category_name,
     },
     {
       title: 'Price',
@@ -80,7 +80,7 @@ function ServiceManagement() {
       title: 'Availability',
       dataIndex: 'is_available',
       key: 'availability',
-      render: (available) => (available ? 'true' : 'false'),
+      render: (available: any) => (available ? 'true' : 'false'),
     },
     {
       title: 'Action',
@@ -135,7 +135,7 @@ function ServiceManagement() {
     }
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj as FileType, (url) => {
+      getBase64(info.file.originFileObj as any, (url) => {
         setLoading(false);
         setImageUrl(url);
         setServiceData({ ...serviceData, image: info.file.originFileObj });
@@ -171,7 +171,7 @@ function ServiceManagement() {
         queryClient.invalidateQueries(['myService']);
         SuccessMessage('Service Added Successfully.');
       },
-      onError: (error) => {
+      onError: (error: any) => {
         ErrorMessage(error.response.data.message);
       },
     }

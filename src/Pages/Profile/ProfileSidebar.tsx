@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './ProfileSidebar.module.css';
 import { Icon } from '../../Components/common/Icon';
-function ProfileSideBar(props) {
+function ProfileSideBar(props: { activePage: string | undefined }) {
   return (
     <>
       <div className={styles.usersidebar}>

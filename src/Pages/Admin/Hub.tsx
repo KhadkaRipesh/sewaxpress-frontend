@@ -51,7 +51,7 @@ function HubManagement() {
       title: 'Avatar',
       dataIndex: 'avatar',
       key: 'image',
-      render: (image) => (
+      render: (image: string) => (
         <img
           src={`${BACKEND_URL}` + image}
           alt='Service'
@@ -153,12 +153,12 @@ function HubManagement() {
       title: 'Owned By',
       dataIndex: 'user',
       key: 'user',
-      render: (user) => user.full_name,
+      render: (user: { full_name: string }) => user.full_name,
     },
     {
       title: 'Action',
       key: 'action',
-      render: (record: { id: string }) => (
+      render: () => (
         <Space size='middle'>
           <Button>View</Button>
         </Space>
