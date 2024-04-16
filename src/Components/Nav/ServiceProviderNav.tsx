@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaBars } from 'react-icons/fa';
-import { Icon } from '../common/Icon';
+import { CustomIconType, Icon } from '../common/Icon';
 
 const routes = [
   {
@@ -68,7 +68,7 @@ export default function ServiceProviderNav() {
                   }}
                 >
                   <div className={styles.icon}>
-                    <Icon icon={route.icon}></Icon>
+                    <Icon icon={route.icon as CustomIconType}></Icon>
                   </div>
                   <AnimatePresence>
                     {isOpen && (

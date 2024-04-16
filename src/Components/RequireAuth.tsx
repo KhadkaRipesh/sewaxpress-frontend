@@ -4,8 +4,12 @@ import ServiceProviderNav from './Nav/ServiceProviderNav';
 import { useQuery } from 'react-query';
 import { sessionUser } from '../api/connection';
 import Loading from './resuable/Loading';
+import React from 'react';
 
-const RequireAuth = ({ allowedRoles }) => {
+interface RequireAuthProps {
+  allowedRoles: string;
+}
+const RequireAuth: React.FC<RequireAuthProps> = ({ allowedRoles }) => {
   const location = useLocation();
   const navigate = useNavigate();
 

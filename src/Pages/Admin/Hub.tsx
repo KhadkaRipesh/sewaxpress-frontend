@@ -133,7 +133,17 @@ function HubManagement() {
             >
               <Typography.Link>
                 <Space>
-                  <Badge status={badgeStatus} text={text} />
+                  <Badge
+                    status={
+                      badgeStatus as
+                        | 'success'
+                        | 'processing'
+                        | 'default'
+                        | 'error'
+                        | 'warning'
+                    }
+                    text={text}
+                  />
                   <DownOutlined />
                 </Space>
               </Typography.Link>

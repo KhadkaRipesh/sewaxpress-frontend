@@ -40,7 +40,17 @@ function MyBookings() {
 
         return (
           <div style={{ border: '1px solid #f0f0f0', padding: '5px' }}>
-            <Badge status={badgeStatus} text={text} />
+            <Badge
+              status={
+                badgeStatus as
+                  | 'success'
+                  | 'processing'
+                  | 'default'
+                  | 'error'
+                  | 'warning'
+              }
+              text={text}
+            />
           </div>
         );
       },
