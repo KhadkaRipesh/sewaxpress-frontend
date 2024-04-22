@@ -248,7 +248,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
         <>
           <div className={styles.form}>
             <h2 className={styles.h2}>Create an Account</h2>
-            <a href='http://localhost:8848/auth/google/callback'>
+            <a href={`${BACKEND_URL}/auth/google/callback`}>
               <button className={styles.google} type='submit'>
                 <div className={styles.icon}>
                   <FaGoogle size={17} />
@@ -310,7 +310,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
         <>
           <div className={styles.form}>
             <h2 className={styles.h2}>Login to your Account</h2>
-            <a href='http://localhost:8848/auth/google/callback'>
+            <a href={`${BACKEND_URL}/auth/google/callback`}>
               <button className={styles.google}>
                 <div className={styles.icon}>
                   <FaGoogle size={17} />

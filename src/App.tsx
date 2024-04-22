@@ -130,8 +130,14 @@ function App() {
             <Route path='/messages' element={<Chat />}></Route>
           </Route>
           {/* for profile */}
-          <Route path='/profile/:activePage' element={<UserProfile />}></Route>
-          <Route path='/book/:id' element={<BookingDetails />}></Route>
+          <Route
+            path='/profile/:activePage'
+            element={isAuth ? <UserProfile /> : <PopupModal />}
+          ></Route>
+          <Route
+            path='/book/:id'
+            element={isAuth ? <BookingDetails /> : <PopupModal />}
+          ></Route>
 
           <Route
             path='/login'
