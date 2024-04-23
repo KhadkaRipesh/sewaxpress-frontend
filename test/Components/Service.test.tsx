@@ -85,17 +85,17 @@ describe('Services Component', () => {
     // After clicking, ensure the modal is opened and cart content is visible
     expect(screen.getByText(/Your Cart/i)).toBeTruthy();
 
-    // // Now find and click the "Proceed" button
-    // const proceesButton = screen
-    //   .getAllByRole('button')
-    //   .find((button) =>
-    //     button.textContent ? button.textContent.includes('Proceed') : null
-    //   );
-    // expect(proceesButton).toBeTruthy();
+    // Now find and click the "Proceed" button
+    const proceesButton = screen
+      .getAllByRole('button')
+      .find((button) =>
+        button.textContent ? button.textContent.includes('Proceed') : null
+      );
+    expect(proceesButton).toBeTruthy();
 
-    // if (proceesButton) fireEvent.click(proceesButton);
+    if (proceesButton) fireEvent.click(proceesButton);
 
-    // // After clicking, ensure the modal is opened and cart content is visible
-    // expect(screen.getByText(/Make a Book/i)).toBeTruthy();
+    // After clicking, ensure the modal is opened and cart content is visible
+    expect(screen.getByText(/Make a Book/i)).toBeTruthy();
   });
 });

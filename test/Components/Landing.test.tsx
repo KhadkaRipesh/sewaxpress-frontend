@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import LandingPage from '../../src/Pages/Landing/Landing'; // Ensure the correct import path
+import LandingPage from '../../src/Pages/Landing/Landing'; 
 import React from 'react';
 import '@testing-library/jest-dom/vitest';
 import { BrowserRouter } from 'react-router-dom';
