@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate, useParams } from 'react-router-dom';
 import ServiceCard from '../../Components/mini-component/Service';
 import {
@@ -93,6 +94,7 @@ function Services() {
   };
 
   // Function to handle selecting a fare
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSelectFare = (fare: any | React.SetStateAction<undefined>) => {
     setFareChange(fare - cart.grand_total);
     setFarePrice(fare);

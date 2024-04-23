@@ -135,6 +135,7 @@ export async function deleteMyService(
   return res;
 }
 // add service on hub
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function createService(data: any, jwt: string | null) {
   console.log(data);
   const res = await axiosInstance.post('/service', data, {
