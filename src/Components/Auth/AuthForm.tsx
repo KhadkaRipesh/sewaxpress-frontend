@@ -261,6 +261,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <label>Full Name</label>
             <br />
             <input
+              className={styles.textField}
               type='text'
               name='full_name'
               id='full_name'
@@ -273,6 +274,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <label>Phone Number</label>
             <br />
             <input
+              className={styles.textField}
               type='text'
               name='phone_number'
               id='phone_number'
@@ -285,6 +287,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <label>Email Address:</label>
             <br />
             <input
+              className={styles.textField}
               type='text'
               name='email'
               id='email'
@@ -322,6 +325,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <label>Email Address</label>
             <br />
             <input
+              className={styles.textField}
               type='text'
               name='email'
               id='email'
@@ -334,6 +338,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <label>Password</label>
             <br />
             <input
+              className={styles.textField}
               type='password'
               name='password'
               id='password'
@@ -368,6 +373,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
             <label>Email</label>
             <br />
             <input
+              className={styles.textField}
               type='text'
               name='email'
               id='email'

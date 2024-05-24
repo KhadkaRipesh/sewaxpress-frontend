@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Badge,
   Button,
@@ -44,6 +45,7 @@ function HubManagement() {
         });
     }
   );
+
 
   // Columns for Services
   const columns = [

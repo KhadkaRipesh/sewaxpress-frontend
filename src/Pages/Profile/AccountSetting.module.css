@@ -1,29 +1,52 @@
-.accountsettings {
-  display: flex;
-  flex-direction: column;
+button.change {
+  height: 50px;
+  color: #ffffff;
+  background-color: #1d588b;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  margin-top: 15px;
+  outline: none;
   width: 100%;
+  margin-bottom: 10px;
+}
+.account_settings_form input {
+  width: -webkit-fill-available;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  margin-top: 5px;
+  outline: none;
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+.account_settings {
+  margin-left: 20px;
+}
+.account_settings_form {
+  margin-left: 10px;
+  width: 50%;
+}
+.account_settings {
+  display: flex;
   align-items: center;
 }
-.accountsettings h1 {
-  padding: 10px 20px;
+.account_settings .details {
+  width: 30%;
 }
-
-.accountsettings .form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  padding: 10px 20px;
+.details {
+  text-align: center;
+  border-right: 1px solid rgb(207, 207, 207);
 }
-
-.accountsettings .form .form_group {
-  display: flex;
-  flex-direction: column;
-  width: 45%;
-  margin: 10px;
+.avatar {
+  border-radius: 50%;
 }
-.form_group input {
-  border: 1px solid black;
-  width: 380px;
+h3.userName {
+  margin: 0;
+}
+p.email {
+  margin-top: 0;
+  font-size: 12px;
 }

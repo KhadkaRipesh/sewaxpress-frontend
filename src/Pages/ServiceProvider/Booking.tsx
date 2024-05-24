@@ -1,20 +1,53 @@
-import { Badge, Button, Space, Table } from 'antd';
+import {
+  Badge,
+  Button,
+  Dropdown,
+  MenuProps,
+  Space,
+  Table,
+  Typography,
+} from 'antd';
 import {
   BookingQuery,
   fetchBookingOfServiceProvider,
+  updateBookStatus,
 } from '../../api/connection';
 import moment from 'moment';
 import { motion } from 'framer-motion';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Title } from '../../Components/common/Title';
+import { ErrorMessage } from '../../utils/notify';
 
 function Booking() {
+  const queryClient = useQueryClient();
+
   const query: BookingQuery = {
     // book_status: 'BOOKING_PLACED',
     // date: 'LAST_30_DAYS',
     // start_date: null,
     // end_date: null,
   };
+
+  // function to edit the status of booking by service provider
+  const editBookStatusMutation = useMutation(
+    (params: { book_status: string; book_id: string }) => {
+      const data = {
+        book_status: params.book_status,
+      };
+      return updateBookStatus(params.book_id, data, session)
+        .then((res) => {
+          console.log(res.data);
+          queryClient.invalidateQueries(['mybook']);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            ErrorMessage('Please Login to Continue');
+          } else {
+            console.log(err.response.data.message);
+          }
+        });
+    }
+  );
 
   const columns = [
     {
@@ -28,7 +61,7 @@ function Booking() {
       title: 'Book Status',
       dataIndex: 'book_status',
       key: 'name',
-      render: (text: string) => {
+      render: (text: string, record: { id: string }) => {
         let badgeStatus = 'default';
 
         // Determine badge status and text based on specific conditions
@@ -40,20 +73,61 @@ function Booking() {
           badgeStatus = 'error';
         }
 
+        const items: MenuProps['items'] = [
+          {
+            key: '1',
+            label: 'BOOKING_CANCELLED',
+          },
+          {
+            key: '2',
+            label: 'BOOKING_PROCESSING',
+          },
+          {
+            key: '3',
+            label: 'READYFORSERVICE',
+          },
+        ];
+
+        const handleStatusChange = async (selectedItem: any, record: any) => {
+          try {
+            // Call editHubStatusMutation function here
+            await editBookStatusMutation.mutateAsync({
+              book_status: selectedItem.label,
+              book_id: record.id,
+            });
+          } catch (error) {
+            console.error('Error updating book status:', error);
+          }
+        };
+
         return (
-          <div style={{ border: '1px solid #f0f0f0', padding: '5px' }}>
-            <Badge
-              status={
-                badgeStatus as
-                  | 'success'
-                  | 'processing'
-                  | 'default'
-                  | 'error'
-                  | 'warning'
-              }
-              text={text}
-            />
-          </div>
+          <>
+            <Dropdown
+              menu={{
+                items,
+                selectable: true,
+                defaultSelectedKeys: ['2'],
+                onClick: ({ key }: { key: string }) =>
+                  handleStatusChange(items[Number(key) - 1], record),
+              }}
+            >
+              <Typography.Link>
+                <Space>
+                  <Badge
+                    status={
+                      badgeStatus as
+                        | 'success'
+                        | 'processing'
+                        | 'default'
+                        | 'error'
+                        | 'warning'
+                    }
+                    text={text}
+                  />
+                </Space>
+              </Typography.Link>
+            </Dropdown>
+          </>
         );
       },
     },
@@ -80,26 +154,29 @@ function Booking() {
       ),
     },
     {
-      title: 'Booked From',
-      dataIndex: 'hub',
-      key: 'hub',
-      render: (hub: { id: string; name: string }) => hub.name,
+      title: 'Booked By',
+      dataIndex: 'customer',
+      key: 'customer',
+      render: (customer: { id: string; full_name: string }) =>
+        customer.full_name,
+    },
+    {
+      title: 'Contact',
+      dataIndex: 'customer',
+      key: 'customer',
+      render: (customer: { phone_number: string }) => customer.phone_number,
+    },
+    {
+      title: 'Booked Address',
+      dataIndex: 'booking_address',
+      key: 'booking_address',
     },
 
     {
-      title: 'Total Price',
+      title: 'Total Charge',
       dataIndex: 'grand_total',
       key: 'price',
       render: (grand_total: string) => `Rs. ${grand_total}`,
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: () => (
-        <Space size='middle'>
-          <Button>View More</Button>
-        </Space>
-      ),
     },
   ];
 
@@ -118,8 +195,10 @@ function Booking() {
         initial={{ opacity: 0, width: '100%' }}
         animate={{ opacity: 1, width: '100%', transition: { duration: 1 } }}
       >
-        <Title title='Service Management' />
-        <Table columns={columns} dataSource={data} rowKey='id' />
+        <Title title='Booking Management' />
+        <div className='data'>
+          <Table columns={columns} dataSource={data} rowKey='id' />
+        </div>
       </motion.div>
     </>
   );

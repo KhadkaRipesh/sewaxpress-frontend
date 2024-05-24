@@ -1,12 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './Category.module.css';
-import image1 from '../../assets/images/category/beauty.jpg';
-import image2 from '../../assets/images/category/man.avif';
-import image3 from '../../assets/images/category/ac.jpg';
-import image4 from '../../assets/images/category/cleaner.jpg';
-import image5 from '../../assets/images/category/pluimb.webp';
-import image6 from '../../assets/images/category/painter.jpg';
 import categoryImage from '../../assets/images/category/category.png';
+import { fetchCategories } from '../../api/connection';
+import { useQuery } from 'react-query';
+import { BACKEND_URL } from '../../constants/constants';
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from 'react';
 
 function Category() {
   const navigate = useNavigate();
@@ -19,38 +18,10 @@ function Category() {
   // Check if the city parameter is valid
   const isValidCity = typeof city === 'string' && validCities.includes(city);
 
-  const categories = [
-    {
-      name: `Women's Salon & Spa`,
-      image: `${image1}`,
-      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
-    },
-    {
-      name: `Men's Salon & Massage`,
-      image: `${image2}`,
-      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
-    },
-    {
-      name: `AC & Appliance Repair`,
-      image: `${image3}`,
-      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
-    },
-    {
-      name: `Cleaning & Pest Control`,
-      image: `${image4}`,
-      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
-    },
-    {
-      name: `Electrician, Plumber & Carpenters`,
-      image: `${image5}`,
-      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
-    },
-    {
-      name: `Painting & Waterproofing`,
-      image: `${image6}`,
-      type: 'b7fdee94-c52a-4aab-986e-84bdf105a9fc',
-    },
-  ];
+
+  const { data: category } = useQuery('category', () => fetchCategories(1, 10));
+  const data = category?.data.data.result;
+  console.log(data);
 
   const handleRoute = (category: string) => {
     navigate(`/${city}/${category}`);
@@ -66,21 +37,21 @@ function Category() {
               <div className={styles.category}>
                 <h4 className={styles.h4}>What are you looking for?</h4>
                 <div className={styles.category_items}>
-                  {categories.map((category, index) => (
+                  {data?.map((data: { id: string; image: string; category_name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }, index: Key | null | undefined) => (
                     <div
                       key={index}
                       className={styles.box}
-                      onClick={() => handleRoute(`${category.type}`)}
+                      onClick={() => handleRoute(`${data.id}`)}
                     >
                       <div className={styles.image}>
                         <img
                           className={styles.image}
-                          src={category.image}
+                          src={`${BACKEND_URL}` + data.image}
                           alt=''
                           style={{ mixBlendMode: 'color-burn' }}
                         />
                       </div>
-                      <span className={styles.name}>{category.name}</span>
+                      <span className={styles.name}>{data.category_name}</span>
                     </div>
                   ))}
                 </div>

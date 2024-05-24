@@ -1,4 +1,4 @@
-import { Button, Drawer, Space, Table, Popconfirm, Upload } from 'antd';
+import { Button, Space, Table, Popconfirm, Modal } from 'antd';
 import { Title } from '../../Components/common/Title';
 import { motion } from 'framer-motion';
 import styles from './Dashboard.module.css';
@@ -7,22 +7,34 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   createService,
   deleteMyService,
+  fetchCategories,
   fetchOwnServices,
+  updateService,
 } from '../../api/connection';
 import { BACKEND_URL } from '../../constants/constants';
 import { ErrorMessage, SuccessMessage } from '../../utils/notify';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
-
-const getBase64 = (img: any, callback: (url: string) => void) => {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result as string));
-  reader.readAsDataURL(img);
-};
+interface ServiceData {
+  image?: File | null;
+  name?: string;
+  description?: string;
+  price?: string;
+  estimated_time?: string;
+  category_id?: string;
+  category?: {
+    category_name?: string;
+  };
+}
 
 function ServiceManagement() {
   // queryclient
   const queryClient = useQueryClient();
+
+  // New state to check if we are editing
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Store the id of the service being edited
+  const [editingServiceId, setEditingServiceId] = useState(null);
+
   // state for side modal
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
@@ -31,15 +43,12 @@ function ServiceManagement() {
 
   const onClose = () => {
     setOpen(false);
+    setIsEditing(false); // Reset editing state when closing the modal
+    setServiceData({}); // Clear form data when closing the modal
   };
 
-  //   for image
-
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
-
   //   state for adding service
-  const [serviceData, setServiceData] = useState({});
+  const [serviceData, setServiceData] = useState<ServiceData>({});
 
   // Columns for Services
   const columns = [
@@ -85,9 +94,9 @@ function ServiceManagement() {
     {
       title: 'Action',
       key: 'action',
-      render: (record: { id: string }) => (
+      render: (record) => (
         <Space size='middle'>
-          <Button>Edit</Button>
+          <Button onClick={() => handleEditClick(record)}>Edit</Button>
           <Popconfirm
             title='Delete the service?'
             onConfirm={() => confirm(record.id)}
@@ -105,6 +114,14 @@ function ServiceManagement() {
   function confirm(service_id: string) {
     deleteServiceMutation.mutate(service_id);
   }
+
+  const handleEditClick = (record) => {
+    console.log(record);
+    setServiceData(record);
+    setEditingServiceId(record.id);
+    setIsEditing(true);
+    setOpen(true);
+  };
 
   //   fetch services
   const session = localStorage.getItem('jwtToken');
@@ -127,43 +144,25 @@ function ServiceManagement() {
     }
   );
 
-  //   for image file
-  const handleChange: UploadProps['onChange'] = (info) => {
-    if (info.file.status === 'uploading') {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj as any, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-        setServiceData({ ...serviceData, image: info.file.originFileObj });
-      });
-    } else {
-      console.log('Error uploading file');
-    }
-  };
-
-  const uploadButton = (
-    <button style={{ border: 0, background: 'none' }} type='button'>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </button>
-  );
-
   // handling service data
   const handleAddService = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     field: string
   ) => {
-    setServiceData({ ...serviceData, [field]: event.target.value });
-    console.log(serviceData);
+    if (
+      event.target instanceof HTMLInputElement &&
+      event.target.type === 'file'
+    ) {
+      const file = event.target.files && event.target.files[0];
+      setServiceData({ ...serviceData, [field]: file });
+    } else {
+      setServiceData({ ...serviceData, [field]: event.target.value });
+    }
   };
 
   const addServiceMutation = useMutation(
     () => {
-      console.log('hel');
+      setServiceData([]);
       return createService(serviceData, session);
     },
     {
@@ -177,6 +176,31 @@ function ServiceManagement() {
     }
   );
 
+  const updateServiceMutation = useMutation(
+    () => updateService(editingServiceId!, serviceData, session),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['myService']);
+        SuccessMessage('Service Updated Successfully.');
+        onClose();
+      },
+      onError: (error: any) => {
+        ErrorMessage(error.response.data.message);
+      },
+    }
+  );
+
+  const handleSaveService = () => {
+    if (isEditing) {
+      updateServiceMutation.mutate();
+    } else {
+      addServiceMutation.mutate();
+    }
+  };
+
+  const { data: category } = useQuery('category', () => fetchCategories(1, 10));
+  const datas = category?.data.data.result;
+
   return (
     <>
       <motion.div
@@ -184,111 +208,111 @@ function ServiceManagement() {
         animate={{ opacity: 1, width: '100%', transition: { duration: 1 } }}
       >
         <Title title='Service Management' />
-        <button className={styles.addbtn} onClick={showDrawer}>
+        <button className={styles.addbtn} onClick={() => showDrawer()}>
           Add Service
         </button>
-        <Drawer
-          title='Add new service'
-          width={720}
-          onClose={onClose}
-          open={open}
-          styles={{
-            body: {
-              paddingBottom: 80,
-            },
-          }}
-          extra={
-            <Space>
-              <Button onClick={onClose}>Cancel</Button>
-              <Button
-                onClick={() => {
-                  onClose();
-                  addServiceMutation.mutate();
-                }}
-                type='primary'
+        {open && (
+          <Modal
+            open={open}
+            onCancel={onClose}
+            footer={null}
+            className='modalStyle'
+          >
+            {/* Form here */}
+            <div className={styles.form}>
+              <h2 className={styles.h2}>
+                {isEditing ? 'Edit Service' : 'Add New Service'}
+              </h2>
+
+              <label>Service Image</label>
+              <br />
+              <div className={styles.textField}>
+                <input
+                  type='file'
+                  name='image'
+                  id='image'
+                  onChange={(e) => handleAddService(e, 'image')}
+                  required={!isEditing}
+                />
+              </div>
+
+              <label>Service Name</label>
+              <input
+                className={styles.textField}
+                type='text'
+                name='name'
+                id='name'
+                placeholder='Enter service name'
+                value={serviceData.name || ''}
+                onChange={(e) => handleAddService(e, 'name')}
+                required
+              />
+
+              <label>Service Description</label>
+              <br />
+              <input
+                className={styles.textField}
+                type='text'
+                name='description'
+                id='description'
+                placeholder='Description here'
+                value={serviceData.description || ''}
+                onChange={(e) => handleAddService(e, 'description')}
+                required
+              />
+
+              <label>Price</label>
+              <input
+                className={styles.textField}
+                type='text'
+                name='price'
+                id='price'
+                placeholder='Price here'
+                value={serviceData.price || ''}
+                onChange={(e) => handleAddService(e, 'price')}
+                required
+              />
+
+              <label>Time</label>
+              <input
+                className={styles.textField}
+                type='text'
+                name='estimated_time'
+                id='estimated_time'
+                placeholder='Estimated time here'
+                value={serviceData.estimated_time || ''}
+                onChange={(e) => handleAddService(e, 'estimated_time')}
+                required
+              />
+
+              <label>Category</label>
+              <select
+                className={styles.textField}
+                name='category_id'
+                id='category_id'
+                value={serviceData.category_id || ''}
+                onChange={(e) => handleAddService(e, 'category_id')}
+                required={!isEditing}
               >
-                Submit
-              </Button>
-            </Space>
-          }
-        >
-          {/* Form here */}
-          <div className='form'>
-            <label>Service Image</label>
-            <Upload
-              name='avatar'
-              listType='picture-card'
-              className='avatar-uploader'
-              showUploadList={false}
-              action='https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188'
-              onChange={handleChange}
+                <option value={''}>Select a Category</option>
+                {datas.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.category_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button
+              className={styles.add}
+              onClick={() => {
+                onClose();
+                handleSaveService();
+              }}
             >
-              {imageUrl ? (
-                <img src={imageUrl} alt='avatar' style={{ width: '100%' }} />
-              ) : (
-                uploadButton
-              )}
-            </Upload>
-            <br />
-
-            <label>Service Name</label>
-            <br />
-            <input
-              type='text'
-              name='name'
-              id='name'
-              placeholder='Enter service name'
-              onChange={(e) => handleAddService(e, 'name')}
-              required
-            />
-            <br />
-
-            <label>Service Description</label>
-            <br />
-            <input
-              type='text'
-              name='description'
-              id='description'
-              placeholder='Description here'
-              onChange={(e) => handleAddService(e, 'description')}
-              required
-            />
-            <br />
-
-            <label>Price</label>
-            <input
-              type='text'
-              name='price'
-              id='price'
-              placeholder='Price here'
-              onChange={(e) => handleAddService(e, 'price')}
-              required
-            />
-            <br />
-
-            <label>Time</label>
-            <input
-              type='text'
-              name='estimated_time'
-              id='estimated_time'
-              placeholder='Price here'
-              onChange={(e) => handleAddService(e, 'estimated_time')}
-              required
-            />
-            <br />
-
-            <label>Category</label>
-            <input
-              type='text'
-              name='category_id'
-              id='category_id'
-              placeholder='Category here'
-              onChange={(e) => handleAddService(e, 'category_id')}
-              required
-            />
-            <br />
-          </div>
-        </Drawer>
+              {isEditing ? 'Update Service' : 'Add Service'}
+            </button>
+          </Modal>
+        )}
         <div className='data'>
           <Table columns={columns} dataSource={data} rowKey={'id'} />
         </div>

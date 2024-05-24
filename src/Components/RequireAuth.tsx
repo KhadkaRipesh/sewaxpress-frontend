@@ -31,8 +31,6 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ allowedRoles }) => {
     return <Loading />;
   }
 
-  console.log(userInfo);
-
   if (userInfo?.role === allowedRoles) {
     return (
       <div className='admins'>

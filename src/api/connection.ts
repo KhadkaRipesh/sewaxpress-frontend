@@ -147,6 +147,18 @@ export async function createService(data: any, jwt: string | null) {
   return res;
 }
 
+// update service on hub
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function updateService(id: string, data: any, jwt: string | null) {
+  const res = await axiosInstance.patch(`/service/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res;
+}
+
 export async function sessionUser(jwt: null | string) {
   const res = await axiosInstance.get('/users/current-user', {
     headers: {
@@ -286,6 +298,20 @@ export async function fetchHubs(jwt: string | null) {
   return res;
 }
 
+// update book status by service provider
+export async function updateBookStatus(
+  book_id: string,
+  data: { book_status: string | null },
+  jwt: string | null
+) {
+  const res = await axiosInstance.post(`book/change-status/${book_id}`, data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
+
 // update hub status by admin
 export async function updateHubStatus(
   hub_id: string,
@@ -312,5 +338,67 @@ export async function fetchBookingOfServiceProvider(
     params: query,
   });
 
+  return res;
+}
+
+// add category by admin
+export async function createCategory(data: unknown, jwt: string | null) {
+  const res = await axiosInstance.post('/category', data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res;
+}
+
+// edit category by admin
+export async function editCategory(
+  id: string,
+  data: unknown,
+  jwt: string | null
+) {
+  console.log(data);
+  const res = await axiosInstance.patch(`/category/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res;
+}
+// delete category by admin
+export async function deleteCategory(
+  category_id: string | null,
+  jwt: string | null
+) {
+  const res = await axiosInstance.delete(`/category/${category_id}`, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}
+// fetch all categories
+export async function fetchCategories(page: number, limit: number) {
+  const res = await axiosInstance.get(`/category?page=${page}&limit=${limit}`);
+  return res;
+}
+
+//  fetch category by id
+export async function fetchCategoryById(id: string) {
+  const res = await axiosInstance.get(`category/${id}`);
+  return res;
+}
+
+// update user profile
+export async function updateProfile(data: unknown, jwt: string | null) {
+  console.log(data);
+  const res = await axiosInstance.patch(`users/current-user`, data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return res;
 }

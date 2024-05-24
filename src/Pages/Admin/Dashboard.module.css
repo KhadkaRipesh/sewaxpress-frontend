@@ -7,3 +7,61 @@
 .middlecontainer {
   display: flex;
 }
+
+button.addbtn {
+  text-decoration: none;
+  padding: 10px 24px;
+  background-color: #1d588b;
+  color: #ffffff;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+}
+.form {
+  background-color: #f2f2f2;
+}
+h2.h2 {
+  text-align: center;
+  font-size: 32px;
+}
+h2.h22 {
+  text-align: center;
+  font-size: 32px;
+  margin: auto;
+}
+label {
+  font-size: 16px;
+}
+
+Input.textfield {
+  width: 97%;
+}
+.textField {
+  width: 97%;
+  padding-left: 10px;
+  height: 50px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  margin-top: 5px;
+  outline: none;
+  display: flex;
+  align-items: center;
+  background: white;
+}
+button.create {
+  height: 50px;
+  width: 100%;
+  color: #ffffff;
+  background-color: #1d588b;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  margin-top: 15px;
+  outline: none;
+}
