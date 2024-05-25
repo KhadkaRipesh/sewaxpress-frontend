@@ -108,7 +108,7 @@ function ProfileNavbar() {
             </NavLink>
           </div>
           <div className={styles.topCenter}>
-            <div className={styles.searchContainer}>
+            {/* <div className={styles.searchContainer}>
               <CiSearch />
               <input
                 type='text'
@@ -117,7 +117,7 @@ function ProfileNavbar() {
                 onChange={handleChange}
                 value={searchInput}
               />
-            </div>
+            </div> */}
           </div>
           <div className={styles.topRight}>
             <div

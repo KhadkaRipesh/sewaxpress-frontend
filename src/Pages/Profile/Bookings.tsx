@@ -1,10 +1,18 @@
 import { useQuery } from 'react-query';
-import { BookingQuery, getMyBookings } from '../../api/connection';
-import { Badge, Button, Space, Table } from 'antd';
+import { BookingQuery, getMyBookings, reviewHub } from '../../api/connection';
+import { Button, Flex, Modal, Rate, Space, Table } from 'antd';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import styles from './Booking.module.css';
+import TextArea from 'antd/es/input/TextArea';
+import { ErrorMessage, SuccessMessage } from '../../utils/notify';
 
 function MyBookings() {
+  type Review = {
+    rating: number;
+    comment: string;
+  };
   const navigate = useNavigate();
   const query: BookingQuery = {
     // book_status: 'BOOKING_PLACED',
@@ -12,6 +20,22 @@ function MyBookings() {
     // start_date: null,
     // end_date: null,
   };
+
+  // state  for modal
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [hubToRate, setHubToRate] = useState('');
+  const [hubIdToRate, setHubIdToRate] = useState('');
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const handleCancel = () => {
+    setModalOpen(false);
+  };
+
+  const [review, setReview] = useState<Review>({
+    rating: 1,
+    comment: '',
+  });
 
   // columns for table
   const columns = [
@@ -22,39 +46,7 @@ function MyBookings() {
       render: (booking_date: moment.MomentInput) =>
         moment(booking_date).format('YYYY-MM-DD'),
     },
-    {
-      title: 'Book Status',
-      dataIndex: 'book_status',
-      key: 'name',
-      render: (text: string) => {
-        let badgeStatus = 'default';
 
-        // Determine badge status and text based on specific conditions
-        if (text === 'BOOKING_PLACED') {
-          badgeStatus = 'processing';
-        } else if (text === 'BOOKING_CONFIRMED') {
-          badgeStatus = 'success';
-        } else if (text === 'BOOKING_CANCELLED') {
-          badgeStatus = 'error';
-        }
-
-        return (
-          <div style={{ border: '1px solid #f0f0f0', padding: '5px' }}>
-            <Badge
-              status={
-                badgeStatus as
-                  | 'success'
-                  | 'processing'
-                  | 'default'
-                  | 'error'
-                  | 'warning'
-              }
-              text={text}
-            />
-          </div>
-        );
-      },
-    },
     {
       title: 'Booked Services',
       dataIndex: 'booked_services',
@@ -99,6 +91,15 @@ function MyBookings() {
         </Space>
       ),
     },
+    {
+      title: 'Rate',
+      key: 'action',
+      render: (record: { hub: { id: string; name: string } }) => (
+        <Space size='middle'>
+          <Button onClick={() => rateHub(record.hub)}>Rate Hubs</Button>
+        </Space>
+      ),
+    },
   ];
 
   //   fetch my bookings
@@ -110,12 +111,71 @@ function MyBookings() {
   );
   const data = services?.data.data;
 
+  // navigate to booking detail page
   const viewStatus = (id: string) => {
     navigate(`/book/${id}`);
   };
+
+  const rateHub = (hub: { id: string; name: string }) => {
+    openModal();
+    setHubToRate(hub.name);
+    setHubIdToRate(hub.id);
+  };
+
+  // function to handle rating of hub
+  const handleRating = () => {
+    reviewHub(hubIdToRate, review, session)
+      .then((res) => SuccessMessage(res.data.message))
+      .catch((e) => ErrorMessage(e.response.data.message));
+  };
+
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey='id' />
+      {isModalOpen && (
+        <Modal
+          open={isModalOpen}
+          onCancel={handleCancel}
+          footer={null}
+          className='modalStyle'
+        >
+          <h2 className={styles.h2}>
+            Rate <span>'{hubToRate}'</span>
+          </h2>
+
+          <br />
+
+          <Flex gap='middle' vertical>
+            <Rate
+              className={styles.icons}
+              onChange={(e) => {
+                setReview({ ...review, rating: e });
+              }}
+              value={review.rating}
+            />
+          </Flex>
+
+          <br />
+          <TextArea
+            rows={3}
+            placeholder='Write a comment here.'
+            maxLength={100}
+            onChange={(event) =>
+              setReview({ ...review, comment: event?.target.value })
+            }
+          />
+
+          <button
+            className={styles.rate}
+            onClick={() => {
+              handleCancel();
+              handleRating();
+            }}
+          >
+            Rate Hub
+          </button>
+        </Modal>
+      )}
     </>
   );
 }

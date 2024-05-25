@@ -402,3 +402,23 @@ export async function updateProfile(data: unknown, jwt: string | null) {
   });
   return res;
 }
+
+// get new service of specific location
+export async function fetchNewServices(location: string) {
+  const res = await axiosInstance.get(`service/new-service/${location}`);
+  return res;
+}
+
+// rate a hub
+export async function reviewHub(
+  hub_id: string,
+  data: unknown,
+  jwt: string | null
+) {
+  const res = await axiosInstance.post(`/hub/review/${hub_id}`, data, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return res;
+}

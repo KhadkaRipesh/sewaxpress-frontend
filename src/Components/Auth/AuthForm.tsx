@@ -162,7 +162,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, toggleMode }) => {
         .then(() => {
           SuccessMessage('Check email to set password.');
           navigate('/');
-          // window.location.reload();
+          window.location.reload();
         })
         .catch((error) => {
           if (error.response) {

@@ -117,3 +117,10 @@ button.chat {
 .description {
   margin-top: 30px;
 }
+i.i{
+  font-size: 14px;
+}
+p.rate{
+  display: flex;
+  align-items: center;
+}

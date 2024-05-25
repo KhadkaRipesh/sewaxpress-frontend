@@ -59,24 +59,42 @@ function LandingPage() {
             <h2>Why SewaXpress?</h2>
             <ul className={styles.why_us}>
               <li>
-                <div className={styles.why_image}></div>
+                <div className={styles.why_image}>
+                  <img
+                    src='https://res.cloudinary.com/urbanclap/image/upload/q_40,f_auto/categories/category_v2/category_29614d40.png'
+                    alt=''
+                    height={80}
+                  />
+                </div>
                 <section>
                   <h3>Transparent Pricing</h3>
                   <p>See fixed prices before you book. No hidden charges.</p>
                 </section>
               </li>
               <li>
-                <div className={styles.why_image}></div>
+                <div className={styles.why_image}>
+                  <img
+                    src='https://res.cloudinary.com/urbanclap/image/upload/q_40,f_auto/categories/category_v2/category_2cc7d0d0.png'
+                    alt=''
+                    height={80}
+                  />
+                </div>
                 <section>
                   <h3>Professional Support</h3>
                   <p>Dedicated customer service team for constant support.</p>
                 </section>
               </li>
               <li>
-                <div className={styles.why_image}></div>
+                <div className={styles.why_image}>
+                  <img
+                    src='https://res.cloudinary.com/urbanclap/image/upload/q_40,f_auto/categories/category_v2/category_2caafa00.png'
+                    alt=''
+                    height={80}
+                  />
+                </div>
                 <section>
                   <h3>Wide range services</h3>
-                  <p>See fixed prices before you book. No hidden charges.</p>
+                  <p>We bring everything needed to get the job done well.</p>
                 </section>
               </li>
             </ul>

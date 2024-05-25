@@ -74,7 +74,7 @@ function ChatContent(props: {
             <div className={styles.content__header}>
               <div className={styles.blocks}>
                 <div className={styles.current_chatting_user}>
-                  <div className={styles.avatar}>
+                  {/* <div className={styles.avatar}>
                     <div className='avatar_img'>
                       <img
                         src={
@@ -84,7 +84,7 @@ function ChatContent(props: {
                       />
                     </div>
                     <span className={`isOnline`}></span>
-                  </div>
+                  </div> */}
                   <p>{props.title ? props.title : defaultTitle}</p>
                 </div>
               </div>

@@ -30,8 +30,8 @@ function ChatItems(props: {
         <div className={styles.chat__item__content}>
           <div className={styles.chat__msg}>{props.msg}</div>
           <div className={styles.chat__meta}>
-            <span>16 mins ago</span>
-            <span>Seen 1.03PM</span>
+            {/* <span>16 mins ago</span>
+            <span>Seen 1.03PM</span> */}
           </div>
         </div>
         <div className={styles.avatar}>

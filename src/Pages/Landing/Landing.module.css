@@ -137,7 +137,7 @@ ul.why_us {
   flex-direction: column;
 }
 .why_image {
-  background-color: #1d588b;
+  /* background-color: #1d588b; */
   height: 80px;
   width: 80px;
 }

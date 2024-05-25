@@ -2,6 +2,7 @@ import { Icon } from '../common/Icon';
 import styles from './Service.module.css';
 import chat from '../../assets/images/chat.jpg';
 import { BACKEND_URL } from '../../constants/constants';
+import { MdStarRate } from 'react-icons/md';
 
 function ServiceCard(props: any) {
   return (
@@ -28,6 +29,12 @@ function ServiceCard(props: any) {
               <span>{props.location}</span>
             </div>
           </span>
+          <p className={styles.rate}>
+            <MdStarRate size={14} />
+            <i className={styles.i}>
+              {props.rate} ({props.count})
+            </i>
+          </p>
           <div className={styles.description}>
             <span>{props.description}</span>
           </div>

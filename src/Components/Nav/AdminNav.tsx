@@ -13,11 +13,6 @@ const routes = [
     icon: 'dashboard',
   },
   {
-    path: '/admin/booking',
-    name: 'Bookings',
-    icon: 'booking',
-  },
-  {
     path: '/admin/category',
     name: 'Category',
     icon: 'categoryy',
@@ -25,12 +20,7 @@ const routes = [
   {
     path: '/admin/hub',
     name: 'Hubs',
-    icon: 'categoryy',
-  },
-  {
-    path: '/admin/user',
-    name: 'Users',
-    icon: 'users',
+    icon: 'booking',
   },
 ];
 

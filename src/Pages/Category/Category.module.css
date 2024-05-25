@@ -13,6 +13,14 @@
   padding-bottom: 20px;
   width: 500px;
 }
+
+.new {
+  border-radius: 10px;
+  border: 1px solid #e3e3e3;
+  padding-bottom: 20px;
+  width: 500px;
+  height: 350px;
+}
 .category_items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -73,7 +81,27 @@ img.image {
 .right img {
   height: 400px;
 }
-.new_services,
+
 .most_booked {
   display: block;
+}
+.new_services {
+  display: flex;
+  gap: 20px;
+}
+.new .image {
+  margin: 10px;
+  height: 300px;
+}
+.new_name {
+  font-size: 18px;
+}
+.new .contentt {
+  padding-left: 10px;
+}
+.price {
+  font-size: 14px;
+}
+.new {
+  width: 365px;
 }

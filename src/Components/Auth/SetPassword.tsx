@@ -57,6 +57,7 @@ function SetPassword() {
           <label>Password</label>
           <br />
           <input
+            className={styles.textField}
             type='password'
             name='password'
             id='password'
@@ -69,6 +70,7 @@ function SetPassword() {
           <label>Password</label>
           <br />
           <input
+            className={styles.textField}
             type='password'
             name='re_password'
             id='re_password'

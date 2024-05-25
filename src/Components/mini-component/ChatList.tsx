@@ -27,7 +27,7 @@ function ChatListItems(props: any) {
 
         <div className={styles.userMeta}>
           <p>{props.name}</p>
-          <span className={styles.activeTime}>32 mins ago</span>
+          {/* <span className={styles.activeTime}>32 mins ago</span> */}
         </div>
       </div>
     </>

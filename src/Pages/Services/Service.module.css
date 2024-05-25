@@ -18,6 +18,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  position: fixed;
+  float: right;
+  right: 380px;
 }
 .head {
   display: flex;

@@ -92,8 +92,8 @@
 }
 
 .chatlist__item .userMeta p {
-  margin: 0;
-  padding: 0;
+  /* margin: 0;
+  padding: 0; */
   color: #000;
   font-weight: 600;
   font-size: 14px;

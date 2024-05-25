@@ -17,6 +17,8 @@ import {
   ReactPortal,
   Key,
 } from 'react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 function BookingDetails() {
   const { id } = useParams();
@@ -61,6 +63,30 @@ function BookingDetails() {
       }
     });
   };
+
+  const handleDownload = async () => {
+    try {
+      const input = document.getElementById('report');
+      const canvas = await html2canvas(input, {
+        scale: 2, // Increase the scale for better quality
+        useCORS: true, // Ensure cross-origin images are loaded properly
+      });
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const imgProps = pdf.getImageProperties(imgData);
+      const imgWidth = pdfWidth - 20; // Apply padding to left and right (10mm each)
+      const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+      const xOffset = 10; // 10mm padding on the left
+      const yOffset = 50; // 50px from the top
+
+      pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight);
+      pdf.save(`${bookingDetails?.book_otp}.pdf`);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
   return (
     <>
       <ProfileNavbar />
@@ -70,57 +96,88 @@ function BookingDetails() {
             <Icon icon='back' />
             <span>BACK</span>
           </button>
-          <h1>Booking Details</h1>
-          <table className={styles.content_table}>
-            <thead>
-              <tr>
-                <th>Booking ID</th>
-                <th>Booking Status</th>
-                <th>Booking Date</th>
-                <th>Booking Address</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{bookingDetails?.book_otp}</td>
-                <td>{bookingDetails?.book_status}</td>
-                <td>
-                  {new Date(bookingDetails?.booking_date).toLocaleDateString()}
-                </td>
-                <td>{bookingDetails?.booking_address}</td>
-              </tr>
-            </tbody>
-          </table>
-          <h1>Service Provider Details</h1>
-          <table className={styles.content_table}>
-            <thead>
-              <tr>
-                <th>Hub Name</th>
-                <th>Hub Address</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{bookingDetails?.hub.name}</td>
-                <td>{bookingDetails?.hub.address}</td>
-              </tr>
-            </tbody>
-          </table>
-          <h1>Booked Services Detail</h1>
-          <table className={styles.content_table}>
-            <thead>
-              <tr>
-                <th>Service Name</th>
-                <th>Estimated Time</th>
-                <th>Service Cost</th>
-              </tr>
-            </thead>
-            <tbody>
-              {bookingDetails?.booked_services.map(
-                (
-                  service: {
+          <button className={styles.back} onClick={handleDownload}>
+            <span>DOWNLOAD REPORT</span>
+          </button>
+          <div className='report' id='report'>
+            <h1>Booking Details</h1>
+            <table className={styles.content_table}>
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Booking Status</th>
+                  <th>Booking Date</th>
+                  <th>Booking Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{bookingDetails?.book_otp}</td>
+                  <td>{bookingDetails?.book_status}</td>
+                  <td>
+                    {new Date(
+                      bookingDetails?.booking_date
+                    ).toLocaleDateString()}
+                  </td>
+                  <td>{bookingDetails?.booking_address}</td>
+                </tr>
+              </tbody>
+            </table>
+            <h1>Service Provider Details</h1>
+            <table className={styles.content_table}>
+              <thead>
+                <tr>
+                  <th>Hub Name</th>
+                  <th>Hub Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{bookingDetails?.hub.name}</td>
+                  <td>{bookingDetails?.hub.address}</td>
+                </tr>
+              </tbody>
+            </table>
+            <h1>Booked Services Detail</h1>
+            <table className={styles.content_table}>
+              <thead>
+                <tr>
+                  <th>Service Name</th>
+                  <th>Estimated Time</th>
+                  <th>Service Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookingDetails?.booked_services.map(
+                  (
                     service: {
-                      name:
+                      service: {
+                        name:
+                          | string
+                          | number
+                          | boolean
+                          | ReactElement<
+                              any,
+                              string | JSXElementConstructor<any>
+                            >
+                          | Iterable<ReactNode>
+                          | ReactPortal
+                          | null
+                          | undefined;
+                        estimated_time:
+                          | string
+                          | number
+                          | boolean
+                          | ReactElement<
+                              any,
+                              string | JSXElementConstructor<any>
+                            >
+                          | Iterable<ReactNode>
+                          | ReactPortal
+                          | null
+                          | undefined;
+                      };
+                      price:
                         | string
                         | number
                         | boolean
@@ -129,118 +186,102 @@ function BookingDetails() {
                         | ReactPortal
                         | null
                         | undefined;
-                      estimated_time:
-                        | string
-                        | number
-                        | boolean
-                        | ReactElement<any, string | JSXElementConstructor<any>>
-                        | Iterable<ReactNode>
-                        | ReactPortal
-                        | null
-                        | undefined;
-                    };
-                    price:
-                      | string
-                      | number
-                      | boolean
-                      | ReactElement<any, string | JSXElementConstructor<any>>
-                      | Iterable<ReactNode>
-                      | ReactPortal
-                      | null
-                      | undefined;
-                  },
-                  index: Key | null | undefined
-                ) => (
-                  <tr key={index}>
-                    <td>{service.service.name}</td>
-                    <td>{service.service.estimated_time}</td>
-                    <td>Rs: {service.price}</td>
-                  </tr>
-                )
+                    },
+                    index: Key | null | undefined
+                  ) => (
+                    <tr key={index}>
+                      <td>{service.service.name}</td>
+                      <td>{service.service.estimated_time}</td>
+                      <td>Rs: {service.price}</td>
+                    </tr>
+                  )
+                )}
+                <tr>
+                  <td></td>
+                  <td className={styles.border}>Total Cost: </td>
+                  <td className={styles.border}>
+                    Rs: {bookingDetails?.sub_total}
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td className={styles.border}>Negotiated Price: </td>
+                  <td className={styles.border}>
+                    Rs:{' '}
+                    {bookingDetails?.sub_total - bookingDetails?.grand_total}
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td className={styles.border}>To Pay: </td>
+                  <td className={styles.border}>
+                    Rs: {bookingDetails?.grand_total}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div className={styles.payment}>
+              {bookingDetails?.book_status === 'BOOKING_CANCELLED' ? (
+                <></>
+              ) : (
+                <>
+                  Payment Status:
+                  {bookingDetails?.hasCustomerPaid ? (
+                    <>
+                      <div className={styles.action}>
+                        <p>Paid</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className={styles.action}>
+                        <p>Pending</p>
+                        <button
+                          className={styles.pay}
+                          onClick={() => payThroughKhalti(bookingDetails.id)}
+                        >
+                          Pay Now
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </>
               )}
-              <tr>
-                <td></td>
-                <td className={styles.border}>Total Cost: </td>
-                <td className={styles.border}>
-                  Rs: {bookingDetails?.sub_total}
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td className={styles.border}>Negotiated Price: </td>
-                <td className={styles.border}>
-                  Rs: {bookingDetails?.sub_total - bookingDetails?.grand_total}
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td className={styles.border}>To Pay: </td>
-                <td className={styles.border}>
-                  Rs: {bookingDetails?.grand_total}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className={styles.payment}>
-            {bookingDetails?.book_status === 'BOOKING_CANCELLED' ? (
-              <></>
-            ) : (
-              <>
-                Payment Status:
-                {bookingDetails?.hasCustomerPaid ? (
+            </div>
+
+            <div className={styles.cancel}>
+              {bookingDetails?.book_status !== 'BOOKING_PLACED' ? (
+                bookingDetails?.book_status === 'BOOKING_CANCELLED' ? (
                   <>
-                    <div className={styles.action}>
-                      <p>Paid</p>
+                    <strong>Status: </strong>
+                    <div className={styles.cancel_border}>
+                      <p>Booking Canceled :( </p>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className={styles.action}>
-                      <p>Pending</p>
-                      <button
-                        className={styles.pay}
-                        onClick={() => payThroughKhalti(bookingDetails.id)}
-                      >
-                        Pay Now
-                      </button>
-                    </div>
+                    <>
+                      <strong>Status: </strong>
+                      <p>Service is on the way :) </p>
+                    </>
                   </>
-                )}
-              </>
-            )}
-          </div>
-          <div className={styles.cancel}>
-            {bookingDetails?.book_status !== 'BOOKING_PLACED' ? (
-              bookingDetails?.book_status === 'BOOKING_CANCELLED' ? (
-                <>
-                  <strong>Status: </strong>
-                  <div className={styles.cancel_border}>
-                    <p>Booking Canceled :( </p>
-                  </div>
-                </>
+                )
               ) : (
                 <>
-                  <>
-                    <strong>Status: </strong>
-                    <p>Service is on the way :) </p>
-                  </>
+                  <Popconfirm
+                    title='Cancel Booking'
+                    description='Are you sure want to cancel booking ?'
+                    onConfirm={() => confirm(bookingDetails?.id)}
+                  >
+                    <button className={styles.cancel}>Cancel Booking</button>
+                  </Popconfirm>
                 </>
-              )
-            ) : (
-              <>
-                <Popconfirm
-                  title='Cancel Booking'
-                  description='Are you sure want to cancel booking ?'
-                  onConfirm={() => confirm(bookingDetails?.id)}
-                >
-                  <button className={styles.cancel}>Cancel Booking</button>
-                </Popconfirm>
-              </>
-            )}
-            <p className={styles.note}>
-              <strong> Note:</strong> Service Booking cannot cancelled if
-              service provider accepts request.
-            </p>
+              )}
+              <p className={styles.note}>
+                <strong> Note:</strong> Service Booking cannot cancelled if
+                service provider accepts request.
+              </p>
+            </div>
           </div>
         </div>
       </div>

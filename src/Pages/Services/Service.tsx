@@ -40,6 +40,7 @@ function Services() {
     fetchServices(city, category)
   );
   const ServiceList = serviceData?.data.data;
+  console.log(ServiceList, 'This is services');
 
   const session = localStorage.getItem('jwtToken');
 
@@ -363,33 +364,39 @@ function Services() {
         {ServiceList ? (
           ServiceList.map(
             (data: {
-              id: string;
-              image: string;
-              name: string;
-              hub: { name: string; address: string; id: string };
-              description: string;
-              estimated_time: string;
-              price: any;
+              service_id: string;
+              service_image: string;
+              service_name: string;
+              hub_name: string;
+              hub_id: string;
+              hub_address: string;
+              service_description: string;
+              service_estimated_time: string;
+              service_price: any;
+              avg_rating: any;
+              rating_count: string;
             }) => {
               return (
                 <ServiceCard
-                  key={data.id}
-                  image={data.image}
-                  service={data.name}
-                  hub={data.hub.name}
-                  location={data.hub.address}
-                  description={data.description}
-                  time={data.estimated_time}
-                  price={data.price}
+                  key={data.service_id}
+                  image={data.service_image}
+                  service={data.service_name}
+                  hub={data.hub_name}
+                  location={data.hub_address}
+                  description={data.service_description}
+                  time={data.service_estimated_time}
+                  price={data.service_price}
+                  rate={parseFloat(data.avg_rating).toFixed(1)}
+                  count={data.rating_count}
                   onAddToCart={() =>
                     addCartServiceMutation.mutate({
-                      service_id: data.id,
-                      hub_id: data.hub.id,
+                      service_id: data.service_id,
+                      hub_id: data.hub_id,
                     })
                   }
                   chatToHub={() =>
                     chatToHubMutation.mutate({
-                      hub_id: data.hub.id,
+                      hub_id: data.hub_id,
                     })
                   }
                 />
