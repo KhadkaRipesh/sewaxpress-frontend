@@ -44,9 +44,9 @@ function LandingPage() {
                   onChange={handleChange}
                   style={{ outline: 'none' }}
                 >
-                  <MenuItem value={'kathmandu'}>Kathmandu</MenuItem>
-                  <MenuItem value={'lalitpur'}>Lalitpur</MenuItem>
-                  <MenuItem value={'bhaktapur'}>Bhaktapur</MenuItem>
+                  <MenuItem value={'Kathmandu'}>Kathmandu</MenuItem>
+                  <MenuItem value={'Lalitpur'}>Lalitpur</MenuItem>
+                  <MenuItem value={'Bhaktapur'}>Bhaktapur</MenuItem>
                 </Select>
               </FormControl>
             </div>

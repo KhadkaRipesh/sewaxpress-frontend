@@ -386,7 +386,11 @@ function Services() {
                   description={data.service_description}
                   time={data.service_estimated_time}
                   price={data.service_price}
-                  rate={parseFloat(data.avg_rating).toFixed(1)}
+                  rate={
+                    data.avg_rating
+                      ? parseFloat(data.avg_rating).toFixed(1)
+                      : '0'
+                  }
                   count={data.rating_count}
                   onAddToCart={() =>
                     addCartServiceMutation.mutate({

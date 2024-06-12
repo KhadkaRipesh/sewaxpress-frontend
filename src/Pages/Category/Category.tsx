@@ -19,7 +19,7 @@ function Category() {
   const { city } = useParams<{ city?: string }>();
 
   // List of valid city names
-  const validCities = ['kathmandu', 'lalitpur', 'bhaktapur'];
+  const validCities = ['Kathmandu', 'Lalitpur', 'Bhaktapur'];
 
   // Check if the city parameter is valid
   const isValidCity = typeof city === 'string' && validCities.includes(city);
